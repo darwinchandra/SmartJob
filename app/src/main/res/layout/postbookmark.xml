@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    android:elevation="10dp"
+    app:cardCornerRadius="12dp">
+    <LinearLayout
+        android:id="@+id/card_bookmark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp">
+            <ImageView
+                android:id="@+id/icon_perusahaan_bookmark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:background="@drawable/shape_iconperusahaan"
+                android:src="@drawable/ipi"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/jabatan_pegawai_bookmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sales Manager"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/basic_regular"
+                android:textSize="22dp" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/line"/>
+            <TextView
+                android:id="@+id/nama_perusahaan_bookmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PT. Industri Pembungkus Internasional"
+                android:fontFamily="@font/basic_regular"/>
+            <TextView
+                android:id="@+id/loca_perusahaan_bookmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medan, Sumatera Utara"
+                android:fontFamily="@font/basic_regular"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:src="@drawable/ic_baseline_bookmark_24"
+            android:layout_marginTop="-7dp"
+            android:layout_marginRight="12dp"
+            android:layout_gravity="right"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

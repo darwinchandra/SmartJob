@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_page"
+        android:enabled="true"
+        android:icon="@drawable/home_icon"
+        android:title="Home"/>
+    <item
+        android:id="@+id/msg_page"
+        android:enabled="true"
+        android:icon="@drawable/msg_icon"
+        android:title="Message"/>
+    <item
+        android:id="@+id/job_page"
+        android:enabled="true"
+        android:icon="@drawable/job_icon"
+        android:title="My Jobs"/>
+    <item
+        android:id="@+id/profile_page"
+        android:enabled="true"
+        android:icon="@drawable/profile_icon"
+        android:title="Profile"/>
+</menu>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="4dp"
+    android:layout_marginRight="5dp"
+    app:cardBackgroundColor="#696969">
+    <TextView
+        android:id="@+id/syarat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Syarat"
+        android:textSize="12dp"
+        android:fontFamily="@font/basic_regular"
+        android:textColor="@color/white"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:layout_marginRight="5dp"/>
+</androidx.cardview.widget.CardView>
