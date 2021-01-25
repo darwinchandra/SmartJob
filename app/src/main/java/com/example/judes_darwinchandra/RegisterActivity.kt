@@ -1,5 +1,6 @@
 package com.example.judes_darwinchandra
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
@@ -160,6 +162,13 @@ class RegisterActivity : AppCompatActivity() {
 
     fun gobacktoLogin(view: View) {
         finish()
+    }
+
+    fun RegisDone(view: View) {
+        finish()
+        Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
     }
 
 }

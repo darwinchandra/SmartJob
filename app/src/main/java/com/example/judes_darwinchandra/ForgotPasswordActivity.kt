@@ -5,6 +5,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -13,6 +15,8 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_forgot_password.*
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_register.*
 
 class ForgotPasswordActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -33,12 +37,22 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
 
     fun reset_pass_email_sent(view: View) {
-        var dialog: AlertDialog.Builder = AlertDialog.Builder(this)
-            .setMessage("Please check your email to recovery your password")
-            .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
-                finish()
-            })
-        dialog.show()
+        if(android.util.Patterns.EMAIL_ADDRESS.matcher(inputEmailFP1.text.toString()).matches()){
+            var dialog: AlertDialog.Builder = AlertDialog.Builder(this)
+                .setMessage("Please check your email to recovery your password")
+                .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
+                    finish()
+                })
+            dialog.show()
+        }
+        else if(inputEmailFP1.text.toString().trim().isEmpty()){
+            inputEmailFP1.setError("Email can't be empty")
+        }
+        else{
+            inputEmailFP1.setError("Invalid Email")
+        }
+
+
     }
 
     fun gotoRegis_forgotpass(view: View) {
