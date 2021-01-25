@@ -70,7 +70,7 @@
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputEmail"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -78,10 +78,10 @@
             android:hint="Email"
             android:textColorHint="@color/light_grey"
             app:startIconContentDescription="Email"
-            app:endIconMode="clear_text"
             android:layout_marginTop="5dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -91,7 +91,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
 
-            android:id="@+id/inputPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@color/light_grey"
@@ -103,6 +102,7 @@
             android:layout_marginTop="5dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -122,6 +122,7 @@
             android:fontFamily="@font/basic_regular"
             android:onClick="forgotpass_login"/>
         <Button
+            android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login"

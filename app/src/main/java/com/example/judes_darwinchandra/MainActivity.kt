@@ -3,11 +3,15 @@ package com.example.judes_darwinchandra
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.WindowManager
+import androidx.annotation.IntegerRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,8 +23,64 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this,R.color.black)
         setContentView(R.layout.activity_main)
-    }
 
+
+
+        login_button.isEnabled=false
+        var valid= arrayOf(0,0)
+        inputEmail.addTextChangedListener(object:TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(android.util.Patterns.EMAIL_ADDRESS.matcher(inputEmail.text.toString()).matches()){
+                    valid[0]=1
+                    cekvalid(valid)
+                }
+                else if(inputEmail.text.toString().trim().isEmpty()){
+                    inputEmail.setError("Email can't be empty")
+                    valid[0]=0
+                    cekvalid(valid)
+                }
+                else{
+                    inputEmail.setError("Invalid Email")
+                    valid[0]=0
+                    cekvalid(valid)
+                }
+            }
+        })
+        inputPass.addTextChangedListener(object:TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(inputPass.text.toString().trim().isEmpty()){
+                    inputPass.setError("Password can't be empty")
+                    valid[1]=0
+                    cekvalid(valid)
+                }
+                else{
+                    valid[1]=1
+                    cekvalid(valid)
+                }
+            }
+        })
+    }
+    fun cekvalid(validasi:Array<Int>){
+
+        if(validasi[0]==1 && validasi[1]==1){
+            login_button.isEnabled=true
+        }
+        else{
+            login_button.isEnabled=false
+        }
+    }
     fun gotoRegis(view: View) {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
