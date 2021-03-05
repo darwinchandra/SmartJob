@@ -3,10 +3,12 @@ package com.example.judes_darwinchandra
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_help.*
+import kotlinx.android.synthetic.main.activity_location.*
 import kotlinx.android.synthetic.main.activity_manage_profil.*
 
 class ManageProfilActivity : AppCompatActivity() {
