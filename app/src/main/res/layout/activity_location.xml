@@ -38,13 +38,10 @@
         android:layout_width="411dp"
         android:layout_height="673dp"
         android:fillViewport="true">
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <Button
                 android:id="@+id/loca_aceh"
                 style="@style/Widget.App.Button"
@@ -503,7 +500,6 @@
                 android:textAlignment="textStart"
                 android:textSize="16dp"
                 android:textColor="@color/black" />
-
             <Button
                 android:id="@+id/loca_sumatraselatan"
                 android:clickable="true"
@@ -520,7 +516,6 @@
                 android:textAlignment="textStart"
                 android:textSize="16dp"
                 android:textColor="@color/black" />
-
             <Button
                 android:id="@+id/loca_sumatrautara"
                 android:clickable="true"
@@ -537,7 +532,6 @@
                 android:textAlignment="textStart"
                 android:textSize="16dp"
                 android:textColor="@color/black" />
-
             <Button
                 android:id="@+id/loca_yogyakarta"
                 android:fontFamily="@font/basic_regular"
