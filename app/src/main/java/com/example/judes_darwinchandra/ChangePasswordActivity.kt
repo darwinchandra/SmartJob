@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_change_password.*
 import kotlinx.android.synthetic.main.activity_video_call.*
 
+private const val EXTRA_STATUS = "EXTRA_STATUS"
 class ChangePasswordActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +30,15 @@ class ChangePasswordActivity : AppCompatActivity() {
         topAppBar_changePass.setNavigationOnClickListener {
             finish()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(EXTRA_STATUS,oldPass.text.toString())
+    }
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        oldPass.text = savedInstanceState?.getString(EXTRA_STATUS) ?: "Kosong"
     }
 
     fun forgotpass_changepass(view: View) {
