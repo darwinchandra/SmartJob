@@ -61,7 +61,7 @@
                 android:src="@drawable/ipi"
                 android:layout_centerHorizontal="true"/>
             <TextView
-                android:id="@+id/textView27"
+                android:id="@+id/jabatan_pegawai_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/basic_regular"
@@ -72,23 +72,23 @@
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/textView29"
+                android:id="@+id/string_salary_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/basic_regular"
                 android:text="10 jt/month"
                 android:textColor="#B3000000"
-                android:layout_below="@id/textView27"
+                android:layout_below="@id/jabatan_pegawai_detail"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/textView28"
+                android:id="@+id/lokasi_perusahaan_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/basic_regular"
                 android:text="Medan, Sumatera Utara"
                 android:textColor="#B3000000"
-                android:layout_below="@id/textView29"
+                android:layout_below="@id/string_salary_detail"
                 android:gravity="center"/>
         </RelativeLayout>
     </RelativeLayout>
