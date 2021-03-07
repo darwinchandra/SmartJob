@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.judes_darwinchandra">
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera"/>
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,11 +13,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BookmarkedActivity"></activity>
+
+        <activity android:name=".BookmarkedActivity" />
         <activity android:name=".ManageProfilActivity" />
         <activity android:name=".DetailPekerjaanActivity" />
         <activity android:name=".FilterActivity" />
-        <activity android:name=".HelpActivity" />
+        <activity android:name=".HelpActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ChangePasswordActivity"
             android:parentActivityName=".BerandaActivity" />
@@ -42,7 +54,8 @@
         <activity
             android:name=".RegisterActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

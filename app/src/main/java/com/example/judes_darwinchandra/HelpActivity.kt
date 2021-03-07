@@ -5,8 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_help.*
@@ -26,29 +28,38 @@ class HelpActivity : AppCompatActivity() {
         topAppBar_help.setNavigationOnClickListener {
             finish()
         }
+        reportbutton.setOnClickListener {
+            var mIntent = Intent(Intent.ACTION_SEND)
+
+            mIntent.data = Uri.parse("mailto:")
+            mIntent.type = "text/plain"
+            mIntent.putExtra(Intent.EXTRA_EMAIL, "example@gmail.com")
+            mIntent.putExtra(Intent.EXTRA_SUBJECT, "Problem with")
+            mIntent.putExtra(Intent.EXTRA_TEXT, "Hi my name is ... I want to report a problem about ..." +
+                    "Your assistance in this matter would be greatly appreciated " +
+                    "Thanks & Regards")
+            mIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("content://path/to/email/attachment"))
 
 
-        fun composeEmail(addresses: Intent, subject: String, attachment: Uri): Intent? {
-
-            val intent = Intent(Intent.ACTION_SEND).apply {
-                type = "text/html"
-                putExtra(Intent.EXTRA_EMAIL, "example@gmail.com")
-                putExtra(Intent.EXTRA_SUBJECT, "subject")
-                putExtra(Intent.EXTRA_TEXT, "Email message text")
-                putExtra(Intent.EXTRA_STREAM, Uri.parse("content://path/to/email/attachment"))
+            try {
+                //start email intent
+                startActivity(Intent.createChooser(mIntent, "Choose Email Client..."))
             }
-            if (intent.resolveActivity(packageManager) != null) {
-                startActivity(Intent.createChooser(intent, "Send Email"))
+            catch (e: Exception){
+                //if any thing goes wrong for example no email client application or any exception
+                //get and show exception message
+                Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
             }
         }
-        button3.setOnClickListener(
-            startActivity(composeEmail(intent))
-        )
+
+
+
     }
+
+
+
 }
 
-private fun Button.setOnClickListener(startActivity: Unit) {
-    TODO("Not yet implemented")
-}
+
 
 
