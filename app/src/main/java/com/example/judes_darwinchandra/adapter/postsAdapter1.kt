@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.judes_darwinchandra.ChatRoomActivity
-import com.example.judes_darwinchandra.DetailPekerjaanActivity
-import com.example.judes_darwinchandra.R
+import com.example.judes_darwinchandra.*
+import org.w3c.dom.Text
 
 class postsAdapter1(val numberOfRecyclerView1: ArrayList<String>): RecyclerView.Adapter<postsAdapter1.ViewHolder>() {
 
@@ -19,11 +19,16 @@ class postsAdapter1(val numberOfRecyclerView1: ArrayList<String>): RecyclerView.
         val card: RelativeLayout=itemView.findViewById(R.id.card_top_loker)
         val numberOfRecyclerView3: ArrayList<String> = ArrayList()
         val recyclerView3:RecyclerView=itemView.findViewById(R.id.recyclerView3)
-
+        var namaCompany : TextView= itemView.findViewById(R.id.nama_perusahaan_row)
+        var posisi:TextView=itemView.findViewById(R.id.jabatan_pegawai_row)
+        var gaji:TextView=itemView.findViewById(R.id.string_salary_row)
+        var lokasiPerusahaan:TextView=itemView.findViewById(R.id.lokasi_perusahaan_row)
         init{
             itemView.setOnClickListener{
                 val position:Int=adapterPosition
-                val intent = Intent(itemView.context, DetailPekerjaanActivity::class.java)
+                var intent = Intent(itemView.context, DetailPekerjaanActivity::class.java)
+                var dataPerusahaan=objDetailLoker(namaCompany.text.toString(),posisi.text.toString(),gaji.text.toString(),lokasiPerusahaan.text.toString())
+                intent.putExtra(EXTRA_DETAIL_LOKER,dataPerusahaan)
                 itemView.context.startActivity(intent)
             }
         }

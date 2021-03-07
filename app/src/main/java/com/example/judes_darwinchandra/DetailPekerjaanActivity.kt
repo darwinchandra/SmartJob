@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_detail_pekerjaan.*
 import kotlinx.android.synthetic.main.activity_forgot_password.*
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.postapplied.*
 
 class DetailPekerjaanActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -29,6 +30,11 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         }
 
         icon_perusahaan_detailkerja.clipToOutline = true
+        var dataPerusahaan=intent.getParcelableExtra<objDetailLoker>(EXTRA_DETAIL_LOKER)
+        jabatan_pegawai_detail.text=dataPerusahaan?.posisiLoker
+        string_salary_detail.text=dataPerusahaan?.gajiLoker
+        lokasi_perusahaan_detail.text=dataPerusahaan?.alamatPerusahaan
+
     }
     fun descklik(view: View) {
         desc.setTextColor(Color.BLACK)
