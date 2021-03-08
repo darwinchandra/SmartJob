@@ -1,6 +1,7 @@
 package com.example.judes_darwinchandra
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
