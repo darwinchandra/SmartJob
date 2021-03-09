@@ -36,15 +36,15 @@ class HelpActivity : AppCompatActivity() {
         // dan semua data sudah terisi
         reportbutton.setOnClickListener {
 
-            var uriEmail = Uri.parse("mailto: 181110859@students.mikroskil.ac.id")
-            var intent = Intent(ACTION_SEND,uriEmail);
-            intent.setType("text/plain")
-            intent.putExtra(Intent.EXTRA_EMAIL, "mailto: 181110859@students.mikroskil.ac.id")
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Problem with")
-            intent.putExtra(Intent.EXTRA_TEXT, "Hi my name is ... I want to report a problem about ..." +
-                    "Your assistance in this matter would be greatly appreciated " +
-                    "Thanks & Regards")
-            startActivity(intent)
+            val emailArrray:Array<String> = arrayOf("181110468@students.mikroskil.ac.id","181110859@students.mikroskil.ac.id","181112213@students.mikroskil.ac.id")
+            val intent = Intent(Intent.ACTION_SENDTO)
+            intent.data = Uri.parse("mailto:") // only email apps should handle this
+            intent.putExtra(Intent.EXTRA_EMAIL, emailArrray)
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Problem with ...")
+            intent.putExtra(Intent.EXTRA_TEXT, "Hi my name is ... \n\n I want to report a problem about ..." +
+                    "\n\n Your assistance in this matter would be greatly appreciated " +
+                    "\n\n Thanks & Regards")
+                startActivity(intent)
         }
 
 
