@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-
+        //login button wrong ketika isinya kosong
         login_button.isEnabled=false
         var valid= arrayOf(0,0)
         inputEmail.addTextChangedListener(object:TextWatcher{
@@ -82,16 +82,20 @@ class MainActivity : AppCompatActivity() {
             login_button.isEnabled=false
         }
     }
+    //Intent Eksplisit
+    //fungsi untuk keluar kehalaman Registrasi
     fun gotoRegis(view: View) {
+
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
     }
+    //fungsi untuk keluar kehalaman Beranda
     fun gotoBeranda(view: View) {
         val intent = Intent(this, BerandaActivity::class.java)
         startActivity(intent)
 
     }
-
+    //fungsi untuk keluar kehalaman Forgot Password
     fun forgotpass_login(view: View) {
         val intent=Intent(this,ForgotPasswordActivity::class.java)
         startActivity(intent)

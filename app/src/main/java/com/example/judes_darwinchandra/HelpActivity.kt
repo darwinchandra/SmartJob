@@ -2,6 +2,8 @@ package com.example.judes_darwinchandra
 
 import android.os.Build
 import android.content.Intent
+import android.content.Intent.ACTION_SEND
+import android.content.Intent.ACTION_SENDTO
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -28,28 +30,21 @@ class HelpActivity : AppCompatActivity() {
         topAppBar_help.setNavigationOnClickListener {
             finish()
         }
-        reportbutton.setOnClickListener {
-            var mIntent = Intent(Intent.ACTION_SEND)
 
-            mIntent.data = Uri.parse("mailto:")
-            mIntent.type = "text/plain"
-            mIntent.putExtra(Intent.EXTRA_EMAIL, "example@gmail.com")
-            mIntent.putExtra(Intent.EXTRA_SUBJECT, "Problem with")
-            mIntent.putExtra(Intent.EXTRA_TEXT, "Hi my name is ... I want to report a problem about ..." +
+        //Intent Implisit
+        //Ketika report button diclick maka akan disuruh memilih dan pilih email atau gmail dan langsung diarahkan kesana
+        // dan semua data sudah terisi
+        reportbutton.setOnClickListener {
+
+            var uriEmail = Uri.parse("mailto: 181110859@students.mikroskil.ac.id")
+            var intent = Intent(ACTION_SEND,uriEmail);
+            intent.setType("text/plain")
+            intent.putExtra(Intent.EXTRA_EMAIL, "mailto: 181110859@students.mikroskil.ac.id")
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Problem with")
+            intent.putExtra(Intent.EXTRA_TEXT, "Hi my name is ... I want to report a problem about ..." +
                     "Your assistance in this matter would be greatly appreciated " +
                     "Thanks & Regards")
-            mIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("content://path/to/email/attachment"))
-
-
-            try {
-                //start email intent
-                startActivity(Intent.createChooser(mIntent, "Choose Email Client..."))
-            }
-            catch (e: Exception){
-                //if any thing goes wrong for example no email client application or any exception
-                //get and show exception message
-                Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-            }
+            startActivity(intent)
         }
 
 
