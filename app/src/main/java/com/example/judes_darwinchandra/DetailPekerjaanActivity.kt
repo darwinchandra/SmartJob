@@ -30,6 +30,8 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         }
 
         icon_perusahaan_detailkerja.clipToOutline = true
+
+        // di DetailPekerjaanActivity tinggal mengubah isi dari masing" Text box sesuai dengan data yang telah dikirimkan.
         var dataPerusahaan=intent.getParcelableExtra<objDetailLoker>(EXTRA_DETAIL_LOKER)
         jabatan_pegawai_detail.text=dataPerusahaan?.posisiLoker
         string_salary_detail.text=dataPerusahaan?.gajiLoker

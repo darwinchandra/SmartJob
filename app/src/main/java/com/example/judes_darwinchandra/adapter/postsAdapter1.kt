@@ -19,14 +19,18 @@ class postsAdapter1(val numberOfRecyclerView1: ArrayList<String>): RecyclerView.
         val card: RelativeLayout=itemView.findViewById(R.id.card_top_loker)
         val numberOfRecyclerView3: ArrayList<String> = ArrayList()
         val recyclerView3:RecyclerView=itemView.findViewById(R.id.recyclerView3)
+
+        // menambahkan variabel yang dibutuhkan
         var namaCompany : TextView= itemView.findViewById(R.id.nama_perusahaan_row)
         var posisi:TextView=itemView.findViewById(R.id.jabatan_pegawai_row)
         var gaji:TextView=itemView.findViewById(R.id.string_salary_row)
         var lokasiPerusahaan:TextView=itemView.findViewById(R.id.lokasi_perusahaan_row)
         init{
             itemView.setOnClickListener{
+                //ketika recyclerview di click, maka mengirimkan data parcel kepada DetailPekerjaanActivity.
                 val position:Int=adapterPosition
                 var intent = Intent(itemView.context, DetailPekerjaanActivity::class.java)
+                // data perusahaan di isi sesuai dengan text awalnya yang ada di beranda kemudian di kirim ke DetailPekerjaanActivity.
                 var dataPerusahaan=objDetailLoker(namaCompany.text.toString(),posisi.text.toString(),gaji.text.toString(),lokasiPerusahaan.text.toString())
                 intent.putExtra(EXTRA_DETAIL_LOKER,dataPerusahaan)
                 itemView.context.startActivity(intent)
