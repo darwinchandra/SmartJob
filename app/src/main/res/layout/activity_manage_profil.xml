@@ -51,12 +51,10 @@
                     android:background="@color/white"
                     android:contentDescription="TODO"
                     android:src="@drawable/profile" />
-
                 <ImageButton
                     android:id="@+id/imagePencil3"
                     android:layout_width="31dp"
                     android:layout_height="44dp"
-                    android:layout_marginLeft="130dp"
                     android:background="@color/white"
                     android:src="@drawable/pencil"
                     android:layout_alignParentEnd="true"
