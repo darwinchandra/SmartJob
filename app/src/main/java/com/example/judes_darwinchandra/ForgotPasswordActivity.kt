@@ -17,8 +17,8 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_forgot_password.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register.*
-
-class ForgotPasswordActivity : AppCompatActivity() {
+// Penambahan Interface data agar dapat memangil fungsi kirimtext sebagai perantara kirim data antar Fragment
+class ForgotPasswordActivity : AppCompatActivity(), InterfaceDataText {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,14 +29,33 @@ class ForgotPasswordActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this,R.color.gray3)
 
+        val fragmentfp=ForgotpassFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.frame_layout_forgotpass_profil,fragmentfp).commit()
+
+
         topAppBar_forgotpass.setNavigationOnClickListener {
             finish()
         }
     }
+    //overide function kirimText ini telah dapat di overide karena telah menambahkan InterfaceDataText pada activity
+    override fun kirimText(TextInputEditText: String) {
+        //Implementasi bundle
+        val bundle=Bundle()
+        bundle.putString("EmailFP",TextInputEditText)
+        // memulai transaksi
+        val transaksi= this.supportFragmentManager.beginTransaction()
+        val fragmentfpConfirm=ForgotpassconfirmFragment()
+        //mengisi argument dari fragmentfpconfirm dengan bundle
+        fragmentfpConfirm.arguments=bundle
+
+        //menimpa fragementfp dengan fragementfpConfirm
+        transaksi.replace(R.id.frame_layout_forgotpass_profil,fragmentfpConfirm)
+        transaksi.commit()
+
+    }
 
 
-
-    fun reset_pass_email_sent(view: View) {
+    /*fun reset_pass_email_sent(view: View) {
         if(android.util.Patterns.EMAIL_ADDRESS.matcher(inputEmailFP1.text.toString()).matches()){
             var dialog: AlertDialog.Builder = AlertDialog.Builder(this)
                 .setMessage("Please check your email to recovery your password")
@@ -59,6 +78,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
         finish()
-    }
+    }*/
 
 }

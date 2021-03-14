@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ForgotpassconfirmFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/confirmtextfp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="message"
+            android:textColor="@color/black"
+            android:fontFamily="@font/basic_regular"
+            android:textSize="20dp"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/SubMessage"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/basic_regular"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="Please check your inbox to recovery your password"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"/>
+        <Button
+            android:id="@+id/btnOkresetpassconfirm"
+            android:layout_gravity="center"
+            style="@style/Widget.App.Button"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/basic_regular"
+            android:layout_height="wrap_content"
+            android:text="OK"/>
+    </LinearLayout>
+</FrameLayout>
