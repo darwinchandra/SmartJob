@@ -46,7 +46,7 @@ class ForgotpassFragment : Fragment() {
         //tambahan interfaceDataText dengan aktifikas dari InterfaceDataText
         interfaceDataText=activity as InterfaceDataText
         // Inisialisasi komponen atau property dari fragment
-        val btnreset= view.findViewById<Button>(R.id.btnResetPass_profil)
+        val btnreset= view.findViewById<Button>(R.id.btnResetPass)
         val Emailuser= view.findViewById<TextInputEditText>(R.id.inputEmailFP1)
 
         //penambahan action click btnreset

@@ -70,7 +70,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btnResetPass_profil"
+            android:id="@+id/btnResetPass"
             android:layout_gravity="center"
             style="@style/Widget.App.Button"
             android:layout_width="match_parent"

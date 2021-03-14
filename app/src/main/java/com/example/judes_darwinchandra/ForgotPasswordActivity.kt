@@ -30,7 +30,7 @@ class ForgotPasswordActivity : AppCompatActivity(), InterfaceDataText {
         window.statusBarColor = ContextCompat.getColor(this,R.color.gray3)
 
         val fragmentfp=ForgotpassFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.frame_layout_forgotpass_profil,fragmentfp).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.frame_layout_forgotpass,fragmentfp).commit()
 
 
         topAppBar_forgotpass.setNavigationOnClickListener {
@@ -49,7 +49,7 @@ class ForgotPasswordActivity : AppCompatActivity(), InterfaceDataText {
         fragmentfpConfirm.arguments=bundle
 
         //menimpa fragementfp dengan fragementfpConfirm
-        transaksi.replace(R.id.frame_layout_forgotpass_profil,fragmentfpConfirm)
+        transaksi.replace(R.id.frame_layout_forgotpass,fragmentfpConfirm)
         transaksi.commit()
 
     }
