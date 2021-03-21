@@ -34,54 +34,88 @@ class BerandaActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this,R.color.gray3)
 
+        //Membuat fragment yang akan menanmpung fragment lainnya
         berandaFragment=BerandaFragment()
+        //membuat transaksi manager untuk halaman yang pertama
         supportFragmentManager
             .beginTransaction()
+            // replace framelayout dengan halaman berandafragment
             .replace(R.id.frame_layout,berandaFragment)
+            // set transaksinya
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            //jalankan fragmentnya
             .commit()
 
+        //ketika menekan bottom navigasi yang terdiri dari beberapa tombol tersebut akan menuju kefragmentnya.
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
+            //ketika item diklik
             when(item.itemId) {
+
                 R.id.home_page -> {
+                    //membuat fragment yang akan menampung beranda
                     berandaFragment=BerandaFragment()
                     supportFragmentManager
+                            //ketika pas di klik akan terjadi transaksi dari beranda,message,jobs,profile ke beranda itu sendiri
                         .beginTransaction()
+                            // dan framelayout akan direplace fragment beranda itu sendiri
                         .replace(R.id.frame_layout,berandaFragment)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit()
                     true
                 }
+                //fragment messages
                 R.id.msg_page -> {
+                    //membuat fragment yang akan menampung message
                     msgFragment=MsgFragment()
                     supportFragmentManager
+                        //ketika pas di klik akan terjadi transaksi dari beranda,profile,jobs ke message
                         .beginTransaction()
+                        // dan framelayout akan direplace fragment message
                         .replace(R.id.frame_layout,msgFragment)
+                        //set fragment message untuk diopen
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        //dan jalankan
                         .commit()
+                    //jika button message yang diklik
                     true
                 }
+                //fragment halaman jobs
                 R.id.job_page -> {
+                    //membuat fragment yang akan menampung jobs
                     jobsFragment= JobsFragment()
                     supportFragmentManager
+                        //ketika pas di klik akan terjadi transaksi dari beranda,message,profile ke jobs
                         .beginTransaction()
+                        // dan framelayout akan direplace fragment jobs
                         .replace(R.id.frame_layout,jobsFragment)
+                        //set fragment jobs untuk diopen
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        //dan jalankan
                         .commit()
+                    //jika button message yang diklik
                     true
                 }
+                //fragment profile
                 R.id.profile_page -> {
+                    //membuat fragment yang akan menampung profile
                     profileFragment=ProfileFragment()
                     supportFragmentManager
+                        //ketika pas di klik akan terjadi transaksi dari beranda,message,jobs ke profile
                         .beginTransaction()
+                        // dan framelayout akan direplace fragment profile
                         .replace(R.id.frame_layout,profileFragment)
+                        //set fragment profile untuk diopen
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        //dan jalankan
                         .commit()
+                    //jika button message yang diklik
                     true
                 }
+                //diluar itu maka error
                 else -> false
             }
         }
+        //tombol button ketika diklik ulang maka akan tetap atau diarahkan kefragment lain
         bottom_navigation.setOnNavigationItemReselectedListener { item ->
             when(item.itemId) {
                 R.id.home_page -> {
@@ -93,13 +127,14 @@ class BerandaActivity : AppCompatActivity() {
                     true
                 }
                 R.id.job_page -> {
-                    // Respond to navigation item 2 click
+                    // Respond to navigation item 3 click
                     true
                 }
                 R.id.profile_page -> {
-                    // Respond to navigation item 2 click
+                    // Respond to navigation item 4 click
                     true
                 }
+                //diluar itu salah.
                 else -> false
             }
         }

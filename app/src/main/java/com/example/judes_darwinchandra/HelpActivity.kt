@@ -38,7 +38,7 @@ class HelpActivity : AppCompatActivity() {
 
             val emailArrray:Array<String> = arrayOf("181110468@students.mikroskil.ac.id","181110859@students.mikroskil.ac.id","181112213@students.mikroskil.ac.id")
             val intent = Intent(Intent.ACTION_SENDTO)
-            intent.data = Uri.parse("mailto:") // only email apps should handle this
+            intent.data = Uri.parse("mailto:")
             intent.putExtra(Intent.EXTRA_EMAIL, emailArrray)
             intent.putExtra(Intent.EXTRA_SUBJECT, "Problem with ...")
             intent.putExtra(Intent.EXTRA_TEXT, "Hi my name is ... \n\n I want to report a problem about ..." +
