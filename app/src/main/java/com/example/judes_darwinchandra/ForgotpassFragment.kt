@@ -37,6 +37,7 @@ class ForgotpassFragment : Fragment() {
     //tambahan interfaceDataText
     private lateinit var interfaceDataText:InterfaceDataText
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

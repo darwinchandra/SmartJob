@@ -29,8 +29,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="true">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,16 +52,17 @@
                     android:background="@color/white"
                     android:contentDescription="TODO"
                     android:src="@drawable/profile" />
+
                 <ImageButton
                     android:id="@+id/imagePencil3"
                     android:layout_width="31dp"
                     android:layout_height="44dp"
-                    android:background="@color/white"
-                    android:src="@drawable/pencil"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
-                    android:onClick="getCustomDialog"/>
+                    android:background="@color/white"
+                    android:onClick="getCustomDialog"
+                    android:src="@drawable/pencil" />
             </RelativeLayout>
 
             <TextView
@@ -140,8 +142,8 @@
                     android:layout_height="22dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
                     android:layout_marginTop="7dp"
+                    android:layout_marginRight="10dp"
                     android:fontFamily="@font/basic_regular"
                     android:text="Add"
                     android:textColor="@color/black"
@@ -252,8 +254,8 @@
                     android:layout_height="18dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
                     android:layout_marginTop="7dp"
+                    android:layout_marginRight="10dp"
                     android:text="Add"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -302,6 +304,125 @@
                 android:fontFamily="@font/basic_regular"
                 android:text="Bachelor's Degree in Computer Science / Information Technology"
                 android:textColor="#B3000000" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bordert"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:layout_width="43dp"
+                    android:layout_height="31dp"
+                    android:layout_marginEnd="11dp"
+                    android:layout_marginRight="11dp"
+                    android:background="@color/gray2"
+                    android:src="@drawable/hat" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Document"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="55dp"
+                    android:fontFamily="@font/basic_regular"/>
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="27dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Add"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="7dp"
+                    android:text="Application Letter"/>
+
+                <ImageButton
+                    android:id="@+id/imagePencil5"
+                    android:layout_width="31dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="right"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/white"
+                    android:src="@drawable/pencil" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:clickable="true"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/blue"
+                    android:text="ApplicaitonLetter.PDF"/>
+                <ProgressBar
+                    android:id="@+id/progressapp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:max="100"
+                    android:min="0"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:text="Curriculum Vitae"/>
+                <ImageButton
+                    android:id="@+id/imagePencil6"
+                    android:layout_width="31dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="right"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/white"
+                    android:src="@drawable/pencil" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:clickable="true"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/blue"
+                    android:text="CurriculumVitae.PDF"/>
+                <ProgressBar
+                    android:id="@+id/progressvitae"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="100"
+                    android:min="0"/>
+            </RelativeLayout>
         </LinearLayout>
+
+        
     </ScrollView>
 </LinearLayout>
