@@ -36,13 +36,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_paddingTop="50dp"
+            android:paddingTop="50dp"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -352,8 +351,7 @@
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:layout_marginLeft="7dp"
-                    android:text="Application Letter"
-                    android:textStyle="bold"/>
+                    android:text="Application Letter"/>
 
                 <ImageButton
                     android:id="@+id/imagePencil5"
@@ -376,7 +374,6 @@
                     android:clickable="true"
                     android:background="@android:color/transparent"
                     android:textColor="@color/blue"
-                    android:drawableLeft="@drawable/word"
                     android:text="ApplicaitonLetter.PDF"/>
                 <ProgressBar
                     android:id="@+id/progressapp"
@@ -394,8 +391,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
-                    android:text="Curriculum Vitae"
-                    android:textStyle="bold"/>
+                    android:text="Curriculum Vitae"/>
                 <ImageButton
                     android:id="@+id/imagePencil6"
                     android:layout_width="31dp"
@@ -409,16 +405,14 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:background="@android:color/transparent"
                     android:clickable="true"
-                    android:drawableLeft="@drawable/word"
-                    android:text="CurriculumVitae.PDF"
-                    android:textColor="@color/blue" />
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/blue"
+                    android:text="CurriculumVitae.PDF"/>
                 <ProgressBar
                     android:id="@+id/progressvitae"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
