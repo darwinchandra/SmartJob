@@ -351,7 +351,10 @@
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:layout_marginLeft="7dp"
-                    android:text="Application Letter"/>
+                    android:text="Application Letter"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
 
                 <ImageButton
                     android:id="@+id/imagePencil5"
@@ -367,14 +370,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 >
+
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:clickable="true"
                     android:background="@android:color/transparent"
-                    android:textColor="@color/blue"
-                    android:text="ApplicaitonLetter.PDF"/>
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/word"
+                    android:text="ApplicaitonLetter.PDF"
+                    android:textColor="@color/blue" />
                 <ProgressBar
                     android:id="@+id/progressapp"
                     android:layout_width="match_parent"
@@ -391,7 +396,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
-                    android:text="Curriculum Vitae"/>
+                    android:text="Curriculum Vitae"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
                 <ImageButton
                     android:id="@+id/imagePencil6"
                     android:layout_width="31dp"
@@ -412,7 +420,8 @@
                     android:clickable="true"
                     android:background="@android:color/transparent"
                     android:textColor="@color/blue"
-                    android:text="CurriculumVitae.PDF"/>
+                    android:text="CurriculumVitae.PDF"
+                    android:drawableLeft="@drawable/word"/>
                 <ProgressBar
                     android:id="@+id/progressvitae"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
