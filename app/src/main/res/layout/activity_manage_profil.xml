@@ -37,7 +37,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="50dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -372,19 +373,24 @@
                 >
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:background="@android:color/transparent"
+                    android:id="@+id/btnappletter"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:backgroundTint="@color/gray"
                     android:clickable="true"
                     android:drawableLeft="@drawable/word"
                     android:text="ApplicaitonLetter.PDF"
-                    android:textColor="@color/blue" />
+                    android:textColor="@color/blue"
+                    android:gravity="left|center" />
                 <ProgressBar
                     android:id="@+id/progressapp"
+                    android:layout_below="@id/btnappletter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:max="100"
                     android:min="0"/>
@@ -414,19 +420,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+                    android:id="@+id/btnCuriVitae"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:backgroundTint="@color/gray"
                     android:clickable="true"
-                    android:background="@android:color/transparent"
+                    android:gravity="left|center"
                     android:textColor="@color/blue"
                     android:text="CurriculumVitae.PDF"
                     android:drawableLeft="@drawable/word"/>
                 <ProgressBar
                     android:id="@+id/progressvitae"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_below="@id/btnCuriVitae"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:max="100"
                     android:min="0"/>
             </RelativeLayout>
