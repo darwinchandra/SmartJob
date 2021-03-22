@@ -140,9 +140,27 @@ class BerandaActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        // variabe wifiManager sebagai receiver
         var wifiManager = MyWifiStateReceiver()
+        // filterwifi disini bergungsi sebegai filter yang membuat receiver dapat bekerja,
+        // ketika terdapat aksi perubahan status wifi
         var filterWifi= IntentFilter()
         filterWifi.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION)
+        // register receiver dengan filter yang telah dibuat sebelumnya
         registerReceiver(wifiManager,filterWifi)
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
