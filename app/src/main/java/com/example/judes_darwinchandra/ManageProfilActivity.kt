@@ -37,22 +37,17 @@ class ManageProfilActivity : AppCompatActivity() {
     private val downloadReceiver = object : BroadcastReceiver(){
         override fun onReceive(p0: Context?, p1: Intent?) {
             var persen = p1?.getIntExtra(EXTRA_PERSEN,0)
-            var finish = p1?.getBooleanExtra(EXTRA_PERSEN,true)
+            var finish= p1?.getBooleanExtra(EXTRA_FINISH,true)
             progressapp.progress = persen ?: 0
-
+            if(finish!!){
+                Toast.makeText(this@ManageProfilActivity,"Download Selesai",Toast.LENGTH_SHORT).show()
+            }
+            btnappletter.isEnabled=finish?:false
         }
 
     }
     //
-    private val downloadReceiver1 = object : BroadcastReceiver(){
-        override fun onReceive(p0: Context?, p1: Intent?) {
-            var persen = p1?.getIntExtra(EXTRA_PERSEN,0)
-            var finish = p1?.getBooleanExtra(EXTRA_PERSEN,true)
-            progressvitae.progress = persen ?: 0
 
-        }
-
-    }
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,13 +66,7 @@ class ManageProfilActivity : AppCompatActivity() {
         }
 
         //
-        var CVService = Intent(this,DownloadService::class.java)
-        btnCuriVitae.setOnClickListener{
-            CVService.putExtra(EXTRA_TIME,500)
-            DownloadService.enqueueWork(this,CVService)
-            var filterDownload1 = IntentFilter(ACTION_DOWNLOAD)
-            registerReceiver(downloadReceiver1,filterDownload1)
-        }
+
 
 
 
@@ -103,7 +92,7 @@ class ManageProfilActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(downloadReceiver)
-        unregisterReceiver(downloadReceiver1)
+
     }
 
     //mengoveride onsaveinstancestate untuk mengambil text pada textview untuk disimpan pada konstanta

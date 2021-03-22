@@ -9,11 +9,11 @@ class DownloadService : JobIntentService() {
     override fun onHandleWork(intent: Intent) {
             var downloadProgress = 0
         do{
-            Thread.sleep(1000)
-            downloadProgress+=10
+            Thread.sleep(20)
+            downloadProgress+=1
             var intentDownload = Intent(ACTION_DOWNLOAD)
             intentDownload.putExtra(EXTRA_PERSEN,downloadProgress)
-            intentDownload.putExtra(EXTRA_FINISH,downloadProgress)
+            intentDownload.putExtra(EXTRA_FINISH,false)
             if(downloadProgress>=100)
                 intentDownload.putExtra(EXTRA_FINISH,true)
             sendBroadcast(intentDownload)
