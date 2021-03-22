@@ -3,6 +3,7 @@ package com.example.judes_darwinchandra
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.EXTRA_TIME
 import android.content.IntentFilter
 import android.content.res.Resources
 
@@ -38,9 +39,7 @@ class ManageProfilActivity : AppCompatActivity() {
             var persen = p1?.getIntExtra(EXTRA_PERSEN,0)
             var finish = p1?.getBooleanExtra(EXTRA_PERSEN,true)
             progressapp.progress = persen ?: 0
-            if(finish!!){
-                Toast.makeText(this@ManageProfilActivity,"Download Finish",Toast.LENGTH_SHORT).show()
-            }
+
         }
 
     }
@@ -50,9 +49,7 @@ class ManageProfilActivity : AppCompatActivity() {
             var persen = p1?.getIntExtra(EXTRA_PERSEN,0)
             var finish = p1?.getBooleanExtra(EXTRA_PERSEN,true)
             progressvitae.progress = persen ?: 0
-            if(finish!!){
-                Toast.makeText(this@ManageProfilActivity,"Download Finish",Toast.LENGTH_SHORT).show()
-            }
+
         }
 
     }
