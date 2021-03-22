@@ -65,6 +65,7 @@ class ManageProfilActivity : AppCompatActivity() {
 
         //memanggil download service menggunakan intent
         var dokumenService = Intent(this,DownloadService::class.java)
+        //onclik pada btnappletter agar ketika diklik proses download berjalan
         btnappletter.setOnClickListener{
             dokumenService.putExtra(EXTRA_TIME,500)
             //memanggil service menggunakan enquequeWork
