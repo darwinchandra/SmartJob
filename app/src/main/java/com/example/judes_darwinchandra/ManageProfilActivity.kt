@@ -33,15 +33,22 @@ private const val EXTRA_STATUS = "EXTRA_STATUS"
 class ManageProfilActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    //
+    //Membuat Object Download Receiver untuk menangkap broadcast dari sendbroadcast
     private val downloadReceiver = object : BroadcastReceiver(){
+        //onReceive
         override fun onReceive(p0: Context?, p1: Intent?) {
+            //untuk mengecek sudah berapa persen
             var persen = p1?.getIntExtra(EXTRA_PERSEN,0)
+            //untuk mengecek apakah sudah selesai apa belum, jika belum ada data kirimkan true
             var finish= p1?.getBooleanExtra(EXTRA_FINISH,true)
+            //progress nya sesuai dengan sudah berapa persen progress berjalan jika tidak ada maka 0
             progressapp.progress = persen ?: 0
+            //cek apakah sudah selesai apa belum
             if(finish!!){
+                //jika sudah selesai maka tampilkan toast "Download Selesai"
                 Toast.makeText(this@ManageProfilActivity,"Download Selesai",Toast.LENGTH_SHORT).show()
             }
+            //Agar buttonletter tidak bisa ditekan saat download berjalan
             btnappletter.isEnabled=finish?:false
         }
 
@@ -56,18 +63,17 @@ class ManageProfilActivity : AppCompatActivity() {
 
 
 
-        //
+        //memanggil download service menggunakan intent
         var dokumenService = Intent(this,DownloadService::class.java)
         btnappletter.setOnClickListener{
             dokumenService.putExtra(EXTRA_TIME,500)
+            //memanggil service menggunakan enquequeWork
             DownloadService.enqueueWork(this,dokumenService)
+            //filter download untuk menerima ACTION_DOWNLOAD agar service dan broadcast bisa saling berinteraksi
             var filterDownload = IntentFilter(ACTION_DOWNLOAD)
+            //yang merespon adalah downloadReceiver
             registerReceiver(downloadReceiver,filterDownload)
         }
-
-        //
-
-
 
 
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
@@ -88,7 +94,7 @@ class ManageProfilActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    //
+    //untuk mengunregisterReceiver supaya tidak memakan banyak memori
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(downloadReceiver)
