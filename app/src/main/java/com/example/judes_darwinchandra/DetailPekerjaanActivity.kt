@@ -12,9 +12,10 @@ import kotlinx.android.synthetic.main.activity_detail_pekerjaan.*
 import kotlinx.android.synthetic.main.activity_forgot_password.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.postapplied.*
-
+const val EXTRA_DETAIL_LOKER="EXTRA_DETAIL_LOKER"
 class DetailPekerjaanActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_pekerjaan)
@@ -30,6 +31,7 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         }
 
         icon_perusahaan_detailkerja.clipToOutline = true
+
 
         // di DetailPekerjaanActivity tinggal mengubah isi dari masing" Text box sesuai dengan data yang telah dikirimkan.
         var dataPerusahaan=intent.getParcelableExtra<objDetailLoker>(EXTRA_DETAIL_LOKER)

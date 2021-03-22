@@ -1,6 +1,12 @@
 package com.example.judes_darwinchandra
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Resources
+
+import kotlinx.android.synthetic.main.activity_main.*
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -8,10 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -27,11 +30,59 @@ import java.net.URL
 //inisialisasi konstanta untuk menampung data yang akan di tampilkan saat di rotate
 private const val EXTRA_STATUS = "EXTRA_STATUS"
 class ManageProfilActivity : AppCompatActivity() {
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    //
+    private val downloadReceiver = object : BroadcastReceiver(){
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            var persen = p1?.getIntExtra(EXTRA_PERSEN,0)
+            var finish = p1?.getBooleanExtra(EXTRA_PERSEN,true)
+            progressapp.progress = persen ?: 0
+            if(finish!!){
+                Toast.makeText(this@ManageProfilActivity,"Download Finish",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+    //
+    private val downloadReceiver1 = object : BroadcastReceiver(){
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            var persen = p1?.getIntExtra(EXTRA_PERSEN,0)
+            var finish = p1?.getBooleanExtra(EXTRA_PERSEN,true)
+            progressvitae.progress = persen ?: 0
+            if(finish!!){
+                Toast.makeText(this@ManageProfilActivity,"Download Finish",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_profil)
         supportActionBar?.hide()
+
+
+
+        //
+        var dokumenService = Intent(this,DownloadService::class.java)
+        btnappletter.setOnClickListener{
+            dokumenService.putExtra(EXTRA_TIME,500)
+            DownloadService.enqueueWork(this,dokumenService)
+            var filterDownload = IntentFilter(ACTION_DOWNLOAD)
+            registerReceiver(downloadReceiver,filterDownload)
+        }
+
+        //
+        var CVService = Intent(this,DownloadService::class.java)
+        btnCuriVitae.setOnClickListener{
+            CVService.putExtra(EXTRA_TIME,500)
+            DownloadService.enqueueWork(this,CVService)
+            var filterDownload1 = IntentFilter(ACTION_DOWNLOAD)
+            registerReceiver(downloadReceiver1,filterDownload1)
+        }
+
+
 
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -49,6 +100,15 @@ class ManageProfilActivity : AppCompatActivity() {
             }
         }).start()
     }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    //
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(downloadReceiver)
+        unregisterReceiver(downloadReceiver1)
+    }
+
     //mengoveride onsaveinstancestate untuk mengambil text pada textview untuk disimpan pada konstanta
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
