@@ -1,6 +1,8 @@
 package com.example.judes_darwinchandra
 
 import android.annotation.SuppressLint
+import android.content.IntentFilter
+import android.net.wifi.WifiManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -138,5 +140,9 @@ class BerandaActivity : AppCompatActivity() {
                 else -> false
             }
         }
+        var wifiManager = MyWifiStateReceiver()
+        var filterWifi= IntentFilter()
+        filterWifi.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION)
+        registerReceiver(wifiManager,filterWifi)
     }
 }
