@@ -54,7 +54,7 @@ class ProfileFragment : Fragment() {
         recyclerView_profile=view.findViewById(R.id.recyclerView_profile)
 
         val numberOfRecyclerView_profile: ArrayList<String> = ArrayList()
-        for (i in 1..3){
+        for (i in 1..4){
             numberOfRecyclerView_profile.add("Post# $i")
         }
         recyclerView_profile.adapter=

@@ -32,6 +32,11 @@ class postsAdapterProfile(val numberOfRecyclerView_profile: ArrayList<String>): 
                     val intent = Intent(itemView.context, HelpActivity::class.java)
                     itemView.context.startActivity(intent)
                 }
+                if (position==3){
+                    // get promosion notif
+
+
+                }
             }
         }
     }
@@ -61,6 +66,11 @@ class postsAdapterProfile(val numberOfRecyclerView_profile: ArrayList<String>): 
             2 -> {
                 holder.ic_listview.setImageResource(R.drawable.ic_baseline_help_24)
                 holder.list_name.setText("Help")
+                true
+            }
+            2 -> {
+                holder.ic_listview.setImageResource(R.drawable.ic_recommendation)
+                holder.list_name.setText("Get Recommendation")
                 true
             }
         }
