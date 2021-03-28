@@ -34,5 +34,8 @@ class ForgotPasswordProfileActivity : AppCompatActivity() {
         .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
             finish()
         })
-        dialog.show()}
+        dialog.show()
+
+        // tambahkan notif goto email disini
+    }
 }

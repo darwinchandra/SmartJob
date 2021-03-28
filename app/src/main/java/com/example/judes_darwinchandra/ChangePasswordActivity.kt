@@ -38,7 +38,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     }
 
     fun ChangePassConfirm(view: View) {
-        Toast.makeText(this, "Your password has been changed", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Check your email to confirm it's you", Toast.LENGTH_SHORT).show()
         finish()
     }
 }

@@ -52,6 +52,8 @@ class ForgotPasswordActivity : AppCompatActivity(), InterfaceDataText {
         transaksi.replace(R.id.frame_layout_forgotpass,fragmentfpConfirm)
         transaksi.commit()
 
+        // tambahkan goto email disini
+
     }
 
 

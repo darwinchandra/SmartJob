@@ -149,6 +149,21 @@ class BerandaActivity : AppCompatActivity() {
         filterWifi.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION)
         // register receiver dengan filter yang telah dibuat sebelumnya
         registerReceiver(wifiManager,filterWifi)
+
+
+
+
+        // buat notif disini
+
+
+
+
+
+
+
+
+
+
     }
 }
 
