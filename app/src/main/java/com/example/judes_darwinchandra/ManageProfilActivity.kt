@@ -5,28 +5,23 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.EXTRA_TIME
 import android.content.IntentFilter
-import android.content.res.Resources
-
-import kotlinx.android.synthetic.main.activity_main.*
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.activity_help.*
-import kotlinx.android.synthetic.main.activity_location.*
 import kotlinx.android.synthetic.main.activity_manage_profil.*
-import kotlinx.android.synthetic.main.my_custom_dialog.*
 import java.io.IOException
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.URL
+
 
 //inisialisasi konstanta untuk menampung data yang akan di tampilkan saat di rotate
 private const val EXTRA_STATUS = "EXTRA_STATUS"
@@ -47,6 +42,9 @@ class ManageProfilActivity : AppCompatActivity() {
             if(finish!!){
                 //jika sudah selesai maka tampilkan toast "Download Selesai"
                 Toast.makeText(this@ManageProfilActivity,"Download Selesai",Toast.LENGTH_SHORT).show()
+
+                // tarok custom notif disini
+
             }
             //Agar buttonletter tidak bisa ditekan saat download berjalan
             btnappletter.isEnabled=finish?:false
@@ -81,9 +79,7 @@ class ManageProfilActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this,R.color.gray3)
 
-        topAppBar_ManageProfil.setNavigationOnClickListener {
-            finish()
-        }
+
         val viewimg = findViewById<ImageView>(R.id.imageProfile)
         Thread(Runnable{
             val bitmap = processBitMap(R.drawable.wanita)
@@ -92,14 +88,22 @@ class ManageProfilActivity : AppCompatActivity() {
                 viewimg.setImageBitmap(bitmap)
             }
         }).start()
+
+        topAppBar_ManageProfil.setNavigationOnClickListener {
+            finish()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     //untuk mengunregisterReceiver supaya tidak memakan banyak memori
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(downloadReceiver)
-
+        try {
+            unregisterReceiver(downloadReceiver)
+            //Register or UnRegister your broadcast receiver here
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
     }
 
     //mengoveride onsaveinstancestate untuk mengambil text pada textview untuk disimpan pada konstanta
@@ -128,6 +132,7 @@ class ManageProfilActivity : AppCompatActivity() {
         }
         mydialog.show()
     }
+
     private fun processBitMap(url: Int): Bitmap? {
         return try{
             var mybitmap = BitmapFactory.decodeResource(resources,url)
