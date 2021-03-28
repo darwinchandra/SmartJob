@@ -152,18 +152,6 @@ class BerandaActivity : AppCompatActivity() {
 
 
 
-
-        // buat notif disini
-
-
-
-
-
-
-
-
-
-
     }
 }
 

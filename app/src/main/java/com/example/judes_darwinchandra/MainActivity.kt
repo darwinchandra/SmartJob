@@ -72,6 +72,28 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+
+
+
+
+
+        // buat notif disini
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
     fun cekvalid(validasi:Array<Int>){
 
