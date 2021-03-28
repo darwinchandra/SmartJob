@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.judes_darwinchandra.*
+import kotlin.coroutines.coroutineContext
 
 class postsAdapterProfile(val numberOfRecyclerView_profile: ArrayList<String>): RecyclerView.Adapter<postsAdapterProfile.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,7 +35,7 @@ class postsAdapterProfile(val numberOfRecyclerView_profile: ArrayList<String>): 
                     itemView.context.startActivity(intent)
                 }
                 if (position==3){
-                    // get promosion notif
+                    Toast.makeText(itemView.context, "taruh notif promosi disini", Toast.LENGTH_SHORT).show()
 
 
                 }
@@ -68,7 +70,7 @@ class postsAdapterProfile(val numberOfRecyclerView_profile: ArrayList<String>): 
                 holder.list_name.setText("Help")
                 true
             }
-            2 -> {
+            3 -> {
                 holder.ic_listview.setImageResource(R.drawable.ic_recommendation)
                 holder.list_name.setText("Get Recommendation")
                 true
