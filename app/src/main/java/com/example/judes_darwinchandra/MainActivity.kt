@@ -18,15 +18,16 @@ import android.view.WindowManager
 import androidx.annotation.IntegerRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-    var dataSpinner1 = arrayOf("Filter Spesialis","Ubah Nama","Chat Backup")
-    var dataSpinner2 = arrayOf("Change Password","Forgot Password")
-    var dataSpinner3 = arrayOf("Message Notification")
-    var dataSpinner4 = arrayOf("Get Recomendation")
+    var dataChannel1 = arrayOf("Filter Spesialis","Ubah Nama","Chat Backup")
+    var dataChannel2 = arrayOf("Change Password","Forgot Password")
+    var dataChannel3 = arrayOf("Message Notification")
+    var dataChannel4 = arrayOf("Get Recomendation")
     var notifier_channel1 = 1
     var notifier_channel2 = 2
     var notificationManager : NotificationManager? = null
@@ -145,7 +146,7 @@ class MainActivity : AppCompatActivity() {
             val att = AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                 .build()
-            for (s in dataSpinner1) {
+            for (s in dataChannel1) {
                 val Channel1 = NotificationChannel(s + "_" + "Umum", s, NotificationManager.IMPORTANCE_HIGH)
                 Channel1.setLightColor(Color.RED);
                 Channel1.enableLights(true)
@@ -159,7 +160,7 @@ class MainActivity : AppCompatActivity() {
                     notificationManager?.createNotificationChannel(Channel1)
                 }
             }
-            for(s in dataSpinner2){
+            for(s in dataChannel2){
                 val Channel2 = NotificationChannel(s + "_" + "Email", s, NotificationManager.IMPORTANCE_NONE)
                 Channel2.setLightColor(Color.RED);
                 Channel2.enableLights(true)
@@ -172,7 +173,7 @@ class MainActivity : AppCompatActivity() {
                     notificationManager?.createNotificationChannel(Channel2)
                 }
             }
-            for(s in dataSpinner3){
+            for(s in dataChannel3){
                 val Channel3 = NotificationChannel(s + "_" + "Chat", s, NotificationManager.IMPORTANCE_NONE)
                 Channel3.setLightColor(Color.RED);
                 Channel3.enableLights(true)
@@ -185,7 +186,7 @@ class MainActivity : AppCompatActivity() {
                     notificationManager?.createNotificationChannel(Channel3)
                 }
             }
-            for(s in dataSpinner4){
+            for(s in dataChannel4){
                 val Channel4 = NotificationChannel(s + "_" + "Promosi", s, NotificationManager.IMPORTANCE_NONE)
                 Channel4.setLightColor(Color.RED);
                 Channel4.enableLights(true)
