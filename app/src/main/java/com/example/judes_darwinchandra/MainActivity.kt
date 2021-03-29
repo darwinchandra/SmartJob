@@ -28,8 +28,6 @@ class MainActivity : AppCompatActivity() {
     var dataChannel2 = arrayOf("Change Password","Forgot Password")
     var dataChannel3 = arrayOf("Message Notification")
     var dataChannel4 = arrayOf("Get Recomendation")
-    var notifier_channel1 = 1
-    var notifier_channel2 = 2
     var notificationManager : NotificationManager? = null
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
