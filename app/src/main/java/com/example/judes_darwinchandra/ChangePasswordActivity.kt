@@ -1,6 +1,9 @@
 package com.example.judes_darwinchandra
 
 import android.app.AlertDialog
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
@@ -10,12 +13,16 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_change_password.*
 import kotlinx.android.synthetic.main.activity_video_call.*
 
 
+
 class ChangePasswordActivity : AppCompatActivity() {
+    //init notif manager
+    var notificationManager : NotificationManager? = null
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +37,45 @@ class ChangePasswordActivity : AppCompatActivity() {
         topAppBar_changePass.setNavigationOnClickListener {
             finish()
         }
+        //notif manager getsystem notif service
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
+                as NotificationManager
+
+        //class baru untuk create notif
+        val notifmanage = NotificationManager()
+        notifmanage.createNotificationGroups(notificationManager!!)
+        notifmanage.createNotificationChannels(notificationManager!!)
+
+        btn_ConfirmChangePass.setOnClickListener {
+
+            // init channelid
+            var channel_id =""
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                channel_id = notificationManager!!.getNotificationChannel("Change Password_Email"
+                ).id
+            }
+            //membuat notifikasi
+            var myNotification = NotificationCompat.Builder(this,channel_id)
+                .setContentTitle("Confirmation Request")
+                .setContentText("Click To Check Your Mail Inbox")
+                .setGroup("Email")
+                .setSmallIcon(R.drawable.ic_baseline_mail_24)
+
+            //Membentuk Aksi Intent UNTUK membuka inbox email
+            val notifyIntent = Intent(Intent.ACTION_MAIN)
+            notifyIntent.addCategory(Intent.CATEGORY_APP_EMAIL)
+            val notifyPandingIntent = PendingIntent.getActivities(
+                this,2,
+                arrayOf(notifyIntent),
+                PendingIntent.FLAG_UPDATE_CURRENT)
+            myNotification.setContentIntent(notifyPandingIntent)
+
+            // memunculkan notifikasi dengan id
+            notificationManager?.notify(
+                NOTIFICATION_EMAIL,
+                myNotification.build())
+
+        }
     }
 
     fun forgotpass_changepass(view: View) {
@@ -38,6 +84,8 @@ class ChangePasswordActivity : AppCompatActivity() {
     }
 
     fun ChangePassConfirm(view: View) {
+
+
         Toast.makeText(this, "Check your email to confirm it's you", Toast.LENGTH_SHORT).show()
         finish()
     }
