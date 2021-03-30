@@ -25,6 +25,7 @@ import java.io.IOException
 //inisialisasi konstanta untuk menampung data yang akan di tampilkan saat di rotate
 private const val EXTRA_STATUS = "EXTRA_STATUS"
 class ManageProfilActivity : AppCompatActivity() {
+    //Inisialisasi notification manager
     var notificationManager : android.app.NotificationManager? = null
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     //Membuat Object Download Receiver untuk menangkap broadcast dari sendbroadcast
@@ -42,20 +43,32 @@ class ManageProfilActivity : AppCompatActivity() {
                 //jika sudah selesai maka tampilkan toast "Download Selesai"
                 Toast.makeText(this@ManageProfilActivity,"Download Selesai",Toast.LENGTH_SHORT).show()
 
-                // tarok custom notif disini
+                // Inisialisasi channel ID
                 var CHANNEL_ID = ""
+                // kondisi untuk mengecek apakah versi android Oreo keatas atau tidak
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                    //jika merupakan versi android O keatas maka memerlukan Channel
+                    //CHANNEL_ID diambil dari namachannel dan grup dari channel tersebut
                     CHANNEL_ID = notificationManager!!.getNotificationChannel("Download_Umum").id
                 }
-                val notificationLayout = RemoteViews(packageName,R.layout.customnotif) //mendapatkan layout yang sudah di buat
+                //Untuk mendapatkan layout yang sudah di buat
+                val notificationLayout = RemoteViews(packageName,R.layout.customnotif)
+                //Membuat Notifikasi
                 var builder = NotificationCompat.Builder(this@ManageProfilActivity,CHANNEL_ID)
+                    //Menentukan Judul
                     .setContentTitle("Your Title")
-                    .setContentText("A")
+                    //Menentukan ISI
+                    .setContentText("Your Text")
+                    //Menentukan Group dari notifikasi
                     .setGroup("Umum")
+                    //Memberikan Icon pada notifikasi
                     .setSmallIcon(R.drawable.download)
+                    //Menentukan Style
                     .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+                    //Menentukan Custom Layout yang telah dibuat
                     .setCustomContentView(notificationLayout)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                //Memunculkan notiifikasi dengan ID
                 notificationManager?.notify(NOTIFICATION_PROMOSI,builder.build())
 
             }
@@ -72,10 +85,12 @@ class ManageProfilActivity : AppCompatActivity() {
         setContentView(R.layout.activity_manage_profil)
         supportActionBar?.hide()
 
-
+        //notifikasi bekerja sebagai service sehingg dapat di jalankan walaupun aplikasi dalam keadaan tertutup
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
         val notifmanage = NotificationManager()
+        //mendaftarkan notifikasi Group kedalam notifikasi manager
         notifmanage.createNotificationGroups(notificationManager!!)
+        //mendaftarkan notifikasi channel kedalam notifikasi manager
         notifmanage.createNotificationChannels(notificationManager!!)
 
 
@@ -90,6 +105,36 @@ class ManageProfilActivity : AppCompatActivity() {
             var filterDownload = IntentFilter(ACTION_DOWNLOAD)
             //yang merespon adalah downloadReceiver
             registerReceiver(downloadReceiver,filterDownload)
+
+
+            var CHANNEL_ID = ""
+            // kondisi untuk mengecek apakah versi android Oreo keatas atau tidak
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                //jika merupakan versi android O keatas maka memerlukan Channel
+                //CHANNEL_ID diambil dari namachannel dan grup dari channel tersebut
+                CHANNEL_ID = notificationManager!!.getNotificationChannel("Download_Umum").id
+            }
+            //Untuk mendapatkan layout yang sudah di buat
+            val notificationLayout = RemoteViews(packageName,R.layout.notifongoing)
+            //
+            var builder = NotificationCompat.Builder(this@ManageProfilActivity,CHANNEL_ID)
+                //Menentukan Judul
+                .setContentTitle("Your Title")
+                //Menentukan ISI
+                .setContentText("Your Text")
+                //Menentukan Group dari notifikasi
+                .setGroup("Umum")
+                //Memberikan Icon pada notifikasi
+                .setSmallIcon(R.drawable.download)
+                //Menentukan Style
+                .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+                //Menentukan Custom Layout yang telah dibuat
+                .setCustomContentView(notificationLayout)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            //onGOing merupakan fungsi untuk membuat notifikasi tidak dapat dihapus
+            builder.setOngoing(true)
+            //Memunculkan notiifikasi dengan ID
+            notificationManager?.notify(NOTIFICATION_PROMOSI,builder.build())
         }
 
 

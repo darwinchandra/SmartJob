@@ -7,7 +7,7 @@
         android:layout_width="103dp"
         android:layout_height="75dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/tyfd" />
+        android:src="@drawable/download2" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,14 +15,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Download Finish"
+            android:text="Downloading Please Wait"
             android:textSize="17dp"
             android:textColor="#000"
             android:layout_marginBottom="5dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="APPLICATION LETTER DAN CV Berhasil Di Download"
+            android:text="APPLICATION LETTER DAN CV Sedang Di Download"
             android:textSize="15dp"/>
     </LinearLayout>
 </LinearLayout>
