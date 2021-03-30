@@ -116,7 +116,7 @@ class ManageProfilActivity : AppCompatActivity() {
             }
             //Untuk mendapatkan layout yang sudah di buat
             val notificationLayout = RemoteViews(packageName,R.layout.notifongoing)
-            //
+            //Membuat Notifikasi
             var builder = NotificationCompat.Builder(this@ManageProfilActivity,CHANNEL_ID)
                 //Menentukan Judul
                 .setContentTitle("Your Title")
