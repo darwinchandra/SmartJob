@@ -12,7 +12,7 @@ import android.os.Build
 class NotificationManager {
 
 
-    var dataChannel1 = arrayOf("Filter Spesialis","Ubah Nama","Chat Backup")
+    var dataChannel1 = arrayOf("Filter Spesialis","Ubah Nama","Chat Backup","Download")
     var dataChannel2 = arrayOf("Change Password","Forgot Password")
     var dataChannel3 = arrayOf("Message Notification")
     var dataChannel4 = arrayOf("Get Recomendation")

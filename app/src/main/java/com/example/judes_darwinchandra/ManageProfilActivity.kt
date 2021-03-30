@@ -45,13 +45,13 @@ class ManageProfilActivity : AppCompatActivity() {
                 // tarok custom notif disini
                 var CHANNEL_ID = ""
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                    CHANNEL_ID = notificationManager!!.getNotificationChannel("Get Recomendation_Promosi").id
+                    CHANNEL_ID = notificationManager!!.getNotificationChannel("Download_Umum").id
                 }
                 val notificationLayout = RemoteViews(packageName,R.layout.customnotif) //mendapatkan layout yang sudah di buat
                 var builder = NotificationCompat.Builder(this@ManageProfilActivity,CHANNEL_ID)
                     .setContentTitle("Your Title")
                     .setContentText("A")
-                    .setGroup("Promosi")
+                    .setGroup("Umum")
                     .setSmallIcon(R.drawable.download)
                     .setStyle(NotificationCompat.DecoratedCustomViewStyle())
                     .setCustomContentView(notificationLayout)
