@@ -56,21 +56,25 @@ class ChangePasswordActivity : AppCompatActivity() {
             }
             //membuat notifikasi
             var myNotification = NotificationCompat.Builder(this,channel_id)
+                    // title notif
                 .setContentTitle("Confirmation Request")
+                    //isi notif
                 .setContentText("Click To Check Your Mail Inbox")
+                    // group notif
                 .setGroup("Email")
+                    //icon notif
                 .setSmallIcon(R.drawable.ic_baseline_mail_24)
 
             //Membentuk Aksi Intent UNTUK membuka inbox email
             val notifyIntent = Intent(Intent.ACTION_MAIN)
             notifyIntent.addCategory(Intent.CATEGORY_APP_EMAIL)
             val notifyPandingIntent = PendingIntent.getActivities(
-                this,2,
+                this, NOTIFICATION_EMAIL,
                 arrayOf(notifyIntent),
                 PendingIntent.FLAG_UPDATE_CURRENT)
             myNotification.setContentIntent(notifyPandingIntent)
 
-            // memunculkan notifikasi dengan id
+            // memunculkan notifikasi dengan id konstanta NOTIFICATION_EMAIL
             notificationManager?.notify(
                 NOTIFICATION_EMAIL,
                 myNotification.build())

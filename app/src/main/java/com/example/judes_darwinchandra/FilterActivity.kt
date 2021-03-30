@@ -62,7 +62,7 @@ class FilterActivity : AppCompatActivity() {
         val mynotification = NotificationManager()
         //membuat notifikasi grup
         mynotification.createNotificationGroups(notificationManager!!)
-        //membuat notifikasi ke channel
+        //membuat notifikasi channel
         mynotification.createNotificationChannels(notificationManager!!)
 
 
