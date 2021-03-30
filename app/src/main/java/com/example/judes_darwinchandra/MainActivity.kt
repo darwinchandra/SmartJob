@@ -1,5 +1,6 @@
 package com.example.judes_darwinchandra
 
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
@@ -9,15 +10,16 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.WindowManager
+import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-
     var notificationManager : NotificationManager? = null
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,8 +104,8 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    }
 
+    }
     fun cekvalid(validasi:Array<Int>){
 
         if(validasi[0]==1 && validasi[1]==1){
@@ -120,15 +122,19 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
     }
+
     //fungsi untuk keluar kehalaman Beranda
     fun gotoBeranda(view: View) {
-
-
-
-
-
         val intent = Intent(this, BerandaActivity::class.java)
         startActivity(intent)
+
+
+
+
+
+
+
+
 
     }
     //fungsi untuk keluar kehalaman Forgot Password

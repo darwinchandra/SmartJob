@@ -11,13 +11,12 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_manage_profil.*
 import java.io.IOException
@@ -26,7 +25,7 @@ import java.io.IOException
 //inisialisasi konstanta untuk menampung data yang akan di tampilkan saat di rotate
 private const val EXTRA_STATUS = "EXTRA_STATUS"
 class ManageProfilActivity : AppCompatActivity() {
-
+    var notificationManager : android.app.NotificationManager? = null
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     //Membuat Object Download Receiver untuk menangkap broadcast dari sendbroadcast
     private val downloadReceiver = object : BroadcastReceiver(){
@@ -44,6 +43,20 @@ class ManageProfilActivity : AppCompatActivity() {
                 Toast.makeText(this@ManageProfilActivity,"Download Selesai",Toast.LENGTH_SHORT).show()
 
                 // tarok custom notif disini
+                var CHANNEL_ID = ""
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                    CHANNEL_ID = notificationManager!!.getNotificationChannel("Get Recomendation_Promosi").id
+                }
+                val notificationLayout = RemoteViews(packageName,R.layout.customnotif) //mendapatkan layout yang sudah di buat
+                var builder = NotificationCompat.Builder(this@ManageProfilActivity,CHANNEL_ID)
+                    .setContentTitle("Your Title")
+                    .setContentText("A")
+                    .setGroup("Promosi")
+                    .setSmallIcon(R.drawable.download)
+                    .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+                    .setCustomContentView(notificationLayout)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                notificationManager?.notify(NOTIFICATION_PROMOSI,builder.build())
 
             }
             //Agar buttonletter tidak bisa ditekan saat download berjalan
@@ -59,6 +72,11 @@ class ManageProfilActivity : AppCompatActivity() {
         setContentView(R.layout.activity_manage_profil)
         supportActionBar?.hide()
 
+
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
+        val notifmanage = NotificationManager()
+        notifmanage.createNotificationGroups(notificationManager!!)
+        notifmanage.createNotificationChannels(notificationManager!!)
 
 
         //memanggil download service menggunakan intent

@@ -5,11 +5,9 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.judes_darwinchandra.*
 import kotlin.coroutines.coroutineContext
@@ -19,6 +17,8 @@ class postsAdapterProfile(val numberOfRecyclerView_profile: ArrayList<String>): 
         val ic_listview: ImageView=itemView.findViewById(R.id.icon_profile_listview)
         val list_name: TextView=itemView.findViewById(R.id.profile_listview_text)
         val card : LinearLayout=itemView.findViewById(R.id.card_Layout_profile)
+
+
         init{
             card.setOnClickListener{
                 val position:Int=adapterPosition
