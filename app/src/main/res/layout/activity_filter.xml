@@ -37,12 +37,13 @@
         android:text="Specializations"
         android:textColor="@color/black"
         android:textSize="18sp"/>
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="41dp"
-        android:entries="@array/daftar_pekerjaan"
-        android:layout_marginTop="10dp"/>
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            />
     <TextView
         android:id="@+id/textSalary"
         android:layout_width="wrap_content"
@@ -157,5 +158,6 @@
                 app:backgroundTint="@color/dark_blue"
                 android:layout_gravity="bottom"/>
         </RelativeLayout>
+
     </LinearLayout>
 </LinearLayout>
