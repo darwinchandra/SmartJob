@@ -1,21 +1,40 @@
 package com.example.judes_darwinchandra
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_detail_pekerjaan.*
 import kotlinx.android.synthetic.main.activity_forgot_password.*
+import kotlinx.android.synthetic.main.activity_manage_profil.*
+import kotlinx.android.synthetic.main.dialogapply.*
+import kotlinx.android.synthetic.main.dialogapply.ok1
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.my_custom_dialog.*
 import kotlinx.android.synthetic.main.postapplied.*
-const val EXTRA_DETAIL_LOKER="EXTRA_DETAIL_LOKER"
-class DetailPekerjaanActivity : AppCompatActivity() {
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+import java.util.*
 
+const val EXTRA_DETAIL_LOKER="EXTRA_DETAIL_LOKER"
+
+class DetailPekerjaanActivity : AppCompatActivity() {
+    private var mPendingIntent: PendingIntent? = null
+    private var sendIntent: Intent? = null
+    private var mAlarmManager: AlarmManager? = null
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_pekerjaan)
@@ -39,7 +58,37 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         string_salary_detail.text=dataPerusahaan?.gajiLoker
         lokasi_perusahaan_detail.text=dataPerusahaan?.alamatPerusahaan
 
+        mAlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        buttonApply2.setOnClickListener {
+            if(mPendingIntent!=null){
+                mAlarmManager?.cancel(mPendingIntent)
+                mPendingIntent?.cancel()
+            }
+            var alarmTimer = Calendar.getInstance()
+
+            alarmTimer.set(2021,3,5,21,6,0)
+            Log.w("Ok", "${alarmTimer.time}")
+            sendIntent = Intent(this, MyReceiver::class.java)
+            sendIntent?.putExtra(EXTRA_PESAN,nama1.text.toString())
+
+            mPendingIntent = PendingIntent.getBroadcast(this,101,sendIntent,0)
+
+//            mAlarmManager?.set(AlarmManager.RTC,alarmTimer.timeInMillis,mPendingIntent)
+            mAlarmManager?.setInexactRepeating(AlarmManager.RTC,alarmTimer.timeInMillis,
+                AlarmManager.INTERVAL_FIFTEEN_MINUTES,mPendingIntent)
+            Toast.makeText(this,"Scheduler Di Aktifkan",Toast.LENGTH_SHORT).show()
+        }
+        ok1.setOnClickListener {
+            if(mPendingIntent!=null){
+                mAlarmManager?.cancel(mPendingIntent)
+                mPendingIntent?.cancel()
+                Toast.makeText(this,"Scheduler Di matikan",Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
     }
+
     fun descklik(view: View) {
         desc.setTextColor(Color.BLACK)
         reviews.setTextColor(Color.GRAY)
@@ -60,5 +109,22 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         reviews.setTextColor(Color.GRAY)
         teks.text="Company"
     }
+
+    fun custom_apply(view: View) {
+        var Mylayout = layoutInflater.inflate(R.layout.dialogapply,null)
+        val mydialogbuilder : AlertDialog.Builder = AlertDialog.Builder(this).apply {
+            setView(Mylayout)
+            setTitle("Notification")
+        }
+        var mydialog = mydialogbuilder.create()
+        var nama = Mylayout.findViewById<TextView>(R.id.nama1)
+        var Btnok = Mylayout.findViewById<Button>(R.id.ok1)
+        Btnok.setOnClickListener {
+            textViewnama.text=nama.text
+
+            mydialog.cancel()
+        }
+        mydialog.show()}
+
 
 }
