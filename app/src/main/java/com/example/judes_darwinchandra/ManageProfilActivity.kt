@@ -1,5 +1,7 @@
 package com.example.judes_darwinchandra
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -9,6 +11,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
@@ -19,11 +22,16 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_manage_profil.*
+import kotlinx.android.synthetic.main.my_custom_dialog.*
 import java.io.IOException
+import java.util.*
 
 
 //inisialisasi konstanta untuk menampung data yang akan di tampilkan saat di rotate
 private const val EXTRA_STATUS = "EXTRA_STATUS"
+var mPendingIntent: PendingIntent? = null
+var sendIntent: Intent? = null
+var mAlarmManager: AlarmManager? = null
 class ManageProfilActivity : AppCompatActivity() {
     //Inisialisasi notification manager
     var notificationManager : android.app.NotificationManager? = null
@@ -155,6 +163,7 @@ class ManageProfilActivity : AppCompatActivity() {
         topAppBar_ManageProfil.setNavigationOnClickListener {
             finish()
         }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
