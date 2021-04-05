@@ -75,4 +75,5 @@
         <item name="colorPrimaryVariant">@color/orange</item>
         <item name="colorOnPrimary">@color/black</item>
     </style>
+
 </resources>

@@ -88,6 +88,8 @@ class FilterActivity : AppCompatActivity() {
                 .setSmallIcon(R.drawable.job_icon)
             // memunculkan notifikasinya
             notificationManager?.notify(NOTIFICATION_UMUM,myNotification1.build())
+
+            finish()
         }
     }
 

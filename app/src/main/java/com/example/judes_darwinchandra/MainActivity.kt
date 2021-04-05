@@ -11,6 +11,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowManager
 import android.widget.RemoteViews
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -94,7 +95,9 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
+        floating_action_button.setOnClickListener {
+            Toast.makeText(this, "dsadas", Toast.LENGTH_SHORT).show()
+        }
 
 
 
