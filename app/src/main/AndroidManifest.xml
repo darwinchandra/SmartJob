@@ -28,7 +28,10 @@
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-
+        <service android:name=".News"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
         <activity android:name=".BookmarkedActivity" />
         <activity android:name=".ManageProfilActivity" />
         <activity android:name=".DetailPekerjaanActivity" />

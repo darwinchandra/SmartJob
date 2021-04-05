@@ -2,6 +2,9 @@ package com.example.judes_darwinchandra
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -21,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
+    var JobSchedulerId = 10
     var notificationManager : NotificationManager? = null
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,6 +100,7 @@ class MainActivity : AppCompatActivity() {
 
 
         floating_action_button.setOnClickListener {
+            startMyJob()
             Toast.makeText(this, "dsadas", Toast.LENGTH_SHORT).show()
         }
 
@@ -109,6 +114,20 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun startMyJob() {
+        var serviceComponent = ComponentName(this,News::class.java)
+        var mJobInfo = JobInfo.Builder(JobSchedulerId,serviceComponent)
+            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+            .setRequiresDeviceIdle(false)
+            .setRequiresCharging(false)
+            .setPeriodic(3*60*1000)
+        var JobCuaca = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+        JobCuaca.schedule(mJobInfo.build())
+        Toast.makeText(this,"Job Service Berjalan",Toast.LENGTH_SHORT).show()
+    }
+
     fun cekvalid(validasi:Array<Int>){
 
         if(validasi[0]==1 && validasi[1]==1){
