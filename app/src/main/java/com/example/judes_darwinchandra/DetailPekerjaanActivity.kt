@@ -91,13 +91,10 @@ class DetailPekerjaanActivity : AppCompatActivity() {
             setTitle("Notification")
         }
         var mydialog = mydialogbuilder.create()
-        var nama = Mylayout.findViewById<TextView>(R.id.nama1)
+
         var Btnok = Mylayout.findViewById<Button>(R.id.ok1)
         Btnok.setOnClickListener {
-            textViewnama.text=nama.text
-
             mAlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            buttonApply2.setOnClickListener {
                 if(mPendingIntent!=null){
                     mAlarmManager?.cancel(mPendingIntent)
                     mPendingIntent?.cancel()
@@ -115,8 +112,8 @@ class DetailPekerjaanActivity : AppCompatActivity() {
                 mAlarmManager?.setInexactRepeating(AlarmManager.RTC,alarmTimer.timeInMillis,
                     AlarmManager.INTERVAL_FIFTEEN_MINUTES,mPendingIntent)
                 Toast.makeText(this,"Scheduler Di Aktifkan",Toast.LENGTH_SHORT).show()
-            }
-            ok1.setOnClickListener {
+
+            Btnok.setOnClickListener {
                 if(mPendingIntent!=null){
                     mAlarmManager?.cancel(mPendingIntent)
                     mPendingIntent?.cancel()
