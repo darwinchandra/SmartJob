@@ -11,10 +11,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -59,6 +56,49 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         string_salary_detail.text=dataPerusahaan?.gajiLoker
         lokasi_perusahaan_detail.text=dataPerusahaan?.alamatPerusahaan
 
+    buttonApply2.setOnClickListener {
+        mAlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        if (mPendingIntent != null) {
+            mAlarmManager?.cancel(mPendingIntent)
+            mPendingIntent?.cancel()
+        }
+        var alarmTimer = Calendar.getInstance()
+
+        alarmTimer.set(2021, 3, 5, 21, 6, 0)
+        Log.w("Ok", "${alarmTimer.time}")
+        sendIntent = Intent(this, MyReceiver::class.java)
+        sendIntent?.putExtra(EXTRA_PESAN, alarmTimer.toString())
+
+        mPendingIntent = PendingIntent.getBroadcast(this, 101, sendIntent, 0)
+
+//            mAlarmManager?.set(AlarmManager.RTC,alarmTimer.timeInMillis,mPendingIntent)
+        mAlarmManager?.setInexactRepeating(
+            AlarmManager.RTC, alarmTimer.timeInMillis,
+            AlarmManager.INTERVAL_FIFTEEN_MINUTES, mPendingIntent
+        )
+        Toast.makeText(this, "Scheduler Di Aktifkan", Toast.LENGTH_SHORT).show()
+
+        var Mylayout = layoutInflater.inflate(R.layout.dialogapply, null)
+        val mydialogbuilder: AlertDialog.Builder = AlertDialog.Builder(this).apply {
+            setView(Mylayout)
+            setTitle("Notification")
+        }
+        var mydialog = mydialogbuilder.create()
+
+        mydialog.show()
+
+        var Btnok = Mylayout.findViewById<Button>(R.id.ok1)
+        Btnok.setOnClickListener {
+            if(cek?.isChecked == true){
+                if(mPendingIntent!=null){
+                    mAlarmManager?.cancel(mPendingIntent)
+                    mPendingIntent?.cancel()
+                    Toast.makeText(this,"Scheduler Di matikan",Toast.LENGTH_SHORT).show()
+                }
+            }
+            mydialog.cancel()
+        }
+    }
 
 
     }
@@ -84,47 +124,9 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         teks.text="Company"
     }
 
-    fun custom_apply(view: View) {
-        var Mylayout = layoutInflater.inflate(R.layout.dialogapply,null)
-        val mydialogbuilder : AlertDialog.Builder = AlertDialog.Builder(this).apply {
-            setView(Mylayout)
-            setTitle("Notification")
-        }
-        var mydialog = mydialogbuilder.create()
 
-        var Btnok = Mylayout.findViewById<Button>(R.id.ok1)
-        Btnok.setOnClickListener {
-            mAlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                if(mPendingIntent!=null){
-                    mAlarmManager?.cancel(mPendingIntent)
-                    mPendingIntent?.cancel()
-                }
-                var alarmTimer = Calendar.getInstance()
-
-                alarmTimer.set(2021,3,5,21,6,0)
-                Log.w("Ok", "${alarmTimer.time}")
-                sendIntent = Intent(this, MyReceiver::class.java)
-                sendIntent?.putExtra(EXTRA_PESAN,alarmTimer.toString())
-
-                mPendingIntent = PendingIntent.getBroadcast(this,101,sendIntent,0)
-
-//            mAlarmManager?.set(AlarmManager.RTC,alarmTimer.timeInMillis,mPendingIntent)
-                mAlarmManager?.setInexactRepeating(AlarmManager.RTC,alarmTimer.timeInMillis,
-                    AlarmManager.INTERVAL_FIFTEEN_MINUTES,mPendingIntent)
-                Toast.makeText(this,"Scheduler Di Aktifkan",Toast.LENGTH_SHORT).show()
-
-            Btnok.setOnClickListener {
-                if(mPendingIntent!=null){
-                    mAlarmManager?.cancel(mPendingIntent)
-                    mPendingIntent?.cancel()
-                    Toast.makeText(this,"Scheduler Di matikan",Toast.LENGTH_SHORT).show()
-                }
-
-            }
-            mydialog.cancel()
-        }
-        mydialog.show()
-    }
 
 
 }
+
+
