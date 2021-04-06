@@ -58,34 +58,7 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         jabatan_pegawai_detail.text=dataPerusahaan?.posisiLoker
         string_salary_detail.text=dataPerusahaan?.gajiLoker
         lokasi_perusahaan_detail.text=dataPerusahaan?.alamatPerusahaan
-        mAlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        buttonApply2.setOnClickListener {
-            if(mPendingIntent!=null){
-                mAlarmManager?.cancel(mPendingIntent)
-                mPendingIntent?.cancel()
-            }
-            var alarmTimer = Calendar.getInstance()
 
-            alarmTimer.set(2021,3,5,21,6,0)
-            Log.w("Ok", "${alarmTimer.time}")
-            sendIntent = Intent(this, MyReceiver::class.java)
-            sendIntent?.putExtra(EXTRA_PESAN,alarmTimer.toString())
-
-            mPendingIntent = PendingIntent.getBroadcast(this,101,sendIntent,0)
-
-//            mAlarmManager?.set(AlarmManager.RTC,alarmTimer.timeInMillis,mPendingIntent)
-            mAlarmManager?.setInexactRepeating(AlarmManager.RTC,alarmTimer.timeInMillis,
-                AlarmManager.INTERVAL_FIFTEEN_MINUTES,mPendingIntent)
-            Toast.makeText(this,"Scheduler Di Aktifkan",Toast.LENGTH_SHORT).show()
-        }
-        ok1.setOnClickListener {
-            if(mPendingIntent!=null){
-                mAlarmManager?.cancel(mPendingIntent)
-                mPendingIntent?.cancel()
-                Toast.makeText(this,"Scheduler Di matikan",Toast.LENGTH_SHORT).show()
-            }
-
-        }
 
 
     }
@@ -121,9 +94,33 @@ class DetailPekerjaanActivity : AppCompatActivity() {
 
         var Btnok = Mylayout.findViewById<Button>(R.id.ok1)
         Btnok.setOnClickListener {
+            mAlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                if(mPendingIntent!=null){
+                    mAlarmManager?.cancel(mPendingIntent)
+                    mPendingIntent?.cancel()
+                }
+                var alarmTimer = Calendar.getInstance()
 
+                alarmTimer.set(2021,3,5,21,6,0)
+                Log.w("Ok", "${alarmTimer.time}")
+                sendIntent = Intent(this, MyReceiver::class.java)
+                sendIntent?.putExtra(EXTRA_PESAN,alarmTimer.toString())
 
+                mPendingIntent = PendingIntent.getBroadcast(this,101,sendIntent,0)
 
+//            mAlarmManager?.set(AlarmManager.RTC,alarmTimer.timeInMillis,mPendingIntent)
+                mAlarmManager?.setInexactRepeating(AlarmManager.RTC,alarmTimer.timeInMillis,
+                    AlarmManager.INTERVAL_FIFTEEN_MINUTES,mPendingIntent)
+                Toast.makeText(this,"Scheduler Di Aktifkan",Toast.LENGTH_SHORT).show()
+
+            Btnok.setOnClickListener {
+                if(mPendingIntent!=null){
+                    mAlarmManager?.cancel(mPendingIntent)
+                    mPendingIntent?.cancel()
+                    Toast.makeText(this,"Scheduler Di matikan",Toast.LENGTH_SHORT).show()
+                }
+
+            }
             mydialog.cancel()
         }
         mydialog.show()

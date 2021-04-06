@@ -179,7 +179,7 @@
                     android:gravity="center"
                     android:padding="0dp"
                     android:textColor="#FFFFFF"
-
+                    android:onClick="custom_apply"
                     style="@style/Widget.App.Button"
                     android:layout_marginLeft="40dp"/>
             </LinearLayout>
