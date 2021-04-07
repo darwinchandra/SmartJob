@@ -57,6 +57,13 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         lokasi_perusahaan_detail.text=dataPerusahaan?.alamatPerusahaan
 
     buttonApply2.setOnClickListener {
+        var Mylayout = layoutInflater.inflate(R.layout.dialogapply, null)
+        val mydialogbuilder: AlertDialog.Builder = AlertDialog.Builder(this).apply {
+            setView(Mylayout)
+            setTitle("Notification")
+        }
+        var mydialog = mydialogbuilder.create()
+        mydialog.show()
         mAlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         if (mPendingIntent != null) {
             mAlarmManager?.cancel(mPendingIntent)
@@ -78,27 +85,26 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         )
         Toast.makeText(this, "Scheduler Di Aktifkan", Toast.LENGTH_SHORT).show()
 
-        var Mylayout = layoutInflater.inflate(R.layout.dialogapply, null)
-        val mydialogbuilder: AlertDialog.Builder = AlertDialog.Builder(this).apply {
-            setView(Mylayout)
-            setTitle("Notification")
-        }
-        var mydialog = mydialogbuilder.create()
-
-        mydialog.show()
-
         var Btnok = Mylayout.findViewById<Button>(R.id.ok1)
         Btnok.setOnClickListener {
-            if(cek?.isChecked == true){
-                if(mPendingIntent!=null){
-                    mAlarmManager?.cancel(mPendingIntent)
-                    mPendingIntent?.cancel()
-                    Toast.makeText(this,"Scheduler Di matikan",Toast.LENGTH_SHORT).show()
+            val checkBox = findViewById<CheckBox>(R.id.cek)
+            checkBox?.setOnCheckedChangeListener{compoundButton, b->
+                if (cek?.isChecked == true) {
+
+                    if (mPendingIntent != null) {
+                        mAlarmManager?.cancel(mPendingIntent)
+                        mPendingIntent?.cancel()
+                        Toast.makeText(this, "Scheduler Di matikan", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
             mydialog.cancel()
         }
+
+
     }
+
+
 
 
     }
