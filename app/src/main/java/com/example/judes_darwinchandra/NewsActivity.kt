@@ -68,9 +68,7 @@ class NewsActivity : AppCompatActivity() {
             .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
             .setRequiresDeviceIdle(false)
             .setRequiresCharging(false)
-            .setPeriodic(3*60*1000)
         var JobNews = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
         JobNews.schedule(mJobInfo.build())
-        Toast.makeText(this,"Job Service Berjalan", Toast.LENGTH_SHORT).show()
     }
 }
