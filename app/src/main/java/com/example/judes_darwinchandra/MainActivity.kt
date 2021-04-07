@@ -102,7 +102,6 @@ class MainActivity : AppCompatActivity() {
         floating_action_button.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             startActivity(intent)
-            Toast.makeText(this, "dsadas", Toast.LENGTH_SHORT).show()
         }
 
 

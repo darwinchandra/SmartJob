@@ -21,18 +21,22 @@ import kotlinx.android.synthetic.main.activity_news.*
 
 class NewsActivity : AppCompatActivity() {
 
-
+    //BroadcastReceiver untuk menerima object yang telah di broadcast
     private val MyNewsReceiver= object : BroadcastReceiver() {
         @SuppressLint("WrongConstant")
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         override fun onReceive(context: Context, intent: Intent) {
-
+            //get parcelable dari object agar dapat digunakan pada activity ini
             var listNews = intent.getParcelableArrayListExtra<MyNewsData>(EXTRA_NEWS)!!
+            //init nilai dari recyclerview
             recyclerView_News.layoutManager= LinearLayoutManager(recyclerView_News.context, OrientationHelper.VERTICAL,false)
+            //set adapter dari recyclerview dengan data context dan object itu sendiri
+            // agar dapat memberikan isi pada recyclerview kita
             recyclerView_News.adapter=postsAdapterNews(context, listNews!!)
-            Log.w("abc",listNews.toString())
+
         }
     }
+    //init var job scheduler
     var JobSchedulerId = 10
     @SuppressLint("WrongConstant")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -47,8 +51,13 @@ class NewsActivity : AppCompatActivity() {
         topAppBar_News.setNavigationOnClickListener {
             finish()
         }
+
+
         startMyJob()
+
+        //memberikan filter action yang sama saat sendBroadcast
         var filterNews=IntentFilter(ACTION_NEWS)
+        //register untuk trigger receiver yang telah dibuat
         registerReceiver(MyNewsReceiver,filterNews)
 
 
@@ -57,6 +66,7 @@ class NewsActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        // unreg receiver ketika onDestroy
         unregisterReceiver(MyNewsReceiver)
     }
 

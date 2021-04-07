@@ -12,6 +12,8 @@ const val NOTIFICATION_CHAT=3333
 const val NOTIFICATION_PROMOSI=4444
 
 const val EXTRA_PESAN: String = "EXTRA_PESAN"
+
+// konstanta untuk broadcast dan krim data
 const val EXTRA_NEWS= "EXTRA_NEWS"
 const val ACTION_NEWS="BroadcastAction.LIST_NEWS_RECEIVED"
 

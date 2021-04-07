@@ -44,12 +44,19 @@ class News: JobService() {
                 responseBody: ByteArray?
             ) {
                 var result = responseBody?.toString(charset) ?: "Kosong"
+                // membuat jsonObject untuk menampung result
                 val obj=JSONObject(result)
+                // membuat JSONArray untuk menampung isi dari array articles yang ada di result.
                 val jsonArray= obj.getJSONArray("articles")
+                //inisialisasi i
                 var i = 0
+                //perulangan sebanyak jumlah jsonArray kali
                 while (i<jsonArray.length()){
+                    //get object dari tiap array ke i, untuk mendapatkan data dari arrayke i
                     val jsonObject=jsonArray.getJSONObject(i)
+                    // kemudian masukkkan ke arraylist
                     list.add(
+                        //proses add sesuai dengan urutan class data MyNewsData
                         MyNewsData(
                             jsonObject.getString("author"),
                             jsonObject.getString("title"),
@@ -60,9 +67,12 @@ class News: JobService() {
                             jsonObject.getString("content")
                         )
                     )
+                    //increment i
                     i++
                 }
+                //membuat send broadcast dengan action berupa konstanta ACTION_NEWS
                 var intent =  Intent(ACTION_NEWS)
+                //untuk mengirimkan extra berupa arraylist<MyNewsData> yang sudah ada datanya ke activity lain menggunakan broadcast
                 intent.putExtra(EXTRA_NEWS,list)
                 sendBroadcast(intent)
 

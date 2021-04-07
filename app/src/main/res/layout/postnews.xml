@@ -38,7 +38,7 @@
                 android:id="@+id/title_news"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sales Manager"
+                android:text="Title"
                 android:textColor="@color/black"
                 android:fontFamily="@font/basic_regular"
                 android:textSize="15dp"
