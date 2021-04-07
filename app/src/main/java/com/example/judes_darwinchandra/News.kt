@@ -2,6 +2,7 @@ package com.example.judes_darwinchandra
 
 import android.app.job.JobParameters
 import android.app.job.JobService
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -16,7 +17,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-class News(val context: Context): JobService() {
+class News: JobService() {
     val AppID = "81c1172db5154c208b2e21d76b4dab56"
     val country = "id"
     val kategori = "business"
@@ -61,10 +62,9 @@ class News(val context: Context): JobService() {
                     )
                     i++
                 }
-                var intent =  Intent("MyACTION")
-                intent.putExtra("extra",list)
+                var intent =  Intent(ACTION_NEWS)
+                intent.putExtra(EXTRA_NEWS,list)
                 sendBroadcast(intent)
-                postsAdapterNews(context,list)
 
                 jobFinished(JobParameters,false)
             }

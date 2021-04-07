@@ -3,12 +3,10 @@ package com.example.judes_darwinchandra
 import android.annotation.SuppressLint
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
-import android.content.BroadcastReceiver
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -23,10 +21,16 @@ import kotlinx.android.synthetic.main.activity_news.*
 
 class NewsActivity : AppCompatActivity() {
 
-    private val MyNews: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val state = intent.extras!!.getStringArrayList("extra")
 
+    private val MyNewsReceiver= object : BroadcastReceiver() {
+        @SuppressLint("WrongConstant")
+        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+        override fun onReceive(context: Context, intent: Intent) {
+
+            var listNews = intent.getParcelableArrayListExtra<MyNewsData>(EXTRA_NEWS)!!
+            recyclerView_News.layoutManager= LinearLayoutManager(recyclerView_News.context, OrientationHelper.VERTICAL,false)
+            recyclerView_News.adapter=postsAdapterNews(context, listNews!!)
+            Log.w("abc",listNews.toString())
         }
     }
     var JobSchedulerId = 10
@@ -43,11 +47,17 @@ class NewsActivity : AppCompatActivity() {
         topAppBar_News.setNavigationOnClickListener {
             finish()
         }
-
-        val list=ArrayList<MyNewsData>()
-        recyclerView_News.layoutManager= LinearLayoutManager(recyclerView_News.context, OrientationHelper.VERTICAL,false)
-        recyclerView_News.adapter=postsAdapterNews(this,list)
         startMyJob()
+        var filterNews=IntentFilter(ACTION_NEWS)
+        registerReceiver(MyNewsReceiver,filterNews)
+
+
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(MyNewsReceiver)
     }
 
 
@@ -58,6 +68,7 @@ class NewsActivity : AppCompatActivity() {
             .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
             .setRequiresDeviceIdle(false)
             .setRequiresCharging(false)
+            .setPeriodic(3*60*1000)
         var JobNews = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
         JobNews.schedule(mJobInfo.build())
         Toast.makeText(this,"Job Service Berjalan", Toast.LENGTH_SHORT).show()
