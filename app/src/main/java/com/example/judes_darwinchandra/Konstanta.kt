@@ -11,6 +11,7 @@ const val NOTIFICATION_EMAIL=2222
 const val NOTIFICATION_CHAT=3333
 const val NOTIFICATION_PROMOSI=4444
 
+// konstanta broadcast untuk mengirim pesan
 const val EXTRA_PESAN: String = "EXTRA_PESAN"
 
 // konstanta untuk broadcast dan krim data

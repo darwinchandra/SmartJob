@@ -14,26 +14,41 @@ class MyReceiver : BroadcastReceiver() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onReceive(context: Context, intent: Intent) {
+
         Log.w("Diana", "Diana")
+        //inisialisasi notify , channel , name sama importance
         val Notifyid = 30103
         val Channel_id = "my_channel_01"
         val name = "ON/OFF"
+        // importance high agar notifikasi keluar
         val importance = NotificationManager.IMPORTANCE_HIGH
+        // inisialisai val yang dapat menampung notifikasichannel dari channel_id,name,importance
         val nNotifyChannel = NotificationChannel(Channel_id,
             name,
-            importance)
+            importance)//
+
+        //Membuat Notifikasi
         val mBuilder = NotificationCompat.Builder(context!!,Channel_id)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentText(intent?.getStringExtra(EXTRA_PESAN))
-            .setContentTitle("Alarm Manager")
+                //mengambil gambar
+            .setSmallIcon(R.drawable.interview)
+                //menentukan isi teks dari extra pesan
+            .setContentText("Ada Interview sedang berlangsung. jangan sampai ketinggalan")
+                //menentukan judul
+            .setContentTitle("Interview")
+                //menentukan priotasnya
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        //notifikasi bekerja sebagai service sehingg dapat di jalankan walaupun aplikasi dalam keadaan tertutup
         var mNotificationManager = context
             .getSystemService(Context.NOTIFICATION_SERVICE)
                 as NotificationManager
+        //memastikan semua notifikasi sudah dihapus sebelumnya
         for(s in mNotificationManager.notificationChannels){
             mNotificationManager.deleteNotificationChannel(s.id)
         }
+        //mendaftarkan notifikasi channel kedalam notifikasi manager
         mNotificationManager.createNotificationChannel(nNotifyChannel)
+        // menampilkan notifikasinya
         mNotificationManager.notify(Notifyid,mBuilder.build())
     }
 }

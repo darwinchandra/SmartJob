@@ -56,53 +56,73 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         string_salary_detail.text=dataPerusahaan?.gajiLoker
         lokasi_perusahaan_detail.text=dataPerusahaan?.alamatPerusahaan
 
-    buttonApply2.setOnClickListener {
+        // mereplace layout menggunakan inflate untuk mengambil dialogapply
         var Mylayout = layoutInflater.inflate(R.layout.dialogapply, null)
+        // membuat alertdialog untuk popup yang menunjukan dont notify jika anda mau
         val mydialogbuilder: AlertDialog.Builder = AlertDialog.Builder(this).apply {
+            // menggunakan layout yang sudah dibuat
             setView(Mylayout)
+            // membuat judul
             setTitle("Notification")
         }
+        // builder dibuat
         var mydialog = mydialogbuilder.create()
+
+
+        var Btnok = Mylayout.findViewById<Button>(R.id.ok1)
+        //ketika buttonapply2 di klik maka akan keluar builder yang sudah dibuat dan notif schedule dijalankan
+    buttonApply2.setOnClickListener {
+        // builder ditampilkan
         mydialog.show()
+        // alarm manager bekerja sebagai service sehingga dapat di jalankan walaupun aplikasi dalam keadaan tertutup
         mAlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        // jika mpending tidak kosong
         if (mPendingIntent != null) {
+            // alarm dibatalkan dan pending juga dibatalkan
             mAlarmManager?.cancel(mPendingIntent)
             mPendingIntent?.cancel()
         }
+        // membuat var yang menampung isi calender
         var alarmTimer = Calendar.getInstance()
 
-        alarmTimer.set(2021, 3, 5, 21, 6, 0)
+        // alarm diset dari perusahaan dan akan dikirim tepat pada waktunya atau harinya
+        alarmTimer.set(2021, 3, 7, 23, 47, 0)
         Log.w("Ok", "${alarmTimer.time}")
+        // menerima notifkasi dari myreceive
         sendIntent = Intent(this, MyReceiver::class.java)
-        sendIntent?.putExtra(EXTRA_PESAN, alarmTimer.toString())
-
+        // menerima pesan notif dari perusahaan
+        sendIntent?.putExtra(EXTRA_PESAN, "Ada Interview sedang berlangsung. jangan sampai ketinggalan")
+        // menerima broadcast
         mPendingIntent = PendingIntent.getBroadcast(this, 101, sendIntent, 0)
 
 //            mAlarmManager?.set(AlarmManager.RTC,alarmTimer.timeInMillis,mPendingIntent)
-        mAlarmManager?.setInexactRepeating(
-            AlarmManager.RTC, alarmTimer.timeInMillis,
-            AlarmManager.INTERVAL_FIFTEEN_MINUTES, mPendingIntent
-        )
-        Toast.makeText(this, "Scheduler Di Aktifkan", Toast.LENGTH_SHORT).show()
+        // membuat toast berisikan bahwa sudah hidup notifikasi schedulenya
+        Toast.makeText(this, "Scheduler On", Toast.LENGTH_SHORT).show()
 
-        var Btnok = Mylayout.findViewById<Button>(R.id.ok1)
+
+
+
+
+    }
+
+
+
+            // ketika cek diceklist dan  btnok diklik maka notifikasi schedule akan dimatikan
         Btnok.setOnClickListener {
-            val checkBox = findViewById<CheckBox>(R.id.cek)
-            checkBox?.setOnCheckedChangeListener{compoundButton, b->
-                if (cek?.isChecked == true) {
-
-                    if (mPendingIntent != null) {
-                        mAlarmManager?.cancel(mPendingIntent)
-                        mPendingIntent?.cancel()
-                        Toast.makeText(this, "Scheduler Di matikan", Toast.LENGTH_SHORT).show()
-                    }
-                }
+            if(cek?.isChecked == true){
+            if(mPendingIntent!=null){
+                mAlarmManager?.cancel(mPendingIntent)
+                mPendingIntent?.cancel()
+                Toast.makeText(this,"Scheduler Di matikan",Toast.LENGTH_SHORT).show()
             }
+            }
+
+
+            //builder ditutup
             mydialog.cancel()
         }
 
 
-    }
 
 
 
