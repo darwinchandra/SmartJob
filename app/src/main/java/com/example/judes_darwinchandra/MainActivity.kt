@@ -100,7 +100,8 @@ class MainActivity : AppCompatActivity() {
 
 
         floating_action_button.setOnClickListener {
-            startMyJob()
+            val intent = Intent(this, NewsActivity::class.java)
+            startActivity(intent)
             Toast.makeText(this, "dsadas", Toast.LENGTH_SHORT).show()
         }
 
@@ -115,17 +116,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun startMyJob() {
-        var serviceComponent = ComponentName(this,News::class.java)
-        var mJobInfo = JobInfo.Builder(JobSchedulerId,serviceComponent)
-            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-            .setRequiresDeviceIdle(false)
-            .setRequiresCharging(false)
-        var JobNews = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        JobNews.schedule(mJobInfo.build())
-        Toast.makeText(this,"Job Service Berjalan",Toast.LENGTH_SHORT).show()
-    }
+
 
     fun cekvalid(validasi:Array<Int>){
 

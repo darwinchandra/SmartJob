@@ -4,9 +4,8 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-feature android:name="android.hardware.camera" />
 
-    <!-- penambahan permission agar aplikasi dapat mengakses wifi state  -->
+    <uses-feature android:name="android.hardware.camera" /> <!-- penambahan permission agar aplikasi dapat mengakses wifi state -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
@@ -17,11 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--receiver untuk wifi yang telah dibuat-->
+        <activity android:name=".NewsActivity"></activity>
+        <!-- receiver untuk wifi yang telah dibuat -->
         <receiver
             android:name=".MyWifiStateReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <service
             android:name=".DownloadService"
@@ -32,7 +32,6 @@
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-
 
         <activity android:name=".BookmarkedActivity" />
         <activity android:name=".ManageProfilActivity" />
