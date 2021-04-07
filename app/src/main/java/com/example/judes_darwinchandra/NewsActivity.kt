@@ -73,12 +73,19 @@ class NewsActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun startMyJob() {
+        //var serviceComponen digunakan untuk mendaftarkan job Scheduler sebagai service yang akan digunakan
         var serviceComponent = ComponentName(this,News::class.java)
+        //membentuk job info untuk job scheduler
         var mJobInfo = JobInfo.Builder(JobSchedulerId,serviceComponent)
+            //menentukan jenis koneksi internet
             .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+            //menentukan apakah job dijalankan ketika perangkat dalam kondisi idle
             .setRequiresDeviceIdle(false)
+            //menentukan apakah job dijalankan pada saat baterai di charger
             .setRequiresCharging(false)
+        //membentuk objek Job Scheduler
         var JobNews = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+        //menjalankan job Scheduler
         JobNews.schedule(mJobInfo.build())
     }
 }
