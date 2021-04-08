@@ -91,11 +91,6 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         Log.w("Ok", "${alarmTimer.time}")
         // menerima notifkasi dari myreceive
         sendIntent = Intent(this, MyReceiver::class.java)
-        // menerima pesan notif dari perusahaan
-        sendIntent?.putExtra(
-            EXTRA_PESAN,
-            "Interview Akan diadakan Perusahaan pada : 08 April 2021 9:19"
-        )
         // menerima broadcast
         mPendingIntent = PendingIntent.getBroadcast(this, 101, sendIntent, 0)
 //            mAlarmManager?.set(AlarmManager.RTC,alarmTimer.timeInMillis,mPendingIntent)
