@@ -7,7 +7,7 @@
         android:id="@+id/myMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Interview Akan diadakan Perusahaan pada : 08 April 2021 9:28"
+        android:text="Interview Akan diadakan Perusahaan pada : 08 April 2021 18:33"
         android:textSize="15dp"
         android:textColor="@color/black"
         android:textAlignment="center"

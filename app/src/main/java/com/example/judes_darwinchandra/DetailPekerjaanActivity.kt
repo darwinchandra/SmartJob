@@ -66,11 +66,9 @@ class DetailPekerjaanActivity : AppCompatActivity() {
             setView(Mylayout)
             // membuat judul
             setTitle("Notification")
-
         }
         // builder dibuat
         var mydialog = mydialogbuilder.create()
-
         var DontNotify = Mylayout.findViewById<Button>(R.id.dontnotify)
         //ketika buttonapply2 di klik maka akan keluar builder yang sudah dibuat dan notif schedule dijalankan
     buttonApply2.setOnClickListener {
@@ -87,18 +85,15 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         // membuat var yang menampung isi calender
         var alarmTimer = Calendar.getInstance()
         // alarm diset dari perusahaan dan akan dikirim tepat pada waktunya atau harinya
-        alarmTimer.set(2021, 3, 7, 9, 19, 0)
+        alarmTimer.set(2021, 3, 8, 18, 33, 0)
         Log.w("Ok", "${alarmTimer.time}")
         // menerima notifkasi dari myreceive
         sendIntent = Intent(this, MyReceiver::class.java)
-        // menerima pesan notif dari perusahaan
-
         // menerima broadcast
         mPendingIntent = PendingIntent.getBroadcast(this, 101, sendIntent, 0)
         mAlarmManager?.set(AlarmManager.RTC,alarmTimer.timeInMillis,mPendingIntent)
-
         // membuat toast berisikan bahwa sudah hidup notifikasi schedulenya
-        Toast.makeText(this, "Scheduler On", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Pengingat Interview Diaktifkan", Toast.LENGTH_SHORT).show()
     }
         val btn = Mylayout.findViewById<Button>(R.id.ok1)
         // jika ok tidak terjadi apa-apa
@@ -106,22 +101,15 @@ class DetailPekerjaanActivity : AppCompatActivity() {
             mydialog.cancel()
         }
             // ketika btnok diklik maka notifikasi schedule akan dimatikan
-                DontNotify?.setOnClickListener {
-                    if(mPendingIntent!=null) {
-                        mAlarmManager?.cancel(mPendingIntent)
-                        mPendingIntent?.cancel()
-                        Toast.makeText(this, "Scheduler Off", Toast.LENGTH_SHORT).show()
-                    }
-                    //builder ditutup
-                    mydialog.cancel()
-                }
-
-
-
-
-
-
-
+        DontNotify?.setOnClickListener {
+            if(mPendingIntent!=null) {
+                mAlarmManager?.cancel(mPendingIntent)
+                mPendingIntent?.cancel()
+                Toast.makeText(this, "Pengingat Interview dinonaktifkan", Toast.LENGTH_SHORT).show()
+            }
+            //builder ditutup
+            mydialog.cancel()
+        }
     }
 
     fun descklik(view: View) {
