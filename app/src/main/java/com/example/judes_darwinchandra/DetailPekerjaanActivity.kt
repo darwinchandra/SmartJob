@@ -71,7 +71,7 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         // builder dibuat
         var mydialog = mydialogbuilder.create()
 
-        var Btnok = Mylayout.findViewById<Button>(R.id.dontnotify)
+        var DontNotify = Mylayout.findViewById<Button>(R.id.dontnotify)
         //ketika buttonapply2 di klik maka akan keluar builder yang sudah dibuat dan notif schedule dijalankan
     buttonApply2.setOnClickListener {
         // builder ditampilkan
@@ -91,11 +91,12 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         Log.w("Ok", "${alarmTimer.time}")
         // menerima notifkasi dari myreceive
         sendIntent = Intent(this, MyReceiver::class.java)
+        // menerima pesan notif dari perusahaan
+
         // menerima broadcast
         mPendingIntent = PendingIntent.getBroadcast(this, 101, sendIntent, 0)
-//            mAlarmManager?.set(AlarmManager.RTC,alarmTimer.timeInMillis,mPendingIntent)
-        mAlarmManager?.setInexactRepeating(AlarmManager.RTC,alarmTimer.timeInMillis,
-            AlarmManager.INTERVAL_FIFTEEN_MINUTES,mPendingIntent)
+        mAlarmManager?.set(AlarmManager.RTC,alarmTimer.timeInMillis,mPendingIntent)
+
         // membuat toast berisikan bahwa sudah hidup notifikasi schedulenya
         Toast.makeText(this, "Scheduler On", Toast.LENGTH_SHORT).show()
     }
@@ -105,7 +106,7 @@ class DetailPekerjaanActivity : AppCompatActivity() {
             mydialog.cancel()
         }
             // ketika btnok diklik maka notifikasi schedule akan dimatikan
-                Btnok?.setOnClickListener {
+                DontNotify?.setOnClickListener {
                     if(mPendingIntent!=null) {
                         mAlarmManager?.cancel(mPendingIntent)
                         mPendingIntent?.cancel()
