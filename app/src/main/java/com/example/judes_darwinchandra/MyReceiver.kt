@@ -32,7 +32,7 @@ class MyReceiver : BroadcastReceiver() {
                 //mengambil gambar
             .setSmallIcon(R.drawable.interview)
                 //menentukan isi teks dari extra pesan
-            .setContentText("Ada Interview sedang berlangsung. jangan sampai ketinggalan")
+            .setContentText("Interview Akan diadakan Perusahaan pada : 08 April 2021 9:19")
                 //menentukan judul
             .setContentTitle("Interview")
                 //menentukan priotasnya

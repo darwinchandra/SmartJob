@@ -3,10 +3,11 @@ package com.example.judes_darwinchandra
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,16 +15,17 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.judes_darwinchandra.R.layout.activity_detail_pekerjaan
 import kotlinx.android.synthetic.main.activity_detail_pekerjaan.*
 import kotlinx.android.synthetic.main.activity_forgot_password.*
 import kotlinx.android.synthetic.main.activity_manage_profil.*
 import kotlinx.android.synthetic.main.dialogapply.*
-import kotlinx.android.synthetic.main.dialogapply.ok1
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.my_custom_dialog.*
 import kotlinx.android.synthetic.main.postapplied.*
+import java.sql.BatchUpdateException
 import java.util.*
 
 const val EXTRA_DETAIL_LOKER="EXTRA_DETAIL_LOKER"
@@ -41,7 +43,7 @@ class DetailPekerjaanActivity : AppCompatActivity() {
 
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(this,R.color.gray3)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.gray3)
 
         topAppBar_detailKerja.setNavigationOnClickListener {
             finish()
@@ -64,12 +66,12 @@ class DetailPekerjaanActivity : AppCompatActivity() {
             setView(Mylayout)
             // membuat judul
             setTitle("Notification")
+
         }
         // builder dibuat
         var mydialog = mydialogbuilder.create()
 
-
-        var Btnok = Mylayout.findViewById<Button>(R.id.ok1)
+        var Btnok = Mylayout.findViewById<Button>(R.id.dontnotify)
         //ketika buttonapply2 di klik maka akan keluar builder yang sudah dibuat dan notif schedule dijalankan
     buttonApply2.setOnClickListener {
         // builder ditampilkan
@@ -84,43 +86,40 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         }
         // membuat var yang menampung isi calender
         var alarmTimer = Calendar.getInstance()
-
         // alarm diset dari perusahaan dan akan dikirim tepat pada waktunya atau harinya
-        alarmTimer.set(2021, 3, 7, 23, 47, 0)
+        alarmTimer.set(2021, 3, 7, 9, 19, 0)
         Log.w("Ok", "${alarmTimer.time}")
         // menerima notifkasi dari myreceive
         sendIntent = Intent(this, MyReceiver::class.java)
         // menerima pesan notif dari perusahaan
-        sendIntent?.putExtra(EXTRA_PESAN, "Ada Interview sedang berlangsung. jangan sampai ketinggalan")
+        sendIntent?.putExtra(
+            EXTRA_PESAN,
+            "Interview Akan diadakan Perusahaan pada : 08 April 2021 9:19"
+        )
         // menerima broadcast
         mPendingIntent = PendingIntent.getBroadcast(this, 101, sendIntent, 0)
-
 //            mAlarmManager?.set(AlarmManager.RTC,alarmTimer.timeInMillis,mPendingIntent)
+        mAlarmManager?.setInexactRepeating(AlarmManager.RTC,alarmTimer.timeInMillis,
+            AlarmManager.INTERVAL_FIFTEEN_MINUTES,mPendingIntent)
         // membuat toast berisikan bahwa sudah hidup notifikasi schedulenya
         Toast.makeText(this, "Scheduler On", Toast.LENGTH_SHORT).show()
-
-
-
-
-
     }
-
-
-
-            // ketika cek diceklist dan  btnok diklik maka notifikasi schedule akan dimatikan
-        Btnok.setOnClickListener {
-            if(cek?.isChecked == true){
-            if(mPendingIntent!=null){
-                mAlarmManager?.cancel(mPendingIntent)
-                mPendingIntent?.cancel()
-                Toast.makeText(this,"Scheduler Di matikan",Toast.LENGTH_SHORT).show()
-            }
-            }
-
-
-            //builder ditutup
+        val btn = Mylayout.findViewById<Button>(R.id.ok1)
+        // jika ok tidak terjadi apa-apa
+        btn?.setOnClickListener{
             mydialog.cancel()
         }
+            // ketika btnok diklik maka notifikasi schedule akan dimatikan
+                Btnok?.setOnClickListener {
+                    if(mPendingIntent!=null) {
+                        mAlarmManager?.cancel(mPendingIntent)
+                        mPendingIntent?.cancel()
+                        Toast.makeText(this, "Scheduler Off", Toast.LENGTH_SHORT).show()
+                    }
+                    //builder ditutup
+                    mydialog.cancel()
+                }
+
 
 
 
