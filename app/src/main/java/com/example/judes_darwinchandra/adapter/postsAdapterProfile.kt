@@ -35,7 +35,8 @@ class postsAdapterProfile(val numberOfRecyclerView_profile: ArrayList<String>): 
                     itemView.context.startActivity(intent)
                 }
                 if (position==3){
-                    Toast.makeText(itemView.context, "taruh notif promosi disini", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(itemView.context, invitefriends::class.java)
+                    itemView.context.startActivity(intent)
 
 
                 }
@@ -71,8 +72,8 @@ class postsAdapterProfile(val numberOfRecyclerView_profile: ArrayList<String>): 
                 true
             }
             3 -> {
-                holder.ic_listview.setImageResource(R.drawable.ic_recommendation)
-                holder.list_name.setText("Get Recommendation")
+                holder.ic_listview.setImageResource(R.drawable.icons8_invite_24)
+                holder.list_name.setText("Invite Friends")
                 true
             }
         }

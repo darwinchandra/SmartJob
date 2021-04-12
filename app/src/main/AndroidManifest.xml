@@ -16,11 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewsActivity"></activity>
-        <!-- receiver untuk wifi yang telah dibuat -->
-        <receiver android:name=".MyReceiver"
+        <activity android:name=".invitefriends"></activity>
+        <activity android:name=".NewsActivity" /> <!-- receiver untuk wifi yang telah dibuat -->
+        <receiver
+            android:name=".MyReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
         <receiver
             android:name=".MyWifiStateReceiver"
             android:enabled="true"
