@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_invitefriends.*
 class invitefriends : AppCompatActivity(),
     LoaderManager.LoaderCallbacks<Cursor>
 {
-    var DisplayName = ContactsContract.Contacts.DISPLAY_NAME
+    var DisplayName = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
     var Number = ContactsContract.CommonDataKinds.Phone.NUMBER
     var myListContact : MutableList<myContact> = ArrayList()
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
