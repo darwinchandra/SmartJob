@@ -2,11 +2,12 @@ package com.example.judes_darwinchandra
 
 import android.database.Cursor
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.WindowManager
+import android.widget.SearchView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
@@ -14,7 +15,6 @@ import androidx.loader.content.Loader
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.judes_darwinchandra.Data.myContact
 import com.example.judes_darwinchandra.adapter.postsAdapterInvite
-import kotlinx.android.synthetic.main.activity_bookmarked.*
 import kotlinx.android.synthetic.main.activity_invitefriends.*
 
 class invitefriends : AppCompatActivity(),
@@ -35,16 +35,39 @@ class invitefriends : AppCompatActivity(),
         topAppBar_invitefriends.setNavigationOnClickListener {
             finish()
         }
+
+
         LoaderManager.getInstance(this).initLoader(1,null,this)
+        SearchViewfriends.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val bundle = Bundle()
+                bundle.putString("select", "$DisplayName LIKE ?")
+                bundle.putStringArray("selectArg",Array(1){"%$newText%"})/*
+                LoaderManager.getInstance(this@invitefriends).initLoader(1,bundle,this@invitefriends)*/
+                LoaderManager.getInstance(this@invitefriends).restartLoader(1,bundle,this@invitefriends)
+                return false
+            }
+
+        } )
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
+
         var MyContactUri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
         var MyProjection = arrayOf(DisplayName,Number)
-        return CursorLoader(this,MyContactUri,MyProjection,null,null,"$DisplayName ASC" )
+        var selection = args?.getString("select")
+        var selectionArgs = args?.getStringArray("selectArg")
+        return CursorLoader(this,MyContactUri,MyProjection,selection,selectionArgs,"$DisplayName ASC" )
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
+
+
+
         myListContact.clear()
         if(data != null){
             data.moveToFirst()
@@ -62,6 +85,8 @@ class invitefriends : AppCompatActivity(),
                 layoutManager = LinearLayoutManager(this@invitefriends)
                 adapter=contactAdapter
             }
+
+
         }
     }
 

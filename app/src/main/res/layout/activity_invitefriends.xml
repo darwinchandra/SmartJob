@@ -24,7 +24,7 @@
                 style="@style/Widget.App.Toolbar"/>
         </com.google.android.material.appbar.AppBarLayout>
     <SearchView
-        android:id="@+id/friends"
+        android:id="@+id/SearchViewfriends"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="Contact Friends"/>
