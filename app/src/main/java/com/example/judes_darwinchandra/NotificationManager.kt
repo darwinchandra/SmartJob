@@ -17,7 +17,7 @@ class NotificationManager {
     var dataChannel1 = arrayOf("Filter Spesialis","Ubah Nama","Chat Backup","Download")
     var dataChannel2 = arrayOf("Change Password","Forgot Password")
     var dataChannel3 = arrayOf("Message Notification")
-    var dataChannel4 = arrayOf("Get Recomendation")
+    var dataChannel4 = arrayOf("Reminder")
 
     // membuat fungsi create notifgroup dengan parameter notificationmanager dari masing masing activity nantinya
     fun createNotificationGroups(notificationManager : NotificationManager) {

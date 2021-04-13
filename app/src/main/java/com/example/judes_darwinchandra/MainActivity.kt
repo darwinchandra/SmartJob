@@ -2,6 +2,7 @@ package com.example.judes_darwinchandra
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
@@ -11,16 +12,20 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Patterns
 import android.view.View
 import android.view.WindowManager
 import android.widget.RemoteViews
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 
 class MainActivity : AppCompatActivity() {
@@ -47,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(android.util.Patterns.EMAIL_ADDRESS.matcher(inputEmail.text.toString()).matches()){
+                if(Patterns.EMAIL_ADDRESS.matcher(inputEmail.text.toString()).matches()){
                     valid[0]=1
                     cekvalid(valid)
                 }
@@ -84,26 +89,16 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-
-
-
-
-        // buat notif disini
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val notifmanage = NotificationManager()
-        notifmanage.createNotificationGroups(notificationManager!!)
-        notifmanage.createNotificationChannels(notificationManager!!)
-
-
-
-
-
-
         floating_action_button.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             startActivity(intent)
         }
-
+        doAsync {
+            Thread.sleep(10000L)
+            uiThread{
+                showNotifReminder()
+            }
+        }
 
 
 
@@ -172,5 +167,46 @@ class MainActivity : AppCompatActivity() {
                 // Hide the nav bar and status bar
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN)
+    }
+
+
+
+
+    private fun showNotifReminder(){
+
+
+
+
+        //notif manager getsystem notif service
+        var notificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE)
+                as NotificationManager
+
+        //class baru untuk create notif
+        val notifmanage = NotificationManager()
+        notifmanage.createNotificationGroups(notificationManager!!)
+        notifmanage.createNotificationChannels(notificationManager!!)
+
+
+        val notifyBookmarkIntent = Intent(this, BookmarkedActivity::class.java)
+            .apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK }
+
+        val myPendingIntent = PendingIntent.getActivity(this,0,
+            notifyBookmarkIntent,
+            PendingIntent.FLAG_CANCEL_CURRENT);
+
+
+        var myNotification = NotificationCompat.Builder(this,"Reminder_Promosi")
+            // title notif
+            .setContentTitle("Bookmarked Loker")
+            //isi notif
+            .setContentText("Yuk cek kembali Loker yang sudah di bookmark kamu")
+            // group notif
+            .setGroup("Promosi")
+            //icon notif
+            .setSmallIcon(R.drawable.ic_baseline_bookmark_24)
+            .setContentIntent(myPendingIntent)
+
+        notificationManager?.notify(100,myNotification.build())
     }
 }

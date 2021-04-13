@@ -18,7 +18,7 @@ class MyReceiver : BroadcastReceiver() {
         Log.w("Diana", "Diana")
         //inisialisasi notify , channel , name sama importance
         val Notifyid = 30103
-        val Channel_id = "my_channel_01"
+        val Channel_id = "Get Recomendation_Promosi"
         val name = "ON/OFF"
         // importance high agar notifikasi keluar
         val importance = NotificationManager.IMPORTANCE_HIGH
@@ -32,7 +32,7 @@ class MyReceiver : BroadcastReceiver() {
                 //mengambil gambar
             .setSmallIcon(R.drawable.interview)
                 //menentukan isi teks dari extra pesan
-            .setContentText("Ada Interview sedang berlangsung. jangan sampai ketinggalan")
+            .setContentText("Ada Interview sedang berlangsung. Jangan sampai ketinggalan ya")
                 //menentukan judul
             .setContentTitle("Interview")
                 //menentukan priotasnya

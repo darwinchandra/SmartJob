@@ -38,7 +38,10 @@
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <activity android:name=".BookmarkedActivity" />
+        <activity android:name=".BookmarkedActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity=""/>
         <activity android:name=".ManageProfilActivity" />
         <activity android:name=".DetailPekerjaanActivity" />
         <activity android:name=".FilterActivity" />

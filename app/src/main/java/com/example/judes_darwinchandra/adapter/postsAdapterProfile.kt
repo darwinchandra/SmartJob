@@ -57,7 +57,8 @@ class postsAdapterProfile(val numberOfRecyclerView_profile: ArrayList<String>): 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (position){
             0 -> {
-
+                holder.ic_listview.setImageResource(R.drawable.ic_baseline_settings_24)
+                holder.list_name.setText("Settings")
                 true
             }
             1 -> {
