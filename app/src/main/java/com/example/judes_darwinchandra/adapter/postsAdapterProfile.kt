@@ -38,7 +38,6 @@ class postsAdapterProfile(val numberOfRecyclerView_profile: ArrayList<String>): 
                     val intent = Intent(itemView.context, invitefriends::class.java)
                     itemView.context.startActivity(intent)
 
-
                 }
             }
         }
