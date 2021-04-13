@@ -46,8 +46,7 @@ class invitefriends : AppCompatActivity(),
             override fun onQueryTextChange(newText: String?): Boolean {
                 val bundle = Bundle()
                 bundle.putString("select", "$DisplayName LIKE ?")
-                bundle.putStringArray("selectArg",Array(1){"%$newText%"})/*
-                LoaderManager.getInstance(this@invitefriends).initLoader(1,bundle,this@invitefriends)*/
+                bundle.putStringArray("selectArg",Array(1){"%$newText%"})
                 LoaderManager.getInstance(this@invitefriends).restartLoader(1,bundle,this@invitefriends)
                 return false
             }
