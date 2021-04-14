@@ -11,9 +11,12 @@ import com.example.judes_darwinchandra.R
 import kotlinx.android.synthetic.main.layout_recy_view.view.*
 
 
+//membuat data class yg terdiri context dan mutablelist mycontact dan mengambil isi holder ke recycleview
 class postsAdapterInvite (private val context : Context , private val contact : MutableList<myContact>): RecyclerView.Adapter<myHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myHolder {
+        //mengembalikan hasil holder
         return myHolder(
+            //mengambil layout dari parent dan mengisinya dengan layout dari recycle view
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.layout_recy_view, parent,false)
         )
