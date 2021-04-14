@@ -31,7 +31,7 @@ class postsAdapterInvite (private val context : Context , private val contact : 
         }
         // jika kosong maka diisi dengan gambar yang sudah diberikan
         else{
-            holder.contactImage.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.icons8_customer_24))
+            holder.contactImage.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.profilepic))
         }
     }
     override fun getItemCount(): Int = contact.size
