@@ -22,7 +22,7 @@ class invitefriends : AppCompatActivity(),
 {
     var DisplayName = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
     var Number = ContactsContract.CommonDataKinds.Phone.NUMBER
-    var ImageProfile = ContactsContract.CommonDataKinds.Photo.PHOTO_URI
+    var ImageProfile= ContactsContract.CommonDataKinds.Phone.PHOTO_URI
     var myListContact : MutableList<myContact> = ArrayList()
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,32 +39,50 @@ class invitefriends : AppCompatActivity(),
 
 
         LoaderManager.getInstance(this).initLoader(1,null,this)
+
+
+        // Untuk menghandle perubahan dan submit dari Searchview
         SearchViewfriends.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            // yang dilakukan saat submit
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
-
+            // saaat isi text dari searchview berubah
             override fun onQueryTextChange(newText: String?): Boolean {
+                // membuat bundle untuk dikirimkan
+                // kemudian masukkan data selection dan selectionArgs ke dalam bundle yang akan dipakai nantinya dalam proses onCreateLoader
+                // SelctionArgs memakai string yang diinput ketika text change
                 val bundle = Bundle()
                 bundle.putString("select", "$DisplayName LIKE ?")
                 bundle.putStringArray("selectArg",Array(1){"%$newText%"})
+                // restartLoader untuk meload ulang loadernya tiap ada perubahan pada searchview .
+                // tapi kali ini sudah ada bundle yang dikirim untuk data selection dan SelectionArgs
+                // guna untuk filter contact yang akan di tampilkan
                 LoaderManager.getInstance(this@invitefriends).restartLoader(1,bundle,this@invitefriends)
                 return false
             }
 
         } )
     }
-
+        //
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-
+        //
         var MyContactUri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-        var MyProjection = arrayOf(DisplayName,Number,ImageProfile)
+        //
+            var MyProjection = arrayOf(DisplayName,Number,ImageProfile)
+
+
+            //selection dan selectionArgs yang dikirim dari
         var selection = args?.getString("select")
         var selectionArgs = args?.getStringArray("selectArg")
+        //
         return CursorLoader(this,MyContactUri,MyProjection,selection,selectionArgs,"$DisplayName ASC" )
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
+
+
+
         myListContact.clear()
         if(data != null){
             data.moveToFirst()
