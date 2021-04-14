@@ -26,6 +26,7 @@ class invitefriends : AppCompatActivity(),
     //menentukan attribute yang perlu diambil pada CursorLoader
     var DisplayName = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
     var Number = ContactsContract.CommonDataKinds.Phone.NUMBER
+
     //myListContact Untuk memasukkan contact kedalam Mutable list
     var myListContact : MutableList<myContact> = ArrayList()
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
