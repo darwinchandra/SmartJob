@@ -22,6 +22,7 @@ class invitefriends : AppCompatActivity(),
 {
     var DisplayName = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
     var Number = ContactsContract.CommonDataKinds.Phone.NUMBER
+    var ImageProfile = ContactsContract.CommonDataKinds.Photo.PHOTO_URI
     var myListContact : MutableList<myContact> = ArrayList()
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,16 +58,13 @@ class invitefriends : AppCompatActivity(),
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
 
         var MyContactUri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-        var MyProjection = arrayOf(DisplayName,Number)
+        var MyProjection = arrayOf(DisplayName,Number,ImageProfile)
         var selection = args?.getString("select")
         var selectionArgs = args?.getStringArray("selectArg")
         return CursorLoader(this,MyContactUri,MyProjection,selection,selectionArgs,"$DisplayName ASC" )
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
-
-
-
         myListContact.clear()
         if(data != null){
             data.moveToFirst()
@@ -79,7 +77,7 @@ class invitefriends : AppCompatActivity(),
                 )
                 data.moveToNext()
             }
-            var contactAdapter = postsAdapterInvite(myListContact)
+            var contactAdapter = postsAdapterInvite(this,myListContact)
             recyInvFriend.apply {
                 layoutManager = LinearLayoutManager(this@invitefriends)
                 adapter=contactAdapter
