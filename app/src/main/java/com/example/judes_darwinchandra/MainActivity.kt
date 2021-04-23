@@ -93,6 +93,8 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, NewsActivity::class.java)
             startActivity(intent)
         }
+        // notifikasi reminder bookmarked dijalankan setelah 10000mili detik setelah aplikasi dijalankan
+        // doAsync diletakkan pada oncreate
         doAsync {
             Thread.sleep(10000L)
             uiThread{
@@ -174,28 +176,30 @@ class MainActivity : AppCompatActivity() {
 
     private fun showNotifReminder(){
 
-
-
-
         //notif manager getsystem notif service
         var notificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE)
                 as NotificationManager
 
-        //class baru untuk create notif
+        //class baru untuk create notif. class "NotificationManager" telah dibuat pada class tersendiri pertemuan sebelumnya
+        // sehingga dapat di akses pada tiap activity
         val notifmanage = NotificationManager()
+        // create group dan channelnya
         notifmanage.createNotificationGroups(notificationManager!!)
         notifmanage.createNotificationChannels(notificationManager!!)
 
-
+        // membuat intent untuk mengarahkan ke bookmark activity
         val notifyBookmarkIntent = Intent(this, BookmarkedActivity::class.java)
             .apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK }
 
+        // membuat pending intent guna untuk memberikan intent content pada notifikiasi nantinya
+        // pending intent ii berisi intent yang sebelumnya telah kita buat yaitu  notifyBookmarkIntent
         val myPendingIntent = PendingIntent.getActivity(this,0,
             notifyBookmarkIntent,
             PendingIntent.FLAG_CANCEL_CURRENT);
 
-
+        // pembuatan variable notifikiasi yang dan diisi ContentIntentnya menjadi myPendingIntent
+        // untuk menghandle ketika diclick ada intent yang akan di triger dan mengarahkannya kepada bookmarkedactivity
         var myNotification = NotificationCompat.Builder(this,"Reminder_Promosi")
             // title notif
             .setContentTitle("Bookmarked Loker")
@@ -206,7 +210,7 @@ class MainActivity : AppCompatActivity() {
             //icon notif
             .setSmallIcon(R.drawable.ic_baseline_bookmark_24)
             .setContentIntent(myPendingIntent)
-
+        // build var notif yang telah dbuat dengan id 100
         notificationManager?.notify(100,myNotification.build())
     }
 }

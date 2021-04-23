@@ -35,16 +35,18 @@ class BookmarkedActivity : AppCompatActivity() {
             finish()
         }
 
-
+        // init array list untuk tampung data
         val list=ArrayList<MyBookmarkedData>()
 
+        // add 3 data kedalam beserta img url
         list.add(MyBookmarkedData("Finance Manager","PT. Indah Kiat Pulp & Paper","Kerawang - Jawa Barat","https://ceowatermandate.org/wp-content/uploads/2021/01/indah-kiat-logo.jpg"))
         list.add(MyBookmarkedData("CEO","PT. Bukit Asam Tbk","Setia Budi - Jakarta Selatan","http://dewara.com/wp-content/uploads/2018/03/logo-bukit_asam.png"))
         list.add(MyBookmarkedData("IT Support","PT. Aneka Tambang Tbk","Medan - Sumatera Utara","https://www.dreamcareerbuilder.com/uploads/employers/5754_ECLB.png"))
 
 
-
+        // layout manager untuk recycler
         recyclerView_bookmarked.layoutManager= LinearLayoutManager(recyclerView_bookmarked.context, OrientationHelper.VERTICAL,false)
+        // memangil adapter dengan parameter list yang sudah di isi 3 data
         recyclerView_bookmarked.adapter=
             postsAdapterBookmark(
                 list
