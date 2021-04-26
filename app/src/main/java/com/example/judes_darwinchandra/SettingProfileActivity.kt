@@ -25,10 +25,11 @@ class SettingProfileActivity : AppCompatActivity() {
         topAppBar_settings.setNavigationOnClickListener {
             finish()
         }
+        button13.setOnClickListener {
+            val intent = Intent(this, ChangePasswordActivity::class.java)
+            startActivity(intent)
+        }
     }
 
-    fun gotoforgotpassprofile(view: View) {
-        val intent = Intent(this, ChangePasswordActivity::class.java)
-        startActivity(intent)
-    }
+
 }

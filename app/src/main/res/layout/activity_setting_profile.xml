@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
+    android:id="@+id/setting"
     tools:context=".SettingProfileActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

@@ -153,7 +153,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/goto_regis_btn"
-                    android:layout_alignParentRight="true"
+
+
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="80dp"
                     android:background="#00000000"

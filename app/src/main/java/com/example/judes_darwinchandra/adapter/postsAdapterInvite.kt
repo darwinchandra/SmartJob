@@ -27,7 +27,7 @@ class postsAdapterInvite (private val context : Context , private val contact : 
         holder.contactName.setText(contact[position].nama)
         //holder number mengambil nomor dari contact
         holder.contactNumber.setText(contact[position].nomorHp)
-        //  diisi dengan gambar yang sudah diberikan
+        //diisi dengan gambar yang sudah diberikan
         holder.contactImage.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.profilepic))
 
     }
