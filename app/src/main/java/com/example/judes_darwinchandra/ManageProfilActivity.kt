@@ -93,6 +93,10 @@ class ManageProfilActivity : AppCompatActivity() {
         setContentView(R.layout.activity_manage_profil)
         supportActionBar?.hide()
 
+        imagePencil3.setOnClickListener{
+            getCustomDialog()
+        }
+
         //notifikasi bekerja sebagai service sehingg dapat di jalankan walaupun aplikasi dalam keadaan tertutup
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
         val notifmanage = NotificationManager()
@@ -189,7 +193,7 @@ class ManageProfilActivity : AppCompatActivity() {
         textViewnama.text = savedInstanceState?.getString(EXTRA_STATUS) ?: "Kosong"
     }
 //membuat function onclick getcustomdialog agar bisa menampilkan custom dialog saat tombol pencil disebelah nama ditekan
-    fun getCustomDialog(view: View) {
+    fun getCustomDialog() {
         var Mylayout = layoutInflater.inflate(R.layout.my_custom_dialog,null)
         val mydialogbuilder : AlertDialog.Builder = AlertDialog.Builder(this).apply {
             setView(Mylayout)
