@@ -11,6 +11,8 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
+import com.example.judes_darwinchandra.ManageProfilActivity.Companion.buildToastMessage
+import kotlinx.android.synthetic.main.my_custom_dialog.view.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,7 +33,7 @@ class DialogTest {
         Espresso.onView(ViewMatchers.withId(R.id.imagePencil3)).perform(ViewActions.click())
 
         //memasukkan input untuk mengetes
-        Espresso.onView(withId(R.id.nama)).perform(typeText("EXPECTED_NAME"))
+        Espresso.onView(withId(R.id.nama)).perform(typeText("SmartJob"))
         Espresso.onView(ViewMatchers.withId(R.id.ok)).perform(ViewActions.click())
         //memastikan dialog telah selesai
         Espresso.onView(ViewMatchers.withText(R.string.text_enter_name)).check(doesNotExist())
