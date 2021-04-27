@@ -18,14 +18,14 @@ class NewsTest {
     var activityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Test
-    fun test_gotosecond() {
+    fun GoToNews() {
         Espresso.onView(withId(R.id.floating_action_button)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.newsactivity))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
-    fun testback() {
+    fun BackFromNews() {
         Espresso.onView(withId(R.id.floating_action_button)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.newsactivity))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
