@@ -1,0 +1,41 @@
+package com.example.judes_darwinchandra
+
+import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.typeText
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.ActivityTestRule
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+
+@RunWith(AndroidJUnit4::class)
+class DialogTest {
+    @Rule
+    @JvmField
+    //val activityScenario = ActivityScenario.launch(BerandaActivity::class.java)
+    var activityTestRule =ActivityTestRule(BerandaActivity::class.java)
+    @Test
+    fun test_dialog() {
+        Espresso.onView(withId(R.id.profile_page)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.profile)).check(matches(isDisplayed()))
+        Espresso.onView(withId(R.id.btn_manage_profil)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.manageprofileact)).check(matches(isDisplayed()))
+
+        Espresso.onView(ViewMatchers.withId(R.id.imagePencil3)).perform(ViewActions.click())
+
+        //memasukkan input untuk mengetes
+        Espresso.onView(withId(R.id.nama)).perform(typeText("EXPECTED_NAME"))
+        Espresso.onView(ViewMatchers.withId(R.id.ok)).perform(ViewActions.click())
+        //memastikan dialog telah selesai
+        Espresso.onView(ViewMatchers.withText(R.string.text_enter_name)).check(doesNotExist())
+    }
+
+
+}

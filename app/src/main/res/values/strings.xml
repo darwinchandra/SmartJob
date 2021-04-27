@@ -8,4 +8,6 @@
         <item>Bookmark</item>
         <item>Help</item>
     </string-array>
+
+    <string name="text_enter_name"></string>
 </resources>
