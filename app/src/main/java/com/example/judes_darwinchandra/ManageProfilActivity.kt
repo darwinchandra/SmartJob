@@ -1,5 +1,6 @@
 package com.example.judes_darwinchandra
 
+import android.app.Activity
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -11,6 +12,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -21,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_manage_profil.*
 import kotlinx.android.synthetic.main.my_custom_dialog.*
 import java.io.IOException
@@ -32,6 +35,7 @@ private const val EXTRA_STATUS = "EXTRA_STATUS"
 var mPendingIntent: PendingIntent? = null
 var sendIntent: Intent? = null
 var mAlarmManager: AlarmManager? = null
+private val TAG: String = "AppDebug"
 class ManageProfilActivity : AppCompatActivity() {
     //Inisialisasi notification manager
     var notificationManager : android.app.NotificationManager? = null
@@ -167,9 +171,62 @@ class ManageProfilActivity : AppCompatActivity() {
         topAppBar_ManageProfil.setNavigationOnClickListener {
             finish()
         }
+        imageProfile.setOnClickListener{
+            pickFromGallery()
+        }
+        camera.setOnClickListener{
+            dispatchCameraIntent()
+        }
+
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK){
+            Log.d(TAG, "RESULT_OK")
+
+            when(requestCode){
+
+                GALLERY_REQUEST_CODE -> {
+                    Log.d(TAG, "GALLERY_REQUEST_CODE detected.")
+                    data?.data?.let { uri ->
+                        Log.d(TAG, "URI: $uri")
+                        Glide.with(this)
+                            .load(uri)
+                            .into(imageProfile)
+                    }
+                }
+            }
+        }
+        else{
+            Log.d(TAG, "RESULT_OK")
+            when(requestCode){
+
+                REQUEST_IMAGE_CAPTURE -> {
+                    Log.d(TAG, "REQUEST_IMAGE_CAPTURE detected.")
+                    data?.extras.let{ extras ->
+                        if (extras == null || !extras.containsKey(KEY_IMAGE_DATA)) {
+                            return
+                        }
+                        val imageBitmap = extras[KEY_IMAGE_DATA] as Bitmap?
+                        imageProfile.setImageBitmap(imageBitmap)
+                    }
+                }
+            }
+        }
 
     }
 
+
+
+
+    private fun dispatchCameraIntent() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+    }
+    private fun pickFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, GALLERY_REQUEST_CODE)
+    }
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     //untuk mengunregisterReceiver supaya tidak memakan banyak memori
     override fun onDestroy() {

@@ -24,6 +24,7 @@ import org.hamcrest.core.AllOf.allOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
 @RunWith(AndroidJUnit4::class)
 class ImageProfileTest {
 
@@ -51,7 +52,7 @@ class ImageProfileTest {
             onView(withId(R.id.imageProfile)).perform(click())
             intended(expectedIntent)
         }
-
+        @Test
         private fun createGalleryPickActivityResultStub(): Instrumentation.ActivityResult {
             val resources: Resources = InstrumentationRegistry.getInstrumentation().context.resources
             val imageUri = Uri.parse(
