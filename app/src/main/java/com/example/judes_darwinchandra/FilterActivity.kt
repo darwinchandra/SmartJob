@@ -24,8 +24,8 @@ import kotlinx.android.synthetic.main.activity_forgot_password.*
 import kotlinx.android.synthetic.main.activity_filter.spinner
 
 class FilterActivity : AppCompatActivity() {
-    //membuat array yang akan dimasukkan ke spinner
-    var dataSpinner = arrayOf("Accounting" , "Desain Grafis" , "Front End", "Back End","IT Support", "Teknisi")
+
+
     //init notifikasi managernya
     var notificationManager: NotificationManager? = null
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -51,9 +51,18 @@ class FilterActivity : AppCompatActivity() {
             }
         }
         //gunakan arrayadapter untuk menampung isi array data spinner diatas
-        val myAdapter= ArrayAdapter(this,android.R.layout.simple_spinner_item,dataSpinner)
+        val myAdapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.label_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner.adapter = adapter
+        }
         //adapter ini membuat dropdown view yang isinya dari dataspinner
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
         //masukkan adapter ke spinner
         spinner!!.setAdapter(myAdapter)
         //notifikasi manager getsystem notif service untuk mendapatkan notifikasi

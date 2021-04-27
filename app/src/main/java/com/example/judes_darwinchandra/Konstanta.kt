@@ -15,3 +15,4 @@ const val NOTIFICATION_PROMOSI=4444
 const val EXTRA_NEWS= "EXTRA_NEWS"
 const val ACTION_NEWS="BroadcastAction.LIST_NEWS_RECEIVED"
 
+const val KEY_IMAGE_DATA = "data"
