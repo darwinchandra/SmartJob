@@ -26,7 +26,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class ImageProfileTest {
+
 
     class ImageProfileTest {
         @get:Rule
@@ -52,7 +52,7 @@ class ImageProfileTest {
             onView(withId(R.id.imageProfile)).perform(click())
             intended(expectedIntent)
         }
-        @Test
+
         private fun createGalleryPickActivityResultStub(): Instrumentation.ActivityResult {
             val resources: Resources = InstrumentationRegistry.getInstrumentation().context.resources
             val imageUri = Uri.parse(
@@ -66,4 +66,3 @@ class ImageProfileTest {
             return Instrumentation.ActivityResult(RESULT_OK, resultIntent)
         }
     }
-}

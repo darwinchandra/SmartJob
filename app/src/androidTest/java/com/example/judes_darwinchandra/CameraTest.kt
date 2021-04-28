@@ -47,7 +47,7 @@ import org.junit.runner.RunWith
             intending(expectedIntent).respondWith(activityResult)
 
             // Execute and Verify
-            onView(withId(R.id.imageProfile)).check(matches(not(hasDrawable())))
+            onView(withId(R.id.imageProfile)).check(matches(hasDrawable()))
             onView(withId(R.id.camera)).perform(click())
             intended(expectedIntent)
             onView(withId(R.id.imageProfile)).check(matches(hasDrawable()))

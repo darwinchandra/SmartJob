@@ -7,7 +7,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.containsString
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -32,13 +33,9 @@ class SpinnerTest {
             // Find the spinner and click on it.
             onView(withId(R.id.spinner)).perform(click())
             // Find the spinner item and click on it.
-            onData(
-                allOf(
-                    `is`(instanceOf(FilterActivity::class.java)),
-                    `is`("Accounting")
-                )
-            ).perform(click())
-            onView(withId(R.id.spinner)).check(matches(withSpinnerText(containsString("Accounting"))))
+            onData(`is`(myArray[i])).perform(click())
+
+            onView(withId(R.id.spec)).check(matches(withText(containsString(myArray[i]))))
 
             // Find the Submit button and click on it.
 //            onView(withId(R.id.spinner)).perform(click())
