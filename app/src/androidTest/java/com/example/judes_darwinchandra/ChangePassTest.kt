@@ -57,7 +57,7 @@ class ChangePassTest {
         // Find the spinner item and click on it.
         onView(withId(R.id.confirmpass)).perform(typeText("wkwkwa"))
 
-        onView(withId(R.id.newpass)).check((matches(withId(R.id.confirmpass))))
+        onView(withId(R.id.btn_ConfirmChangePass)).perform(click())
         onView(withText(ChangePasswordActivity.buildToastMessagePassWrong())).inRoot(ToastMatcher()).check(
             matches(isDisplayed()))
 
