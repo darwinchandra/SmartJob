@@ -23,7 +23,7 @@ import androidx.core.view.iterator
 import com.example.judes_darwinchandra.adapter.postsAdapterInterview
 import kotlinx.android.synthetic.main.activity_filter.*
 import kotlinx.android.synthetic.main.activity_forgot_password.*
-import kotlinx.android.synthetic.main.activity_filter.spinner
+import kotlinx.android.synthetic.main.activity_filter.spinnerSpecial
 
 class FilterActivity : AppCompatActivity() {
 
@@ -61,8 +61,8 @@ class FilterActivity : AppCompatActivity() {
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
-            spinner.adapter = adapter
-            spinner.onItemSelectedListener = object :
+            spinnerSpecial.adapter = adapter
+            spinnerSpecial.onItemSelectedListener = object :
 
                 AdapterView.OnItemSelectedListener{
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -70,7 +70,7 @@ class FilterActivity : AppCompatActivity() {
                 }
 
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    spec.text = spinner.getItemAtPosition(p2).toString()
+                    spec.text = spinnerSpecial.getItemAtPosition(p2).toString()
                 }
 
             }
@@ -78,7 +78,7 @@ class FilterActivity : AppCompatActivity() {
         //adapter ini membuat dropdown view yang isinya dari dataspinner
 
         //masukkan adapter ke spinner
-        spinner!!.setAdapter(myAdapter)
+        spinnerSpecial!!.setAdapter(myAdapter)
         //notifikasi manager getsystem notif service untuk mendapatkan notifikasi
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)as NotificationManager
         //membuat variabel baru untuk mengcreate notif
@@ -104,7 +104,7 @@ class FilterActivity : AppCompatActivity() {
                     //membuat title
                 .setContentTitle("Filter Applied")
                     //membuat isi text
-                .setContentText("Pekerjaan yang anda inginkan " + spinner.selectedItem.toString())
+                .setContentText("Pekerjaan yang anda inginkan " + spinnerSpecial.selectedItem.toString())
                     //berada digrup umum
                 .setGroup("Umum")
                     //membuat icon

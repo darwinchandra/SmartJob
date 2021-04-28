@@ -22,20 +22,19 @@ class SpinnerTest {
 
     @Test
     fun test_spinner(){
-        onView(withId(R.id.spinner)).perform(click())
 
-        var myArray: Array<String> = activityTestRule.getActivity().getResources()
+        var myArray = activityTestRule.getActivity().getResources()
             .getStringArray(R.array.label_array)
 
         // Iterate through the spinner array of items.
         val size = myArray.size
         for (i in 0 until size) {
             // Find the spinner and click on it.
-            onView(withId(R.id.spinner)).perform(click())
+            onView(withId(R.id.spinnerSpecial)).perform(click())
             // Find the spinner item and click on it.
             onData(`is`(myArray[i])).perform(click())
 
-            onView(withId(R.id.spec)).check(matches(withText(containsString(myArray[i]))))
+            onView(withId(R.id.spec)).check(matches(withText(myArray[i])))
 
             // Find the Submit button and click on it.
 //            onView(withId(R.id.spinner)).perform(click())
