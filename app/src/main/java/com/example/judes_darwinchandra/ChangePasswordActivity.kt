@@ -90,7 +90,21 @@ class ChangePasswordActivity : AppCompatActivity() {
     fun ChangePassConfirm(view: View) {
 
 
-        Toast.makeText(this, "Check your email to confirm it's you", Toast.LENGTH_SHORT).show()
+        showToast(buildToastMessagePass(newpass.text.toString()))
         finish()
     }
+    private fun showToast(message:String){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+    companion object{
+        fun buildToastMessagePass(name:String):String{
+            return "Please confirm by Email"
+        }
+        fun buildToastMessagePassWrong(name:String):String{
+            return "Confirmpassword must be same with New Password"
+        }
+    }
+
+
+
 }

@@ -11,7 +11,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class ToatTest {
+class ToastTest {
     @Rule
     @JvmField
     //val activityScenario = ActivityScenario.launch(BerandaActivity::class.java)
