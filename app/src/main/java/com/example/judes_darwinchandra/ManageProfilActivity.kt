@@ -262,6 +262,7 @@ class ManageProfilActivity : AppCompatActivity() {
         Btnok.setOnClickListener {
             textViewnama.text=nama.text
             mydialog.cancel()
+            //Menampilkan Toast
             showToast(buildToastMessage(nama.text.toString()))
         }
 
@@ -278,10 +279,13 @@ class ManageProfilActivity : AppCompatActivity() {
             null
         }
     }
+    //Fungsi Show Toast untuk menampilkan toast ketika btn ok diklik
     private fun showToast(message:String){
+        //membuat Toast
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
     companion object{
+        //fungsi untuk membuat message dari Toast
         fun buildToastMessage(name:String):String{
             return "Nama Anda Adalah $name"
         }
