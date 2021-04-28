@@ -21,18 +21,28 @@ class ManageProfileTest {
     var activityTestRule =ActivityTestRule(BerandaActivity::class.java)
     @Test
     fun test_gotomanageprofile(){
+        //click icon nav bagian bawah terlebih dahulu untuk menuju ke profile fragment
         onView(withId(R.id.profile_page)).perform(click())
+        //check profile page sudah display
         onView(withId(R.id.profile)).check(matches(isDisplayed()))
+        //click tombol manage profile
         onView(withId(R.id.btn_manage_profil)).perform(click())
+        //click check apakaah berhasil di tampilkan
         onView(withId(R.id.manageprofileact)).check(matches(isDisplayed()))
     }
     @Test
     fun testback_manageprofile(){
+        //click icon nav bagian bawah terlebih dahulu untuk menuju ke profile fragment
         onView(withId(R.id.profile_page)).perform(click())
+        //check profile page sudah display
         onView(withId(R.id.profile)).check(matches(isDisplayed()))
+        //click tombol manage profile
         onView(withId(R.id.btn_manage_profil)).perform(click())
+        //click check apakaah berhasil di tampilkan
         onView(withId(R.id.manageprofileact)).check(matches(isDisplayed()))
+        //ketika backpress
         pressBack()
+        //cek apaakh kembali ke berandaactivity
         onView(withId(R.id.berandamain)).check(matches(isDisplayed()))
     }
 }

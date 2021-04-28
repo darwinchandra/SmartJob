@@ -53,13 +53,12 @@ dependencies {
     androidTestImplementation'androidx.test:runner:1.1.0'
     androidTestImplementation'androidx.test:rules:1.1.0'
     androidTestImplementation'androidx.test.espresso:espresso-intents:3.1.0'
-
+    testImplementation 'org.mockito:mockito-core:2.28.2'
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
     implementation 'com.afollestad.material-dialogs:input:3.3.0'
-
     def glide_version = "4.9.0"
     implementation "com.github.bumptech.glide:glide:$glide_version"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
-    testImplementation 'org.mockito:mockito-core:2.28.2'
+
 }

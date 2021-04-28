@@ -15,6 +15,7 @@ import com.example.judes_darwinchandra.adapter.postsAdapterBookmark
 import com.example.judes_darwinchandra.presenter.BookmarkedPresenter
 import kotlinx.android.synthetic.main.activity_bookmarked.*
 
+//implementasi interface DataView
 class BookmarkedActivity : AppCompatActivity(),bookmarkInterface.DataView {
 
     private var presenter : bookmarkInterface.Presenter? =null
@@ -22,7 +23,7 @@ class BookmarkedActivity : AppCompatActivity(),bookmarkInterface.DataView {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bookmarked)
+        setContentView(R.layout.activity_bookmarked) // view
         supportActionBar?.hide()
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -32,7 +33,10 @@ class BookmarkedActivity : AppCompatActivity(),bookmarkInterface.DataView {
             finish()
         }
 
+
+        // inisialisasi presenter dengan view BookmarkedActivity
         presenter=BookmarkedPresenter(this)
+        // fungsi initview
         initView()
 
 

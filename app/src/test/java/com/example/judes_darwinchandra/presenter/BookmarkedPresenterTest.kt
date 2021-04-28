@@ -22,7 +22,7 @@ class BookmarkedPresenterTest {
         //pengambilan size dari array recycler yang telah dibuat
         var size= listBookmarkedtesting.size.toDouble()
         // pengujian banyak data yang ada pada arraylist tersebut
-        assertEquals(3.0,size,00.1)
+        assertEquals(3.0,size,0.1)
 
     }
 }
