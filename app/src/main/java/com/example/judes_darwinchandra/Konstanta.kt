@@ -15,3 +15,6 @@ const val NOTIFICATION_PROMOSI=4444
 const val EXTRA_NEWS= "EXTRA_NEWS"
 const val ACTION_NEWS="BroadcastAction.LIST_NEWS_RECEIVED"
 
+const val KEY_IMAGE_DATA = "data"
+const val GALLERY_REQUEST_CODE = 1111
+const val REQUEST_IMAGE_CAPTURE = 2222

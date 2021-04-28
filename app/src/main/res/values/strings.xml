@@ -8,4 +8,17 @@
         <item>Bookmark</item>
         <item>Help</item>
     </string-array>
+
+    <string name="text_enter_name"></string>
+
+    <string-array name="label_array">
+        <item>Accounting</item>
+        <item>Desain Grafis</item>
+        <item>Front End</item>
+        <item>Back End</item>
+        <item>IT Support</item>
+        <item>Teknisi</item>
+    </string-array>
+    <string name="nothing_entered">Nothing entered.</string>
+    <string name="nothing_selected">"onNothingSelected: "</string>
 </resources>

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -19,13 +20,14 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.core.view.iterator
+import com.example.judes_darwinchandra.adapter.postsAdapterInterview
 import kotlinx.android.synthetic.main.activity_filter.*
 import kotlinx.android.synthetic.main.activity_forgot_password.*
-import kotlinx.android.synthetic.main.activity_filter.spinner
+import kotlinx.android.synthetic.main.activity_filter.spinnerSpecial
 
 class FilterActivity : AppCompatActivity() {
-    //membuat array yang akan dimasukkan ke spinner
-    var dataSpinner = arrayOf("Accounting" , "Desain Grafis" , "Front End", "Back End","IT Support", "Teknisi")
+
+
     //init notifikasi managernya
     var notificationManager: NotificationManager? = null
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -51,11 +53,32 @@ class FilterActivity : AppCompatActivity() {
             }
         }
         //gunakan arrayadapter untuk menampung isi array data spinner diatas
-        val myAdapter= ArrayAdapter(this,android.R.layout.simple_spinner_item,dataSpinner)
+        val myAdapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.label_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinnerSpecial.adapter = adapter
+            spinnerSpecial.onItemSelectedListener = object :
+
+                AdapterView.OnItemSelectedListener{
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    spec.text = spinnerSpecial.getItemAtPosition(p2).toString()
+                }
+
+            }
+        }
         //adapter ini membuat dropdown view yang isinya dari dataspinner
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
         //masukkan adapter ke spinner
-        spinner!!.setAdapter(myAdapter)
+        spinnerSpecial!!.setAdapter(myAdapter)
         //notifikasi manager getsystem notif service untuk mendapatkan notifikasi
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)as NotificationManager
         //membuat variabel baru untuk mengcreate notif
@@ -81,7 +104,7 @@ class FilterActivity : AppCompatActivity() {
                     //membuat title
                 .setContentTitle("Filter Applied")
                     //membuat isi text
-                .setContentText("Pekerjaan yang anda inginkan " + spinner.selectedItem.toString())
+                .setContentText("Pekerjaan yang anda inginkan " + spinnerSpecial.selectedItem.toString())
                     //berada digrup umum
                 .setGroup("Umum")
                     //membuat icon
