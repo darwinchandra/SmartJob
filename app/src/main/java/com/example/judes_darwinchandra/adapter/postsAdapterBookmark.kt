@@ -1,24 +1,17 @@
 package com.example.judes_darwinchandra.adapter
 
-import android.content.Intent
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.judes_darwinchandra.BookmarkedActivity
-import com.example.judes_darwinchandra.Data.MyBookmarkedData
-import com.example.judes_darwinchandra.DetailPekerjaanActivity
+import com.example.judes_darwinchandra.model.MyBookmarkedModel
 import com.example.judes_darwinchandra.R
-import com.example.judes_darwinchandra.VideoCallActivity
 import com.squareup.picasso.Picasso
-import org.w3c.dom.Text
+
 // pembuatran adapter  recyclerview yang akan dipakai pada bookmarkedActivity nantinya dengan parameter Arraylist
-class postsAdapterBookmark(val list: ArrayList<MyBookmarkedData>): RecyclerView.Adapter<postsAdapterBookmark.ViewHolder>() {
+class postsAdapterBookmark(val list: ArrayList<MyBookmarkedModel>): RecyclerView.Adapter<postsAdapterBookmark.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         // init val agar holder dapat mengakses item berikut untuk diubah nantinya
         val img=itemView.findViewById<ImageView>(R.id.icon_perusahaan_bookmark)
@@ -40,9 +33,9 @@ class postsAdapterBookmark(val list: ArrayList<MyBookmarkedData>): RecyclerView.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // merubah isi dari posisi, nama , lokasi , dan image dengan isi dari list yang dikirim sebagai parameter adapter nntinya
-        holder.posisi.setText(list.get(position).posisi.toString())
-        holder.nama.setText(list.get(position).namaPerusahaan.toString())
-        holder.lokasi.setText(list.get(position).lokasiPerusahaan.toString())
+        holder.posisi.setText(list.get(position).posisi)
+        holder.nama.setText(list.get(position).namaPerusahaan)
+        holder.lokasi.setText(list.get(position).lokasiPerusahaan)
         Picasso.get().load(list.get(position).imgurl).into(holder.img)
 
     }

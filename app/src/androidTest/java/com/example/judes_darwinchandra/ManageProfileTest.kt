@@ -34,6 +34,5 @@ class ManageProfileTest {
         onView(withId(R.id.manageprofileact)).check(matches(isDisplayed()))
         pressBack()
         onView(withId(R.id.berandamain)).check(matches(isDisplayed()))
-
     }
 }
