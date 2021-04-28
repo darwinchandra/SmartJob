@@ -30,7 +30,11 @@ class ChangePassTest {
 
     @Test
     fun test_changepassword(){
-
+        Espresso.onView(ViewMatchers.withId(R.id.passchanged)).check(
+            ViewAssertions.matches(
+                ViewMatchers.isDisplayed()
+            )
+        )
         // Find the spinner and click on it.
         onView(withId(R.id.newpass)).perform(typeText("wkwka"))
         // Find the spinner item and click on it.
@@ -49,12 +53,12 @@ class ChangePassTest {
     @Test
     fun test_changepasswordwrong(){
         // Find the spinner and click on it.
-        onView(withId(R.id.newpass)).perform(typeText("wkwkssssa"))
+        onView(withId(R.id.newpass)).perform(typeText("wkwkswa"))
         // Find the spinner item and click on it.
         onView(withId(R.id.confirmpass)).perform(typeText("wkwkwa"))
 
         onView(withId(R.id.newpass)).check((matches(withId(R.id.confirmpass))))
-        onView(withText(ChangePasswordActivity.buildToastMessagePassWrong("Confirmpassword must be same with New Password"))).inRoot(ToastMatcher()).check(
+        onView(withText(ChangePasswordActivity.buildToastMessagePassWrong())).inRoot(ToastMatcher()).check(
             matches(isDisplayed()))
 
     }

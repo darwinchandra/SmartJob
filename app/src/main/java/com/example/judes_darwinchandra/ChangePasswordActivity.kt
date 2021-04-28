@@ -48,7 +48,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
         btn_ConfirmChangePass.setOnClickListener {
             if (newpass.text.toString()==confirmpass.text.toString()){
-                Toast.makeText(this, "Check Your email to confirm", Toast.LENGTH_SHORT).show()
+                showToast(buildToastMessagePass("darwinch@gmail.com"))
                 // init channelid
                 var channel_id =""
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -81,8 +81,8 @@ class ChangePasswordActivity : AppCompatActivity() {
                     myNotification.build())
 
             }
-            else{
-                Toast.makeText(this, "Confirmpassword must be same with New Password", Toast.LENGTH_SHORT).show()
+            else if(newpass.text.toString()!=confirmpass.text.toString()){
+                showToast(buildToastMessagePassWrong())
             }
 
         }
@@ -101,7 +101,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         fun buildToastMessagePass(name:String):String{
             return "Please confirm by $name"
         }
-        fun buildToastMessagePassWrong(name:String):String{
+        fun buildToastMessagePassWrong():String{
             return "Confirmpassword must be same with New Password"
         }
     }
