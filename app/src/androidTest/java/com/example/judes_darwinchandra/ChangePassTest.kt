@@ -21,14 +21,16 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import kotlinx.android.synthetic.main.fragment_forgotpassconfirm.*
 import kotlinx.android.synthetic.main.fragment_forgotpass.*
-
+//@RunWith menunjukkan runner yang akan digunakan untuk menjalankan pengujian dalam kelas
 @RunWith(AndroidJUnit4::class)
 class ChangePassTest {
-    @Rule
-    @JvmField
+    //@Rule membuat konteks untuk kode pengujian
+    @Rule @JvmField
     var activityTestRule = ActivityTestRule(ChangePasswordActivity::class.java)
-
+    //Metode pengujian dimulai dengan anotasi @Test dan berisi kode untuk dijalankan dan memverifikasi satu fungsi dalam
+    //komponen yang ingin di uji
     @Test
+    //fungsi untuk menguji ketika password diganti dan benar
     fun test_changepassword(){
         Espresso.onView(ViewMatchers.withId(R.id.passchanged)).check(
             ViewAssertions.matches(
@@ -50,7 +52,10 @@ class ChangePassTest {
             matches(isDisplayed()))
 
     }
+    //Metode pengujian dimulai dengan anotasi @Test dan berisi kode untuk dijalankan dan memverifikasi satu fungsi dalam
+    //komponen yang ingin di uji
     @Test
+    //fungsi untuk menguji ketika password diganti dan benar
     fun test_changepasswordwrong(){
         // Find the spinner and click on it.
         onView(withId(R.id.newpass)).perform(typeText("wkwkswa"))
