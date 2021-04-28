@@ -28,7 +28,7 @@ class ToastTest {
         Espresso.onView(ViewMatchers.withId(R.id.profile)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         //perform untuk menklik btn manage profile
         Espresso.onView(ViewMatchers.withId(R.id.btn_manage_profil)).perform(ViewActions.click())*/
-        //untuk mengecek apakah sudah sesuai
+        //untuk mengecek apakah activity yang dituju sudah sesuai
         Espresso.onView(ViewMatchers.withId(R.id.manageprofileact)).check(
             ViewAssertions.matches(
                 ViewMatchers.isDisplayed()

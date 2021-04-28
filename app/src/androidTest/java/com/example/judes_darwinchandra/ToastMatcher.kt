@@ -1,7 +1,6 @@
 package com.example.judes_darwinchandra
 
 import android.os.IBinder
-
 import android.view.WindowManager
 import androidx.test.espresso.Root
 import org.hamcrest.Description
@@ -25,5 +24,4 @@ class ToastMatcher : TypeSafeMatcher<Root?>() {
         }
         return false
     }
-
 }
