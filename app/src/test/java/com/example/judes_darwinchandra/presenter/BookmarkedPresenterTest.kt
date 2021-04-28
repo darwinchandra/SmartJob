@@ -1,5 +1,6 @@
 package com.example.judes_darwinchandra.presenter
 
+import com.example.judes_darwinchandra.Data.BookmarkedData
 import com.example.judes_darwinchandra.`interface`.bookmarkInterface
 import com.example.judes_darwinchandra.model.MyBookmarkedModel
 import org.junit.Test
@@ -16,7 +17,9 @@ class BookmarkedPresenterTest {
 
     @Test
     fun getData() {
-        var listmodel=presenter.getData()
+        var listBookmarkedtesting=presenter.prosesadddata()
+        var size= listBookmarkedtesting.size.toDouble()
+        assertEquals(3.0,size,00.1)
 
     }
 }

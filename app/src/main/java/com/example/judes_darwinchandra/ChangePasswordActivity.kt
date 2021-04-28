@@ -47,37 +47,43 @@ class ChangePasswordActivity : AppCompatActivity() {
         notifmanage.createNotificationChannels(notificationManager!!)
 
         btn_ConfirmChangePass.setOnClickListener {
-
-            // init channelid
-            var channel_id =""
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                channel_id = notificationManager!!.getNotificationChannel("Change Password_Email"
-                ).id
-            }
-            //membuat notifikasi
-            var myNotification = NotificationCompat.Builder(this,channel_id)
+            if (newpass.text.toString()==confirmpass.text.toString()){
+                Toast.makeText(this, "Check Your email to confirm", Toast.LENGTH_SHORT).show()
+                // init channelid
+                var channel_id =""
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    channel_id = notificationManager!!.getNotificationChannel("Change Password_Email"
+                    ).id
+                }
+                //membuat notifikasi
+                var myNotification = NotificationCompat.Builder(this,channel_id)
                     // title notif
-                .setContentTitle("Confirmation Request")
+                    .setContentTitle("Confirmation Request")
                     //isi notif
-                .setContentText("Click To Check Your Mail Inbox")
+                    .setContentText("Click To Check Your Mail Inbox")
                     // group notif
-                .setGroup("Email")
+                    .setGroup("Email")
                     //icon notif
-                .setSmallIcon(R.drawable.ic_baseline_mail_24)
+                    .setSmallIcon(R.drawable.ic_baseline_mail_24)
 
-            //Membentuk Aksi Intent UNTUK membuka inbox email
-            val notifyIntent = Intent(Intent.ACTION_MAIN)
-            notifyIntent.addCategory(Intent.CATEGORY_APP_EMAIL)
-            val notifyPandingIntent = PendingIntent.getActivities(
-                this, NOTIFICATION_EMAIL,
-                arrayOf(notifyIntent),
-                PendingIntent.FLAG_UPDATE_CURRENT)
-            myNotification.setContentIntent(notifyPandingIntent)
+                //Membentuk Aksi Intent UNTUK membuka inbox email
+                val notifyIntent = Intent(Intent.ACTION_MAIN)
+                notifyIntent.addCategory(Intent.CATEGORY_APP_EMAIL)
+                val notifyPandingIntent = PendingIntent.getActivities(
+                    this, NOTIFICATION_EMAIL,
+                    arrayOf(notifyIntent),
+                    PendingIntent.FLAG_UPDATE_CURRENT)
+                myNotification.setContentIntent(notifyPandingIntent)
 
-            // memunculkan notifikasi dengan id konstanta NOTIFICATION_EMAIL
-            notificationManager?.notify(
-                NOTIFICATION_EMAIL,
-                myNotification.build())
+                // memunculkan notifikasi dengan id konstanta NOTIFICATION_EMAIL
+                notificationManager?.notify(
+                    NOTIFICATION_EMAIL,
+                    myNotification.build())
+
+            }
+            else{
+                Toast.makeText(this, "Confirmpassword must be same with New Password", Toast.LENGTH_SHORT).show()
+            }
 
         }
     }
@@ -87,12 +93,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun ChangePassConfirm(view: View) {
 
-
-        showToast(buildToastMessagePass(newpass.text.toString()))
-        finish()
-    }
     private fun showToast(message:String){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

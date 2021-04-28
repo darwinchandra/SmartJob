@@ -35,13 +35,13 @@ class ChangePassTest {
         onView(withId(R.id.newpass)).perform(typeText("wkwka"))
         // Find the spinner item and click on it.
         onView(withId(R.id.confirmpass)).perform(typeText("wkwka"))
-
-        Espresso.onView(ViewMatchers.withText(R.id.newpass)).check(ViewAssertions.doesNotExist())
+        onView(withId(R.id.btn_ConfirmChangePass)).perform(click())
+//        onView(ViewMatchers.withText(R.id.NewPass)).check(ViewAssertions.doesNotExist())
 //        onView(withId(R.id.newpass)).check(matches(withText(R.id.confirmpass)))
 
-        onView(withText(R.id.newpass)).check((matches(withText(R.id.confirmpass))))
-//        onView(withId(R.id.confirmpass)).check((matches(withText("wkwka"))))
+//        onView(withText(R.id.NewPass)).check((matches(withText(R.id.NewPassConfirm))))
 
+//        onView(withId(R.id.confirmpass)).check((matches(withText("wkwka"))))
         onView(withText(ChangePasswordActivity.buildToastMessagePass("darwinch@gmail.com"))).inRoot(ToastMatcher()).check(
             matches(isDisplayed()))
 
