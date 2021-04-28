@@ -19,21 +19,26 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DialogTest {
+    //@Rule membuat konteks untuk kode pengujian
     @Rule
     @JvmField
-    //val activityScenario = ActivityScenario.launch(BerandaActivity::class.java)
+    //ActivityTestRule menyediakan pengujian fungsional Aktivitas (MainActivity::class)
     var activityTestRule =ActivityTestRule(BerandaActivity::class.java)
+    //Metode pengujian dimulai dengan anotasi @Test dan berisi kode untuk dijalankan dan memverifikasi satu fungsi dalam
+    //komponen yang ingin di uji
     @Test
+    //fungsi untuk menguji dari profile page kemudian masuk kedalam manage profile dan mengklik btn manage profile
     fun test_dialog() {
         Espresso.onView(withId(R.id.profile_page)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.profile)).check(matches(isDisplayed()))
         Espresso.onView(withId(R.id.btn_manage_profil)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.manageprofileact)).check(matches(isDisplayed()))
-
+        //klik tulisan pencil untuk memunculkan kotak dialog
         Espresso.onView(ViewMatchers.withId(R.id.imagePencil3)).perform(ViewActions.click())
 
         //memasukkan input untuk mengetes
         Espresso.onView(withId(R.id.nama)).perform(typeText("SmartJob"))
+        //perform untuk mengklik button ok
         Espresso.onView(ViewMatchers.withId(R.id.ok)).perform(ViewActions.click())
         //memastikan dialog telah selesai
         Espresso.onView(ViewMatchers.withText(R.string.text_enter_name)).check(doesNotExist())
