@@ -17,8 +17,11 @@ class BookmarkedPresenterTest {
 
     @Test
     fun getData() {
+        //membuat var dengan memanfaatkan  fungsi prosesadddata agar var tersebut memiliki nilai dari arraylist
         var listBookmarkedtesting=presenter.prosesadddata()
+        //pengambilan size dari array recycler yang telah dibuat
         var size= listBookmarkedtesting.size.toDouble()
+        // pengujian banyak data yang ada pada arraylist tersebut
         assertEquals(3.0,size,00.1)
 
     }

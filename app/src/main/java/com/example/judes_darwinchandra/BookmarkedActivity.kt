@@ -73,13 +73,16 @@ class BookmarkedActivity : AppCompatActivity(),bookmarkInterface.DataView {
 
     @SuppressLint("WrongConstant")
     private fun initView() {
+        // pemanggilan getdata() sehingga nilai "value" pada setdataBookmarktoView telah berisi data
+        // yang diberikan pada presenter
         presenter!!.getData()
         // layout manager untuk recycler
         recyclerView_bookmarked.layoutManager= LinearLayoutManager(recyclerView_bookmarked.context, OrientationHelper.VERTICAL,false)
 
     }
-
+    // overide yang muncul karena implement Interface ViewData
     override fun setdataBookmarktoView(value: ArrayList<MyBookmarkedModel>) {
+        //membuat adapter recyclerview dengan arraylist value
         recyclerView_bookmarked.adapter=
             postsAdapterBookmark(
                 value

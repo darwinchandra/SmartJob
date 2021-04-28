@@ -16,18 +16,18 @@ class ToastTest {
     @Rule
     @JvmField
     //ActivityTestRule menyediakan pengujian fungsional Aktivitas (MainActivity::class)
-    var activityTestRule =ActivityTestRule(BerandaActivity::class.java)
+    var activityTestRule =ActivityTestRule(ManageProfilActivity::class.java)
     //Metode pengujian dimulai dengan anotasi @Test dan berisi kode untuk dijalankan dan memverifikasi satu fungsi dalam
     //komponen yang ingin di uji
     @Test
     //fungsi untuk menguji
     fun test_dialog() {
-        //perform untuk mengklik profle page
+        /*//perform untuk mengklik profle page
         Espresso.onView(ViewMatchers.withId(R.id.profile_page)).perform(ViewActions.click())
         //untuk mengecek apakah kesamaan
         Espresso.onView(ViewMatchers.withId(R.id.profile)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         //perform untuk menklik btn manage profile
-        Espresso.onView(ViewMatchers.withId(R.id.btn_manage_profil)).perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withId(R.id.btn_manage_profil)).perform(ViewActions.click())*/
         //untuk mengecek apakah sudah sesuai
         Espresso.onView(ViewMatchers.withId(R.id.manageprofileact)).check(
             ViewAssertions.matches(
