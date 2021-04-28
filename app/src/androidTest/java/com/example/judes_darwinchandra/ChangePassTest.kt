@@ -7,7 +7,9 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
@@ -28,15 +30,19 @@ class ChangePassTest {
 
     @Test
     fun test_changepassword(){
+
         // Find the spinner and click on it.
         onView(withId(R.id.newpass)).perform(typeText("wkwka"))
         // Find the spinner item and click on it.
         onView(withId(R.id.confirmpass)).perform(typeText("wkwka"))
 
-        onView(withId(R.id.newpass)).check((matches(withText("wkwka"))))
-        onView(withId(R.id.confirmpass)).check((matches(withText("wkwka"))))
+        Espresso.onView(ViewMatchers.withText(R.id.newpass)).check(ViewAssertions.doesNotExist())
+//        onView(withId(R.id.newpass)).check(matches(withText(R.id.confirmpass)))
 
-        onView(withText(ChangePasswordActivity.buildToastMessagePass("Please Confirm by Email"))).inRoot(ToastMatcher()).check(
+        onView(withText(R.id.newpass)).check((matches(withText(R.id.confirmpass))))
+//        onView(withId(R.id.confirmpass)).check((matches(withText("wkwka"))))
+
+        onView(withText(ChangePasswordActivity.buildToastMessagePass("darwinch@gmail.com"))).inRoot(ToastMatcher()).check(
             matches(isDisplayed()))
 
     }

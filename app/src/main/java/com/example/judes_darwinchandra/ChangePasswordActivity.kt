@@ -98,7 +98,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     }
     companion object{
         fun buildToastMessagePass(name:String):String{
-            return "Please confirm by Email"
+            return "Please confirm by $name"
         }
         fun buildToastMessagePassWrong(name:String):String{
             return "Confirmpassword must be same with New Password"
