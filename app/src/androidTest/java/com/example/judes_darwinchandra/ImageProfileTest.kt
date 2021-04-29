@@ -29,16 +29,21 @@ import org.junit.runner.RunWith
 
 
     class ImageProfileTest {
+        //@Rule membuat konteks untuk kode pengujian
         @get:Rule
+        //ActivityTestRule menyediakan pengujian fungsional Aktivitas (BerandaActivity::class)
         val intentsTestRule = IntentsTestRule(BerandaActivity::class.java)
-
-
-
+        //Metode pengujian dimulai dengan anotasi @Test dan berisi kode untuk dijalankan dan memverifikasi satu fungsi dalam
+        //komponen yang ingin di uji
         @Test
         fun  test_validateIntentSentToPickPackage() {
+            //perform klik untuk masuk ke profile page
             onView(withId(R.id.profile_page)).perform(click())
+            //mencocokkan profile page dengan id dari activity tersebut
             onView(withId(R.id.profile)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            //perform klik pada btn manage profile
             onView(withId(R.id.btn_manage_profil)).perform(click())
+            //mencocokkan activity dengan id pada activity manage profile
             onView(withId(R.id.manageprofileact)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
             // memberikan aksi untuk mengambil gambar dan mencocoknya
             val expectedIntent: Matcher<Intent> = allOf(
@@ -49,12 +54,12 @@ import org.junit.runner.RunWith
             val activityResult = createGalleryPickActivityResultStub()
             intending(expectedIntent).respondWith(activityResult)
 
-            // Execute and Verify
+            // Mengeksekusi dan mengverify
             onView(withId(R.id.imageProfile)).perform(click())
             intended(expectedIntent)
         }
-
-        private fun createGalleryPickActivityResultStub(): Instrumentation.ActivityResult {
+    //
+    private fun createGalleryPickActivityResultStub(): Instrumentation.ActivityResult {
             val resources: Resources = InstrumentationRegistry.getInstrumentation().context.resources
             val imageUri = Uri.parse(
                 ContentResolver.SCHEME_ANDROID_RESOURCE)
