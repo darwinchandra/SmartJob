@@ -75,6 +75,34 @@ class FilterActivity : AppCompatActivity() {
 
             }
         }
+
+
+            buttonNtF.setOnClickListener{
+                buttonNtF.setBackgroundColor(Color.YELLOW)
+                buttonCost.setBackgroundColor(Color.WHITE)
+                buttonAss.setBackgroundColor(Color.WHITE)
+            textView26.text = "Nearest"
+            }
+
+
+
+            buttonCost.setOnClickListener{
+        buttonCost.setBackgroundColor(Color.YELLOW)
+        buttonNtF.setBackgroundColor(Color.WHITE)
+        buttonAss.setBackgroundColor(Color.WHITE)
+            textView26.text = "Low To High"
+        }
+
+
+
+            buttonAss.setOnClickListener{
+            textView26.text = "Alphabetic"
+                buttonAss.setBackgroundColor(Color.YELLOW)
+                buttonNtF.setBackgroundColor(Color.WHITE)
+                buttonCost.setBackgroundColor(Color.WHITE)
+        }
+
+
         //adapter ini membuat dropdown view yang isinya dari dataspinner
 
         //masukkan adapter ke spinner

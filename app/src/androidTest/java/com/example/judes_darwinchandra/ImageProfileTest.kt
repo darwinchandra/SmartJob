@@ -40,11 +40,12 @@ import org.junit.runner.RunWith
             onView(withId(R.id.profile)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
             onView(withId(R.id.btn_manage_profil)).perform(click())
             onView(withId(R.id.manageprofileact)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
-            // GIVEN
+            // memberikan aksi untuk mengambil gambar dan mencocoknya
             val expectedIntent: Matcher<Intent> = allOf(
                 hasAction(Intent.ACTION_PICK),
                 hasData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             )
+            // intending direspon dengan activityresult
             val activityResult = createGalleryPickActivityResultStub()
             intending(expectedIntent).respondWith(activityResult)
 
@@ -56,11 +57,7 @@ import org.junit.runner.RunWith
         private fun createGalleryPickActivityResultStub(): Instrumentation.ActivityResult {
             val resources: Resources = InstrumentationRegistry.getInstrumentation().context.resources
             val imageUri = Uri.parse(
-                ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
-                        resources.getResourcePackageName(R.drawable.ic_launcher_background) + '/' +
-                        resources.getResourceTypeName(R.drawable.ic_launcher_background) + '/' +
-                        resources.getResourceEntryName(R.drawable.ic_launcher_background)
-            )
+                ContentResolver.SCHEME_ANDROID_RESOURCE)
             val resultIntent = Intent()
             resultIntent.setData(imageUri)
             return Instrumentation.ActivityResult(RESULT_OK, resultIntent)
