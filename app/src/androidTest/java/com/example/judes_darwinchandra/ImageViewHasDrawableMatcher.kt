@@ -7,7 +7,7 @@ import org.hamcrest.Description
 
 
 object ImageViewHasDrawableMatcher {
-
+    //Fungsi untuk mengecek gambar yang sudah ada dan gambar yang kosong pada image profile
     fun hasDrawable(): BoundedMatcher<View, ImageView> {
         return object: BoundedMatcher<View, ImageView>(ImageView::class.java){
 

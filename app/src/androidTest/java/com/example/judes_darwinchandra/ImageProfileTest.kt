@@ -58,9 +58,11 @@ import org.junit.runner.RunWith
             onView(withId(R.id.imageProfile)).perform(click())
             intended(expectedIntent)
         }
-    //
+    //Fungsi untuk mengambil resource dari gallery kita
     private fun createGalleryPickActivityResultStub(): Instrumentation.ActivityResult {
+            //resource yang kita ambil
             val resources: Resources = InstrumentationRegistry.getInstrumentation().context.resources
+            //uri dari image
             val imageUri = Uri.parse(
                 ContentResolver.SCHEME_ANDROID_RESOURCE)
             val resultIntent = Intent()
