@@ -28,13 +28,16 @@ class RecoveryTest {
 
     @Test
     fun test_recovery(){
+        // click forgot untuk menuju ke fragpass
         Espresso.onView(withId(R.id.forgots)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.fragpass)).check(matches(isDisplayed()))
-            // Find the spinner and click on it.
+            // click di input email dan mengetiknya
             onView(withId(R.id.inputEmailFP1)).perform(typeText("darwinch@gmail.com"))
-            // Find the spinner item and click on it.
+            // mengclick tombol buttonya
             onView(withId(R.id.btnResetPass)).perform(click())
+            //mengecek apakah sudah sama textnya dengan text difragmentnya
             onView(withId(R.id.confirmtextfp)).check((matches(withText("We have sent a recovery link to darwinch@gmail.com"))))
+        // mengclick ok untuk keluar dari page
             onView(withId(R.id.btnOkresetpassconfirm)).perform(click())
     }
 }

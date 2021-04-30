@@ -34,35 +34,45 @@ import org.junit.runner.RunWith
 
         @Test
         fun  test_cameraIntent() {
+            // click profile page dan akan menuju profile page
             Espresso.onView(ViewMatchers.withId(R.id.profile_page)).perform(ViewActions.click())
+            // mengecek apakah display sudah betul
             Espresso.onView(ViewMatchers.withId(R.id.profile))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            // click manageprofil dan akan menuju manageprofil page
             Espresso.onView(ViewMatchers.withId(R.id.btn_manage_profil)).perform(ViewActions.click())
+            // mengecek apakah display sudah betul
             Espresso.onView(ViewMatchers.withId(R.id.manageprofileact))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
 
-            // GIVEN
+            // diberikan data yang diambil dari fungsi createimagecaptureactivityresultstub
             val activityResult = createImageCaptureActivityResultStub()
+            // mencocok dan memberikan aksi untuk mengambil foto
             val expectedIntent: Matcher<Intent> = hasAction(MediaStore.ACTION_IMAGE_CAPTURE)
             intending(expectedIntent).respondWith(activityResult)
 
-            // Execute and Verify
+            // mengeksekusi dan menverify apakah semua sudah betul
             onView(withId(R.id.imageProfile)).check(matches(hasDrawable()))
             onView(withId(R.id.camera)).perform(click())
             intended(expectedIntent)
             onView(withId(R.id.imageProfile)).check(matches(hasDrawable()))
         }
-
+        //membuat fungsi camera capture
         private fun createImageCaptureActivityResultStub(): Instrumentation.ActivityResult? {
+            //init bundle
             val bundle = Bundle()
+            // bundle diparceable utk diambil data dari drawable image
             bundle.putParcelable(
                 KEY_IMAGE_DATA, BitmapFactory.decodeResource(
                     intentsTestRule.getActivity().getResources(),
                     R.drawable.ic_launcher_background
                 )
             )
+            // init data dengan intent
             val resultData = Intent()
+            // result data berisikan bundle
             resultData.putExtras(bundle)
+            // dikembalikan activity jika sudah ok dan result datanya
             return Instrumentation.ActivityResult(Activity.RESULT_OK, resultData)
         }
     }

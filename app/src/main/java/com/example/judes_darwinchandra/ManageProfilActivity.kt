@@ -216,9 +216,6 @@ class ManageProfilActivity : AppCompatActivity() {
 
     }
 
-
-
-
     private fun dispatchCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);

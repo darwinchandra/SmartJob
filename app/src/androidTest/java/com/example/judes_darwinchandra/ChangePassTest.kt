@@ -32,22 +32,18 @@ class ChangePassTest {
     @Test
     //fungsi untuk menguji ketika password diganti dan benar
     fun test_changepassword(){
+        // mengecek pass yang diubah
         Espresso.onView(ViewMatchers.withId(R.id.passchanged)).check(
             ViewAssertions.matches(
                 ViewMatchers.isDisplayed()
             )
         )
-        // Find the spinner and click on it.
+        // temukan newpass utk di ketik
         onView(withId(R.id.newpass)).perform(typeText("wkwka"))
-        // Find the spinner item and click on it.
+        // temukan confirm pass utk di ketik
         onView(withId(R.id.confirmpass)).perform(typeText("wkwka"))
+        // click btn utk mengecek pass sama maka akan keluar toast berhasil
         onView(withId(R.id.btn_ConfirmChangePass)).perform(click())
-//        onView(ViewMatchers.withText(R.id.NewPass)).check(ViewAssertions.doesNotExist())
-//        onView(withId(R.id.newpass)).check(matches(withText(R.id.confirmpass)))
-
-//        onView(withText(R.id.NewPass)).check((matches(withText(R.id.NewPassConfirm))))
-
-//        onView(withId(R.id.confirmpass)).check((matches(withText("wkwka"))))
         onView(withText(ChangePasswordActivity.buildToastMessagePass("darwinch@gmail.com"))).inRoot(ToastMatcher()).check(
             matches(isDisplayed()))
 
@@ -57,11 +53,11 @@ class ChangePassTest {
     @Test
     //fungsi untuk menguji ketika password diganti dan benar
     fun test_changepasswordwrong(){
-        // Find the spinner and click on it.
+        // temukan newpass utk di ketik
         onView(withId(R.id.newpass)).perform(typeText("wkwkswa"))
-        // Find the spinner item and click on it.
+        // temukan confirm pass utk di ketik
         onView(withId(R.id.confirmpass)).perform(typeText("wkwkwa"))
-
+        // click btn utk mengecek tidak sama makan akan keluar toast gagal
         onView(withId(R.id.btn_ConfirmChangePass)).perform(click())
         onView(withText(ChangePasswordActivity.buildToastMessagePassWrong())).inRoot(ToastMatcher()).check(
             matches(isDisplayed()))

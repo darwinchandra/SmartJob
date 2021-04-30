@@ -23,25 +23,20 @@ class SpinnerTest {
     @Test
     fun test_spinner(){
 
+        // init myarray untuk mengambil data dari source lable array
         var myArray = activityTestRule.getActivity().getResources()
             .getStringArray(R.array.label_array)
 
-        // Iterate through the spinner array of items.
+        // menginit size berisikan array
         val size = myArray.size
+        // perulangan sampai array ke size
         for (i in 0 until size) {
-            // Find the spinner and click on it.
+            //temukan spinnernya dan klik
             onView(withId(R.id.spinnerSpecial)).perform(click())
-            // Find the spinner item and click on it.
+            // data klik 1 per 1 dikarenakan di dalam perulangan
             onData(`is`(myArray[i])).perform(click())
-
+            // mengecek apakah sudah betul text spec cocok dengan myarray
             onView(withId(R.id.spec)).check(matches(withText(myArray[i])))
-
-            // Find the Submit button and click on it.
-//            onView(withId(R.id.spinner)).perform(click())
-//            // Find the text view and check that the spinner item
-//            // is part of the string.
-//            onView(withId(R.id.spinner))
-//                .check(matches(withSpinnerText(containsString(myArray[i]))))
         }
     }
 }
