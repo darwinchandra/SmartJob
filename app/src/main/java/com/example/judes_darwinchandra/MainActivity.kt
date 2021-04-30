@@ -8,6 +8,8 @@ import android.app.job.JobScheduler
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
+import android.media.SoundPool
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -27,7 +29,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-
+private var sound : SoundPool? =null
+private var soundIDplayer= 1
 class MainActivity : AppCompatActivity() {
     var JobSchedulerId = 10
     var notificationManager : NotificationManager? = null
@@ -101,21 +104,45 @@ class MainActivity : AppCompatActivity() {
                 showNotifReminder()
             }
         }
-
-
-
-
-
-
-
-
-
     }
 
+    override fun onStart() {
+        super.onStart()
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            createNewSoundPool()
+        }
+        else{
+            createOldSoundPool()
+        }
+        sound?.setOnLoadCompleteListener{ SoundPool, sampleId, status ->
+            if(status!=0){
+                Toast.makeText(this,"Musik Gagal Dijalankan",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                Toast.makeText(this,"Musik Berhasil Dijalankan",Toast.LENGTH_SHORT).show()
+            }
+        }
+        soundIDplayer= sound?.load(this,R.raw.whosh,1)?: 0
+    }
 
+    private fun createOldSoundPool() {
+        sound = SoundPool(15,AudioManager.STREAM_MUSIC,0)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun createNewSoundPool() {
+        sound = SoundPool.Builder()
+            .setMaxStreams(15)
+            .build()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        sound?.release()
+        sound = null
+    }
 
     fun cekvalid(validasi:Array<Int>){
-
         if(validasi[0]==1 && validasi[1]==1){
             login_button.isEnabled=true
         }
@@ -126,7 +153,6 @@ class MainActivity : AppCompatActivity() {
     //Intent Eksplisit
     //fungsi untuk keluar kehalaman Registrasi
     fun gotoRegis(view: View) {
-
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
     }
@@ -135,15 +161,9 @@ class MainActivity : AppCompatActivity() {
     fun gotoBeranda(view: View) {
         val intent = Intent(this, BerandaActivity::class.java)
         startActivity(intent)
-
-
-
-
-
-
-
-
-
+        if(soundIDplayer != 0){
+            sound?.play(soundIDplayer, .99f, .99f,1,0,.99f)
+        }
     }
     //fungsi untuk keluar kehalaman Forgot Password
     fun forgotpass_login(view: View) {
@@ -175,7 +195,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun showNotifReminder(){
-
         //notif manager getsystem notif service
         var notificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE)
                 as NotificationManager
