@@ -31,6 +31,7 @@ import org.jetbrains.anko.uiThread
 
 private var sound : SoundPool? =null
 private var soundIDplayer= 1
+private var soundmain = 2
 class MainActivity : AppCompatActivity() {
     var JobSchedulerId = 10
     var notificationManager : NotificationManager? = null
@@ -43,7 +44,9 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this,R.color.black)
         setContentView(R.layout.activity_main)
 
-
+        if(soundmain != 0){
+            sound?.play(soundmain, .99f, .99f,1,0,.99f)
+        }
         //login button wrong ketika isinya kosong
         login_button.isEnabled=false
         var valid= arrayOf(0,0)
@@ -114,15 +117,8 @@ class MainActivity : AppCompatActivity() {
         else{
             createOldSoundPool()
         }
-        sound?.setOnLoadCompleteListener{ SoundPool, sampleId, status ->
-            if(status!=0){
-                Toast.makeText(this,"Musik Gagal Dijalankan",Toast.LENGTH_SHORT).show()
-            }
-            else{
-                Toast.makeText(this,"Musik Berhasil Dijalankan",Toast.LENGTH_SHORT).show()
-            }
-        }
-        soundIDplayer= sound?.load(this,R.raw.whosh,1)?: 0
+        soundIDplayer= sound?.load(this,R.raw.transitiontoberanda,1)?: 0
+        soundmain = sound?.load(this,R.raw.intromain,1)?:0
     }
 
     private fun createOldSoundPool() {
@@ -155,6 +151,7 @@ class MainActivity : AppCompatActivity() {
     fun gotoRegis(view: View) {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
+
     }
 
     //fungsi untuk keluar kehalaman Beranda
