@@ -28,8 +28,9 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-
+//variabel Sound Pool
 private var sound : SoundPool? =null
+//Untuk menangkap ID dari sound pool
 private var soundIDplayer= 1
 
 class MainActivity : AppCompatActivity() {
@@ -106,19 +107,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
+    //fungsi untuk menload sound pool
     override fun onStart() {
+        //membaca data
         super.onStart()
+        //untuk versi yang sudah diatas lolipop
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            //memanggil fungsi untuk membuat soundpool
             createNewSoundPool()
         }
+        //untuk versi lama
         else{
+            //memanggil fungsi untuk membuat soundpool
             createOldSoundPool()
         }
+        //Menload sound yang akan dipakai dan set prioritas
         soundIDplayer= sound?.load(this,R.raw.transitiontoberanda,1)?: 0
     }
 
     private fun createOldSoundPool() {
+        //untuk Membuat SoundPool dengan maxstream,type stream dan quality
         sound = SoundPool(15,AudioManager.STREAM_MUSIC,0)
     }
 
@@ -155,7 +163,9 @@ class MainActivity : AppCompatActivity() {
     fun gotoBeranda(view: View) {
         val intent = Intent(this, BerandaActivity::class.java)
         startActivity(intent)
+        //Cek jika id dari sound tidak sama dengan nol maka akan memainkan soundnya
         if(soundIDplayer != 0){
+            //memainkan sound dan Set sound kiri dan kanan, priority,apakah diulang atau tidak
             sound?.play(soundIDplayer, .99f, .99f,1,0,.99f)
         }
     }
