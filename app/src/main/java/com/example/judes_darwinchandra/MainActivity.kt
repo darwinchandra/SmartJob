@@ -28,6 +28,10 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+
+
+var sharePrefFileName="PrefEmail"
+
 //variabel Sound Pool
 private var sound : SoundPool? =null
 //Untuk menangkap ID dari sound pool
@@ -106,6 +110,12 @@ class MainActivity : AppCompatActivity() {
                 showNotifReminder()
             }
         }
+
+    }
+
+    private fun clearDataLogin() {
+        inputEmail.text?.clear()
+        inputPass.text?.clear()
     }
     //fungsi untuk menload sound pool
     override fun onStart() {
@@ -161,6 +171,15 @@ class MainActivity : AppCompatActivity() {
 
     //fungsi untuk keluar kehalaman Beranda
     fun gotoBeranda(view: View) {
+
+        var mySharedPref = SharePrefData(this, sharePrefFileName)
+
+        mySharedPref.email=inputEmail.text.toString()
+        clearDataLogin()
+
+
+
+
         val intent = Intent(this, BerandaActivity::class.java)
         startActivity(intent)
         //Cek jika id dari sound tidak sama dengan nol maka akan memainkan soundnya

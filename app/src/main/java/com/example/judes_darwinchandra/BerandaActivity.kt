@@ -4,19 +4,13 @@ import android.annotation.SuppressLint
 import android.content.IntentFilter
 import android.net.wifi.WifiManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.OrientationHelper
-import com.example.judes_darwinchandra.adapter.postsAdapter1
-import com.example.judes_darwinchandra.adapter.postsAdapter2
 import kotlinx.android.synthetic.main.activity_beranda.*
-import kotlinx.android.synthetic.main.fragment_beranda.*
 
 class BerandaActivity : AppCompatActivity() {
 
@@ -101,6 +95,11 @@ class BerandaActivity : AppCompatActivity() {
                 R.id.profile_page -> {
                     //membuat fragment yang akan menampung profile
                     profileFragment=ProfileFragment()
+                    val bundle = Bundle()
+                    val mySharedPref= SharePrefData(this, sharePrefFileName)
+                    val myMessage = mySharedPref.email
+                    bundle.putString("message", myMessage)
+                    profileFragment.arguments=bundle
                     supportFragmentManager
                         //ketika pas di klik akan terjadi transaksi dari beranda,message,jobs ke profile
                         .beginTransaction()

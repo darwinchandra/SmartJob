@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.contentValuesOf
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.judes_darwinchandra.adapter.postsAdapterChat
 import com.example.judes_darwinchandra.adapter.postsAdapterProfile
 import kotlinx.android.synthetic.main.fragment_profile.*
+import org.w3c.dom.Text
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,9 +51,13 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
         val recyclerView_profile: RecyclerView
         val view:View=inflater.inflate(R.layout.fragment_profile, container, false)
         recyclerView_profile=view.findViewById(R.id.recyclerView_profile)
+        val mail_profile=view.findViewById<TextView>(R.id.mail_profile)
+
 
         val numberOfRecyclerView_profile: ArrayList<String> = ArrayList()
         for (i in 1..4){
@@ -62,8 +68,8 @@ class ProfileFragment : Fragment() {
                 numberOfRecyclerView_profile
             )
         recyclerView_profile?.layoutManager= LinearLayoutManager(context, OrientationHelper.VERTICAL,false)
-
-
+        var myEmail= this.arguments?.getString("message")
+        mail_profile.text=myEmail.toString()
 
 
         // Inflate the layout for this fragment

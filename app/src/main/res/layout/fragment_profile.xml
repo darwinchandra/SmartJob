@@ -85,7 +85,7 @@
                 android:id="@+id/phone_number_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="+6287372738423"
+                android:text="Not Registered yet"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="12dp"
                 android:textSize="18dp"
