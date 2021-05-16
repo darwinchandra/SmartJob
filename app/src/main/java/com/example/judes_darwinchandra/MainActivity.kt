@@ -118,17 +118,66 @@ class MainActivity : AppCompatActivity() {
                 showNotifReminder()
             }
         }
+        exist.setOnClickListener{
+            if(isExternalStorageReadable()){
+            readFileExternal()
+            }
+        }
 
-//        exist.setOnClickListener{
-//            if(isExternalStorageReadable()){
-//            readFileExternal()
-//            }
-//        }
     }
 
-//    private fun readFileExternal() {
-//        TODO("Not yet implemented")
-//    }
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    private fun readFileExternal() {
+        var myLog = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.toURI())
+        inputEmail.text?.clear()
+        var readFile = ""
+        File(myLog,"ExistingUser").forEachLine { readFile+=1 }
+        isi.setText(readFile)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    private fun writeFileExternal() {
+        var myLog = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.toURI())
+        if(!myLog.exists()){
+            myLog.mkdir()
+        }
+     //disini errornya dan kan mau lgsg save difilenya
+//        File(myLog,"$ExistingUser").apply{ writeText(inputEmail.text.toString()}
+     inputEmail.text?.clear()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun isExternalStorageReadable(): Boolean {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 123)
+        }
+        var status = Environment.getExternalStorageState()
+        if(Environment.MEDIA_MOUNTED.equals(status) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(status)){
+            return true
+        }
+        return false
+    }
+    override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
+        )
+    {
+            when(requestCode){
+                123 ->{
+                    if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                        Toast.makeText(this,"Permission is Granted",Toast.LENGTH_SHORT).show()
+                    else{
+                        Toast.makeText(this,"Permission is Denied",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+    }
+
 
     private fun clearDataLogin() {
         inputEmail.text?.clear()
@@ -195,9 +244,7 @@ class MainActivity : AppCompatActivity() {
 
         mySharedPref.email = inputEmail.text.toString()
         clearDataLogin()
-//        if(isExternalStorageReadable()){
-//            writeFileExternal()
-//        }
+
 
         val intent = Intent(this, BerandaActivity::class.java)
         startActivity(intent)
@@ -208,57 +255,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
-//    private fun writeFileExternal() {
-//        var myLog = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.toURI())
-//        if(!myLog.exists()){
-//            myLog.mkdir()
-//        }
-    // disini errornya wa blm buat siap soalnya
-//        File(myLog,"$ExistingUser")
-//    }
-
-//    @RequiresApi(Build.VERSION_CODES.M)
-//    private fun isExternalStorageReadable(): Boolean {
-//        if (ContextCompat.checkSelfPermission(
-//                this,
-//                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 123)
-//        }
-//        var status = Environment.getExternalStorageState()
-//        if(Environment.MEDIA_MOUNTED.equals(status) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(status)){
-//            return true
-//        }
-//        return false
-//    }
-//    override fun onRequestPermissionsResult(
-//            requestCode: Int,
-//            permissions: Array<out String>,
-//            grantResults: IntArray
-//        )
-//    {
-//            when(requestCode){
-//                123 ->{
-//                    if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-//                        Toast.makeText(this,"Permission is Granted",Toast.LENGTH_SHORT).show()
-//                    else{
-//                        Toast.makeText(this,"Permission is Denied",Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//            }
-//    }
-
-
-
-
     //fungsi untuk keluar kehalaman Forgot Password
     fun forgotpass_login(view: View) {
         val intent=Intent(this,ForgotPasswordActivity::class.java)
         startActivity(intent)
     }
-
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
@@ -278,9 +279,6 @@ class MainActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
-
-
-
 
     private fun showNotifReminder(){
         //notif manager getsystem notif service
