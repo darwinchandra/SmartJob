@@ -3,21 +3,23 @@
     package="com.example.judes_darwinchandra">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET" />
-<!--    untuk dapat membaca/mengambil contact dari hp kita-->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- untuk dapat membaca/mengambil contact dari hp kita -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <uses-feature android:name="android.hardware.camera" /> <!-- penambahan permission agar aplikasi dapat mengakses wifi state -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    ...
-    <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
     <uses-feature android:name="android.hardware.location.gps" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,7 +27,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".invitefriends"></activity>
+        <activity android:name=".ExistingUser"></activity>
+        <activity android:name=".invitefriends" />
         <activity android:name=".NewsActivity" /> <!-- receiver untuk wifi yang telah dibuat -->
         <receiver
             android:name=".MyReceiver"
@@ -46,10 +49,11 @@
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <activity android:name=".BookmarkedActivity"
+        <activity
+            android:name=".BookmarkedActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
-            android:taskAffinity=""/>
+            android:taskAffinity="" />
         <activity android:name=".ManageProfilActivity" />
         <activity android:name=".DetailPekerjaanActivity" />
         <activity android:name=".FilterActivity" />

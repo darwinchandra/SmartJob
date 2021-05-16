@@ -1,5 +1,7 @@
 package com.example.judes_darwinchandra
 
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -8,10 +10,12 @@ import android.app.job.JobScheduler
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.media.SoundPool
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
@@ -25,9 +29,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import kotlinx.android.synthetic.main.activity_existing_user.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.io.File
+import java.util.jar.Manifest
+import javax.security.auth.callback.PasswordCallback
+import com.example.judes_darwinchandra.ExistingUser as ExistingUser
 
 
 var sharePrefFileName="PrefEmail"
@@ -39,21 +48,23 @@ private var soundIDplayer= 1
 
 class MainActivity : AppCompatActivity() {
     var JobSchedulerId = 10
-    var notificationManager : NotificationManager? = null
+    var notificationManager: NotificationManager? = null
+
+    @SuppressLint("NewApi")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(this,R.color.black)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         setContentView(R.layout.activity_main)
 
 
         //login button wrong ketika isinya kosong
-        login_button.isEnabled=false
-        var valid= arrayOf(0,0)
-        inputEmail.addTextChangedListener(object:TextWatcher{
+        login_button.isEnabled = false
+        var valid = arrayOf(0, 0)
+        inputEmail.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -61,23 +72,21 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(Patterns.EMAIL_ADDRESS.matcher(inputEmail.text.toString()).matches()){
-                    valid[0]=1
+                if (Patterns.EMAIL_ADDRESS.matcher(inputEmail.text.toString()).matches()) {
+                    valid[0] = 1
                     cekvalid(valid)
-                }
-                else if(inputEmail.text.toString().trim().isEmpty()){
+                } else if (inputEmail.text.toString().trim().isEmpty()) {
                     inputEmail.setError("Email can't be empty")
-                    valid[0]=0
+                    valid[0] = 0
                     cekvalid(valid)
-                }
-                else{
+                } else {
                     inputEmail.setError("Invalid Email")
-                    valid[0]=0
+                    valid[0] = 0
                     cekvalid(valid)
                 }
             }
         })
-        inputPass.addTextChangedListener(object:TextWatcher{
+        inputPass.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -85,13 +94,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(inputPass.text.toString().trim().isEmpty()){
+                if (inputPass.text.toString().trim().isEmpty()) {
                     inputPass.setError("Password can't be empty")
-                    valid[1]=0
+                    valid[1] = 0
                     cekvalid(valid)
-                }
-                else{
-                    valid[1]=1
+                } else {
+                    valid[1] = 1
                     cekvalid(valid)
                 }
             }
@@ -106,38 +114,48 @@ class MainActivity : AppCompatActivity() {
         // doAsync diletakkan pada oncreate
         doAsync {
             Thread.sleep(10000L)
-            uiThread{
+            uiThread {
                 showNotifReminder()
             }
         }
 
+//        exist.setOnClickListener{
+//            if(isExternalStorageReadable()){
+//            readFileExternal()
+//            }
+//        }
     }
+
+//    private fun readFileExternal() {
+//        TODO("Not yet implemented")
+//    }
 
     private fun clearDataLogin() {
         inputEmail.text?.clear()
         inputPass.text?.clear()
     }
+
     //fungsi untuk menload sound pool
     override fun onStart() {
         //membaca data
         super.onStart()
         //untuk versi yang sudah diatas lolipop
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //memanggil fungsi untuk membuat soundpool
             createNewSoundPool()
         }
         //untuk versi lama
-        else{
+        else {
             //memanggil fungsi untuk membuat soundpool
             createOldSoundPool()
         }
         //Menload sound yang akan dipakai dan set prioritas
-        soundIDplayer= sound?.load(this,R.raw.transitiontoberanda,1)?: 0
+        soundIDplayer = sound?.load(this, R.raw.transitiontoberanda, 1) ?: 0
     }
 
     private fun createOldSoundPool() {
         //untuk Membuat SoundPool dengan maxstream,type stream dan quality
-        sound = SoundPool(15,AudioManager.STREAM_MUSIC,0)
+        sound = SoundPool(15, AudioManager.STREAM_MUSIC, 0)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -153,14 +171,14 @@ class MainActivity : AppCompatActivity() {
         sound = null
     }
 
-    fun cekvalid(validasi:Array<Int>){
-        if(validasi[0]==1 && validasi[1]==1){
-            login_button.isEnabled=true
-        }
-        else{
-            login_button.isEnabled=false
+    fun cekvalid(validasi: Array<Int>) {
+        if (validasi[0] == 1 && validasi[1] == 1) {
+            login_button.isEnabled = true
+        } else {
+            login_button.isEnabled = false
         }
     }
+
     //Intent Eksplisit
     //fungsi untuk keluar kehalaman Registrasi
     fun gotoRegis(view: View) {
@@ -170,24 +188,71 @@ class MainActivity : AppCompatActivity() {
     }
 
     //fungsi untuk keluar kehalaman Beranda
+    @RequiresApi(Build.VERSION_CODES.M)
     fun gotoBeranda(view: View) {
 
         var mySharedPref = SharePrefData(this, sharePrefFileName)
 
-        mySharedPref.email=inputEmail.text.toString()
+        mySharedPref.email = inputEmail.text.toString()
         clearDataLogin()
-
-
-
+//        if(isExternalStorageReadable()){
+//            writeFileExternal()
+//        }
 
         val intent = Intent(this, BerandaActivity::class.java)
         startActivity(intent)
         //Cek jika id dari sound tidak sama dengan nol maka akan memainkan soundnya
-        if(soundIDplayer != 0){
+        if (soundIDplayer != 0) {
             //memainkan sound dan Set sound kiri dan kanan, priority,apakah diulang atau tidak
-            sound?.play(soundIDplayer, .99f, .99f,1,0,.99f)
+            sound?.play(soundIDplayer, .99f, .99f, 1, 0, .99f)
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+//    private fun writeFileExternal() {
+//        var myLog = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.toURI())
+//        if(!myLog.exists()){
+//            myLog.mkdir()
+//        }
+    // disini errornya wa blm buat siap soalnya
+//        File(myLog,"$ExistingUser")
+//    }
+
+//    @RequiresApi(Build.VERSION_CODES.M)
+//    private fun isExternalStorageReadable(): Boolean {
+//        if (ContextCompat.checkSelfPermission(
+//                this,
+//                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+//            ) != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 123)
+//        }
+//        var status = Environment.getExternalStorageState()
+//        if(Environment.MEDIA_MOUNTED.equals(status) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(status)){
+//            return true
+//        }
+//        return false
+//    }
+//    override fun onRequestPermissionsResult(
+//            requestCode: Int,
+//            permissions: Array<out String>,
+//            grantResults: IntArray
+//        )
+//    {
+//            when(requestCode){
+//                123 ->{
+//                    if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+//                        Toast.makeText(this,"Permission is Granted",Toast.LENGTH_SHORT).show()
+//                    else{
+//                        Toast.makeText(this,"Permission is Denied",Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            }
+//    }
+
+
+
+
     //fungsi untuk keluar kehalaman Forgot Password
     fun forgotpass_login(view: View) {
         val intent=Intent(this,ForgotPasswordActivity::class.java)
