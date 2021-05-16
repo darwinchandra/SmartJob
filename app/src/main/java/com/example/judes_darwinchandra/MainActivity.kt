@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
         inputEmail.text?.clear()
         var readFile = ""
         File(myLog,"ExistingUser.txt").forEachLine {
-            readFile+=1
+            readFile+= it
         }
         isi.setText(readFile)
     }
