@@ -119,6 +119,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         exist.setOnClickListener{
+            val intent = Intent(this, ExistingUser::class.java)
+            startActivity(intent)
             if(isExternalStorageReadable()){
             readFileExternal()
             }
@@ -131,7 +133,9 @@ class MainActivity : AppCompatActivity() {
         var myLog = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.toURI())
         inputEmail.text?.clear()
         var readFile = ""
-        File(myLog,"ExistingUser").forEachLine { readFile+=1 }
+        File(myLog,"ExistingUser.txt").forEachLine {
+            readFile+=1
+        }
         isi.setText(readFile)
     }
 
@@ -141,8 +145,8 @@ class MainActivity : AppCompatActivity() {
         if(!myLog.exists()){
             myLog.mkdir()
         }
-     //disini errornya dan kan mau lgsg save difilenya
-//        File(myLog,"$ExistingUser").apply{ writeText(inputEmail.text.toString()}
+//     disini errornya dan kan mau lgsg save difilenya
+        File(myLog,"ExistingUser.txt").apply{ writeText(inputEmail.text.toString())}
      inputEmail.text?.clear()
     }
 
@@ -244,7 +248,9 @@ class MainActivity : AppCompatActivity() {
 
         mySharedPref.email = inputEmail.text.toString()
         clearDataLogin()
-
+        if(isExternalStorageReadable()){
+            writeFileExternal()
+        }
 
         val intent = Intent(this, BerandaActivity::class.java)
         startActivity(intent)
