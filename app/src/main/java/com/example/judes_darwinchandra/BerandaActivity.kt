@@ -95,10 +95,16 @@ class BerandaActivity : AppCompatActivity() {
                 R.id.profile_page -> {
                     //membuat fragment yang akan menampung profile
                     profileFragment=ProfileFragment()
+
+                    //membuat bundle untuk mengirim data ke fragment
                     val bundle = Bundle()
+                    // membuat variabel Shareprefdata agar dapat get nilai email
+                    // dan memasukkannya pada variabel myMail yang akan dikirim lewat bundle
                     val mySharedPref= SharePrefData(this, sharePrefFileName)
-                    val myMessage = mySharedPref.email
-                    bundle.putString("message", myMessage)
+                    val myMail = mySharedPref.email
+                    // pengiriman myMail ke bundle dengan key MYEMAIL
+                    bundle.putString("MYEMAIL", myMail)
+                    // memberikan nilai arg berupa bundle tadi
                     profileFragment.arguments=bundle
                     supportFragmentManager
                         //ketika pas di klik akan terjadi transaksi dari beranda,message,jobs ke profile
@@ -152,6 +158,7 @@ class BerandaActivity : AppCompatActivity() {
 
 
     }
+
 }
 
 

@@ -179,9 +179,20 @@
                     android:gravity="center"
                     android:padding="0dp"
                     android:textColor="#FFFFFF"
-
                     style="@style/Widget.App.Button"
-                    android:layout_marginLeft="40dp"/>
+                    android:layout_marginLeft="20dp"/>
+                <Button
+                    android:id="@+id/btnExportDetailPekerjaan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Export"
+                    android:fontFamily="@font/basic_regular"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:textColor="#FFFFFF"
+                    style="@style/Widget.App.Button"
+                    android:backgroundTint="@color/orange"
+                    android:layout_marginLeft="20dp"/>
             </LinearLayout>
             </LinearLayout>
         </LinearLayout>

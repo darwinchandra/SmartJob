@@ -68,7 +68,10 @@ class ProfileFragment : Fragment() {
                 numberOfRecyclerView_profile
             )
         recyclerView_profile?.layoutManager= LinearLayoutManager(context, OrientationHelper.VERTICAL,false)
-        var myEmail= this.arguments?.getString("message")
+
+        //Pengambilan  data dari bundle yang berisi key MYEMAIL
+        var myEmail= this.arguments?.getString("MYEMAIL")
+        // ubah textview sesuai dengan email yang telah diterima
         mail_profile.text=myEmail.toString()
 
 
