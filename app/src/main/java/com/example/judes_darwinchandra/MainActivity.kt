@@ -247,10 +247,13 @@ class MainActivity : AppCompatActivity() {
         var mySharedPref = SharePrefData(this, sharePrefFileName)
 
         mySharedPref.email = inputEmail.text.toString()
-        clearDataLogin()
+
         if(isExternalStorageReadable()){
             writeFileExternal()
         }
+
+        clearDataLogin()
+
 
         val intent = Intent(this, BerandaActivity::class.java)
         startActivity(intent)

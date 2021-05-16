@@ -9,8 +9,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.judes_darwinchandra.`interface`.bookmarkInterface
 import com.example.judes_darwinchandra.adapter.postsAdapter1
 import com.example.judes_darwinchandra.adapter.postsAdapter2
+import com.example.judes_darwinchandra.model.MyBookmarkedModel
 import kotlinx.android.synthetic.main.fragment_beranda.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -45,6 +47,13 @@ class BerandaFragment : Fragment() {
         recyclerView1=view.findViewById(R.id.recyclerView1)
         recyclerView2=view.findViewById(R.id.recyclerView2)
 
+        var listdata1=ArrayList<objDetailLoker>()
+        listdata1.add(objDetailLoker("PT. Industri Pembungkus Internasional", "Manager", "10 jt/Bulan", "Medan - Sumatera Utara"))
+        listdata1.add(objDetailLoker("PT. Bukit Asam Tbk", "CEO", "15 jt/Bulan", "Jakarta Utara"))
+        listdata1.add(objDetailLoker("PT. Aneka Tambang Tbk", "IT Support", "5 jt/Bulan", "Bogor - Jawa Barat"))
+
+
+
         val numberOfRecyclerView2: ArrayList<String> = ArrayList()
         for (i in 1..10){
             numberOfRecyclerView2.add("Post# $i")
@@ -63,7 +72,7 @@ class BerandaFragment : Fragment() {
         recyclerView1.layoutManager= LinearLayoutManager(recyclerView1.context, OrientationHelper.HORIZONTAL,false)
         recyclerView1.adapter=
             postsAdapter1(
-                numberOfRecyclerView1
+                listdata1
             )
 
 

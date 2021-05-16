@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.judes_darwinchandra.*
 import org.w3c.dom.Text
 
-class postsAdapter1(val numberOfRecyclerView1: ArrayList<String>): RecyclerView.Adapter<postsAdapter1.ViewHolder>() {
+class postsAdapter1(val list: ArrayList<objDetailLoker>): RecyclerView.Adapter<postsAdapter1.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val card: RelativeLayout=itemView.findViewById(R.id.card_top_loker)
@@ -43,13 +43,17 @@ class postsAdapter1(val numberOfRecyclerView1: ArrayList<String>): RecyclerView.
         return ViewHolder(view)
     }
 
-    override fun getItemCount() = numberOfRecyclerView1.size
+    override fun getItemCount() = list.size
 
     @SuppressLint("WrongConstant")
     override fun onBindViewHolder(holder: postsAdapter1.ViewHolder, position: Int) {
         for (i in 1..3){
             holder.numberOfRecyclerView3.add("Post# $i")
         }
+        holder.namaCompany.setText(list.get(position).namaPerusahaan)
+        holder.posisi.setText(list.get(position).posisiLoker)
+        holder.lokasiPerusahaan.setText(list.get(position).alamatPerusahaan)
+        holder.gaji.setText(list.get(position).gajiLoker)
         holder.recyclerView3.layoutManager= LinearLayoutManager(holder.recyclerView3.context, OrientationHelper.HORIZONTAL,false)
         holder.recyclerView3.adapter=
             postsAdapter3(holder.numberOfRecyclerView3)

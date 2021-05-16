@@ -51,6 +51,17 @@
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:gravity="bottom|center_horizontal">
+            <TextView
+                android:id="@+id/nama_perusahaan_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="@color/white"
+                android:textSize="20sp"
+                android:fontFamily="@font/basic_regular"
+                android:text="PT. Industri Pembungkus Internasional"
+                android:layout_marginBottom="10dp"/>
             <ImageView
                 android:id="@+id/icon_perusahaan_detailkerja"
                 android:layout_width="120dp"
@@ -59,6 +70,7 @@
                 android:scaleType="fitXY"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ipi"
+                android:layout_below="@+id/nama_perusahaan_detail"
                 android:layout_centerHorizontal="true"/>
             <TextView
                 android:id="@+id/jabatan_pegawai_detail"

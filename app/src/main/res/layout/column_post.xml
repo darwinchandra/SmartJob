@@ -35,7 +35,7 @@
                     android:orientation="vertical"
                     android:layout_marginLeft="10dp">
                     <TextView
-                        android:id="@+id/jabatan_pegawai"
+                        android:id="@+id/jabatan_pegawai_col"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Jabatan"
@@ -53,7 +53,7 @@
                             android:layout_height="15dp"
                             android:src="@drawable/ic_company_white"/>
                         <TextView
-                            android:id="@+id/nama_perusahaan"
+                            android:id="@+id/nama_perusahaan_col"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="12dp"
@@ -72,7 +72,7 @@
                             android:layout_height="15dp"
                             android:src="@drawable/ic_location_only_white"/>
                         <TextView
-                            android:id="@+id/lokasi_perusahaan"
+                            android:id="@+id/lokasi_perusahaan_col"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="12dp"
@@ -82,7 +82,7 @@
                             android:layout_marginLeft="5dp"/>
                     </LinearLayout>
                     <TextView
-                        android:id="@+id/string_salary"
+                        android:id="@+id/string_salary_col"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="10jt/month"

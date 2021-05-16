@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.dialogapply.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.my_custom_dialog.*
 import kotlinx.android.synthetic.main.postapplied.*
+import java.io.File
 import java.sql.BatchUpdateException
 import java.util.*
 
@@ -57,7 +58,7 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         jabatan_pegawai_detail.text=dataPerusahaan?.posisiLoker
         string_salary_detail.text=dataPerusahaan?.gajiLoker
         lokasi_perusahaan_detail.text=dataPerusahaan?.alamatPerusahaan
-
+        nama_perusahaan_detail.text=dataPerusahaan?.namaPerusahaan
         // mereplace layout menggunakan inflate untuk mengambil dialogapply
         var Mylayout = layoutInflater.inflate(R.layout.dialogapply, null)
         // membuat alertdialog untuk popup yang menunjukan dont notify jika anda mau
@@ -110,6 +111,23 @@ class DetailPekerjaanActivity : AppCompatActivity() {
             //builder ditutup
             mydialog.cancel()
         }
+        btnExportDetailPekerjaan.setOnClickListener {
+            writeDetailPekerjaan()
+        }
+    }
+
+    private fun writeDetailPekerjaan() {
+        var output = openFileOutput("detailPekerjaan.txt",Context.MODE_PRIVATE).apply {
+            var isidetail="Nama Perusahaan : "+nama_perusahaan_detail.text.toString()+"\n"+
+                    "Jabatan : "+jabatan_pegawai_detail.text.toString()+"\n"+
+                    "Gaji : "+string_salary_detail.text.toString()+"\n"+
+                    "Lokasi : "+lokasi_perusahaan_detail.text.toString()
+            write(isidetail.toByteArray())
+            close()
+        }
+        var filedetail  = File(this.filesDir,"detailPekerjaan.txt")
+        Log.w("OK",filedetail.absolutePath)
+        Toast.makeText(this,"File Save",Toast.LENGTH_SHORT).show()
     }
 
     fun descklik(view: View) {
