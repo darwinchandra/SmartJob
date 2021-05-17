@@ -18,6 +18,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.view.WindowManager
@@ -34,8 +35,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.io.File
+import java.util.*
 import java.util.jar.Manifest
 import javax.security.auth.callback.PasswordCallback
+import kotlin.collections.ArrayList
 import com.example.judes_darwinchandra.ExistingUser as ExistingUser
 
 
@@ -145,8 +148,28 @@ class MainActivity : AppCompatActivity() {
         if(!myLog.exists()){
             myLog.mkdir()
         }
-//     disini errornya dan kan mau lgsg save difilenya
-        File(myLog,"ExistingUser.txt").apply{ appendText(inputEmail.text.toString()+"\n")}
+
+        var duplicateEmail=false
+
+        if(File(myLog,"ExistingUser.txt").exists()){
+            val listemail=ArrayList<String>()
+            File(myLog,"ExistingUser.txt").forEachLine (Charsets.UTF_8){
+                listemail.add(it)
+            }
+            Log.w("listemail",listemail.toString())
+            for (s in listemail) {
+                if(s==inputEmail.text.toString()){
+                    duplicateEmail=true
+                }
+            }
+        }
+
+        if (duplicateEmail==false){
+            File(myLog,"ExistingUser.txt").apply{
+                appendText(inputEmail.text.toString()+"\n")
+            }
+        }
+
      inputEmail.text?.clear()
     }
 
