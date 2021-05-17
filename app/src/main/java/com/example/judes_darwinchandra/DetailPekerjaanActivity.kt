@@ -117,17 +117,21 @@ class DetailPekerjaanActivity : AppCompatActivity() {
     }
 
     private fun writeDetailPekerjaan() {
+        // membuat open file output untuk membuka file dan membuat file output yaitu detailPekerjaan.txt
         var output = openFileOutput("detailPekerjaan.txt",Context.MODE_PRIVATE).apply {
+            //membuat sebuah variabel isi detail yang menampung detail lowongan kerja
             var isidetail="Nama Perusahaan : "+nama_perusahaan_detail.text.toString()+"\n"+
                     "Jabatan : "+jabatan_pegawai_detail.text.toString()+"\n"+
                     "Gaji : "+string_salary_detail.text.toString()+"\n"+
                     "Lokasi : "+lokasi_perusahaan_detail.text.toString()
+
+            //mengisi file detailpekerjaan.txt dengan isidetail dengan format bytearray
             write(isidetail.toByteArray())
+            //menutup file
             close()
-        }
-        var filedetail  = File(this.filesDir,"detailPekerjaan.txt")
-        Log.w("OK",filedetail.absolutePath)
-        Toast.makeText(this,"File Save",Toast.LENGTH_SHORT).show()
+            }
+        //toast untuk menandakan detail telah di export ke internal storage
+        Toast.makeText(this, "Detail has been Exported", Toast.LENGTH_SHORT).show()
     }
 
     fun descklik(view: View) {

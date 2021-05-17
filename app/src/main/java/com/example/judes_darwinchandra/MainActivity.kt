@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity() {
             myLog.mkdir()
         }
 //     disini errornya dan kan mau lgsg save difilenya
-        File(myLog,"ExistingUser.txt").apply{ writeText(inputEmail.text.toString())}
+        File(myLog,"ExistingUser.txt").apply{ appendText(inputEmail.text.toString()+"\n")}
      inputEmail.text?.clear()
     }
 
