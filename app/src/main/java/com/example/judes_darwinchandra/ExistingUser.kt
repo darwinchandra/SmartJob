@@ -7,6 +7,8 @@ import android.view.View
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import kotlinx.android.synthetic.main.activity_existing_user.*
+import kotlinx.android.synthetic.main.activity_manage_profil.*
 
 class ExistingUser : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -16,11 +18,16 @@ class ExistingUser : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         setContentView(R.layout.activity_existing_user)
+
+        topAppBar_ExistingUser.setNavigationOnClickListener {
+            finish()
+        }
     }
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) hideSystemUI()
     }
+
     private fun hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.

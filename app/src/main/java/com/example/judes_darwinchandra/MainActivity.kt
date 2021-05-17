@@ -122,25 +122,25 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ExistingUser::class.java)
             startActivity(intent)
             if(isExternalStorageReadable()){
-            readFileExternal()
+                readFileExternalMemory()
             }
         }
 
     }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
-    private fun readFileExternal() {
+    private fun readFileExternalMemory() {
         var myLog = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.toURI())
         inputEmail.text?.clear()
         var readFile = ""
         File(myLog,"ExistingUser.txt").forEachLine {
-            readFile+= it
+            readFile+= "$it\n"
         }
         isi.setText(readFile)
     }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
-    private fun writeFileExternal() {
+    private fun writeFileExternalMemory() {
         var myLog = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.toURI())
         if(!myLog.exists()){
             myLog.mkdir()
@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity() {
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 123)
+            requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 5558)
         }
         var status = Environment.getExternalStorageState()
         if(Environment.MEDIA_MOUNTED.equals(status) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(status)){
@@ -172,7 +172,7 @@ class MainActivity : AppCompatActivity() {
         )
     {
             when(requestCode){
-                123 ->{
+                5558 ->{
                     if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                         Toast.makeText(this,"Permission is Granted",Toast.LENGTH_SHORT).show()
                     else{
@@ -249,7 +249,7 @@ class MainActivity : AppCompatActivity() {
         mySharedPref.email = inputEmail.text.toString()
 
         if(isExternalStorageReadable()){
-            writeFileExternal()
+            writeFileExternalMemory()
         }
 
         clearDataLogin()
