@@ -23,10 +23,14 @@
         app:titleTextAppearance="@style/TextAppearance.App.Subtitle1"
         app:titleTextColor="@color/black" />
     </com.google.android.material.appbar.AppBarLayout>
-    <MultiAutoCompleteTextView
-        android:id="@+id/isi"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/isi"
+            android:textSize="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </ScrollView>
 </LinearLayout>

@@ -4,12 +4,15 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_existing_user.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_manage_profil.*
+import java.io.File
 
 class ExistingUser : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -19,6 +22,13 @@ class ExistingUser : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         setContentView(R.layout.activity_existing_user)
+
+        var myLog = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.toURI())
+        var readFile = ""
+        File(myLog,"ExistingUser.txt").forEachLine {
+            readFile+= "$it\n"
+        }
+        isi.setText(readFile)
 
         topAppBar_ExistingUser.setNavigationOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
