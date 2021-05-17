@@ -1,5 +1,6 @@
 package com.example.judes_darwinchandra
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,7 +21,8 @@ class ExistingUser : AppCompatActivity() {
         setContentView(R.layout.activity_existing_user)
 
         topAppBar_ExistingUser.setNavigationOnClickListener {
-            finish()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
     override fun onWindowFocusChanged(hasFocus: Boolean) {
