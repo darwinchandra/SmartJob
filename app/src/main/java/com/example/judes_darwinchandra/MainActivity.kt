@@ -124,23 +124,11 @@ class MainActivity : AppCompatActivity() {
         exist.setOnClickListener{
             val intent = Intent(this, ExistingUser::class.java)
             startActivity(intent)
-            if(isExternalStorageReadable()){
-                readFileExternalMemory()
-            }
         }
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
-    private fun readFileExternalMemory() {
-        var myLog = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.toURI())
-        inputEmail.text?.clear()
-        var readFile = ""
-        File(myLog,"ExistingUser.txt").forEachLine {
-            readFile+= "$it\n"
-        }
-        isi.setText(readFile)
-    }
+
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     private fun writeFileExternalMemory() {
