@@ -129,40 +129,47 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
+    // membuat fungsi write ke external memory
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     private fun writeFileExternalMemory() {
+        //mengambil file dari external memory yang sudah ada
         var myLog = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.toURI())
+        // jika file tidak ada maka membuat file baru
         if(!myLog.exists()){
             myLog.mkdir()
         }
-
+        // false duplicate isinya
         var duplicateEmail=false
-
+        // jika file sudah ada maka dibuat arraylist
         if(File(myLog,"ExistingUser.txt").exists()){
             val listemail=ArrayList<String>()
+            // file yang dibuat dan ditambahkan ke array
             File(myLog,"ExistingUser.txt").forEachLine (Charsets.UTF_8){
-                listemail.add(it)
+                listemail.add("$it\n")
             }
+            //membuat perulangan pada setiap data list email.Ketika email yang ad pada edittext telah ada di file tersebut.
+            // Maka status duplicateEmail menjadi false
             Log.w("listemail",listemail.toString())
+            // setiap array listemail maka isi text ditulis dan duplicate true untuk menghindari adanya double
             for (s in listemail) {
                 if(s==inputEmail.text.toString()){
                     duplicateEmail=true
                 }
             }
         }
-
-        if (duplicateEmail==false){
-            File(myLog,"ExistingUser.txt").apply{
-                appendText(inputEmail.text.toString()+"\n")
+        // jika double salah maka mengambil text dari textbox dan masukkan kefile
+        if (duplicateEmail==false) {
+            File(myLog, "ExistingUser.txt").apply {
+                appendText(inputEmail.text.toString() + "\n")
             }
         }
-
+        // membersih edittext
      inputEmail.text?.clear()
     }
-
+    // membuat fungsi untuk permission external storage
     @RequiresApi(Build.VERSION_CODES.M)
     private fun isExternalStorageReadable(): Boolean {
+        // mengecek apakah selfpermission sudah ada atau belum jika belum maka dibuat request permission agar diberikan access
         if (ContextCompat.checkSelfPermission(
                 this,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -170,18 +177,25 @@ class MainActivity : AppCompatActivity() {
         ) {
             requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 5558)
         }
+        // mengambil state dari external storage
         var status = Environment.getExternalStorageState()
+        // jika storage sama dengan media mount dan media mount read only maka hasilnya true
         if(Environment.MEDIA_MOUNTED.equals(status) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(status)){
             return true
         }
+        // jika tidak maka return false
         return false
     }
+    // memnbuat fungsi requestcode
     override fun onRequestPermissionsResult(
             requestCode: Int,
             permissions: Array<out String>,
             grantResults: IntArray
         )
     {
+        // ketika requestcode 5558 maka akan dilanjutkan dengan jika grantresult tidak kosong dan grantresult ke 0
+        // sudah diberikan permission maka keluar toast permission is granted dan sebaliknya jika belum maka
+        // akan keluar permission is denied
             when(requestCode){
                 5558 ->{
                     if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
@@ -259,6 +273,7 @@ class MainActivity : AppCompatActivity() {
 
         mySharedPref.email = inputEmail.text.toString()
 
+        // ketika di click login button maka akan dijalankan fungsi write
         if(isExternalStorageReadable()){
             writeFileExternalMemory()
         }
