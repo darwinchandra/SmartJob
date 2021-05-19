@@ -23,11 +23,16 @@ class ExistingUser : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         setContentView(R.layout.activity_existing_user)
 
+        //Untuk Me,dapatkan direktori dari file yang kita buat
         var myLog = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.toURI())
+        //variabel untuk menampung data file yang kita buat
         var readFile = ""
+        //membaca isi file ExistingUser.txt
         File(myLog,"ExistingUser.txt").forEachLine {
+            //Menambahkan teks yang kita baca kedalam readFile
             readFile+= "$it\n"
         }
+        //memasukkan isi dari readFile ke dalam textview isi
         isi.setText(readFile)
 
         topAppBar_ExistingUser.setNavigationOnClickListener {
