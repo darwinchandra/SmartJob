@@ -28,7 +28,10 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/isi"
-            android:textSize="30dp"
+            android:textSize="25dp"
+            android:padding="20dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/basic_regular"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />

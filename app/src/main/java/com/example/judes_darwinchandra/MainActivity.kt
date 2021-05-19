@@ -279,7 +279,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         clearDataLogin()
-
+        delFile()
 
         val intent = Intent(this, BerandaActivity::class.java)
         startActivity(intent)
@@ -287,6 +287,13 @@ class MainActivity : AppCompatActivity() {
         if (soundIDplayer != 0) {
             //memainkan sound dan Set sound kiri dan kanan, priority,apakah diulang atau tidak
             sound?.play(soundIDplayer, .99f, .99f, 1, 0, .99f)
+        }
+    }
+
+    private fun delFile() {
+        if (fileList().size != 0) {
+            for (i in fileList())
+                deleteFile(i)
         }
     }
 
