@@ -296,7 +296,7 @@ class MainActivity : AppCompatActivity() {
         //Database
         var db= Room.databaseBuilder(
             this,
-            MyRoomDBHelper::class.java,
+            MyDBRoomHelper::class.java,
             "myroomdbex.db"
         ).build()
 
