@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity() {
             val listemail=ArrayList<String>()
             // file yang dibuat dan ditambahkan ke array
             File(myLog,"ExistingUser.txt").forEachLine (Charsets.UTF_8){
-                listemail.add("$it\n")
+                listemail.add(it)
             }
             //membuat perulangan pada setiap data list email.Ketika email yang ad pada edittext telah ada di file tersebut.
             // Maka status duplicateEmail menjadi false
