@@ -30,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_existing_user.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
@@ -39,6 +40,7 @@ import java.util.*
 import java.util.jar.Manifest
 import javax.security.auth.callback.PasswordCallback
 import kotlin.collections.ArrayList
+import kotlin.random.Random
 import com.example.judes_darwinchandra.ExistingUser as ExistingUser
 
 
@@ -62,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         setContentView(R.layout.activity_main)
+
 
 
         //login button wrong ketika isinya kosong
@@ -288,6 +291,27 @@ class MainActivity : AppCompatActivity() {
             //memainkan sound dan Set sound kiri dan kanan, priority,apakah diulang atau tidak
             sound?.play(soundIDplayer, .99f, .99f, 1, 0, .99f)
         }
+
+
+        //Database
+        var db= Room.databaseBuilder(
+            this,
+            MyRoomDBHelper::class.java,
+            "myroomdbex.db"
+        ).build()
+
+
+        var hasil =""
+        doAsync {
+            db.userDao().insertAll(User(Random.nextInt(), inputEmail.text.toString(), inputPass.text.toString()))
+            for(allData in db.userDao().getAllData()){
+                hasil += "${allData.email} ${allData.password}\n"
+            }
+            uiThread {
+                Log.w("Hasil",hasil)
+            }
+        }
+
     }
 
     private fun delFile() {
