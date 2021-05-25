@@ -3,6 +3,7 @@ package com.example.judes_darwinchandra
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface UserDAO {
@@ -11,5 +12,8 @@ interface UserDAO {
 
     @Insert
     fun insertAll(vararg user: User)
+
+    @Query("UPDATE User SET COLUMN_PASSWORD = :newpass WHERE COLUMN_EMAIL= :email")
+    fun updatepass(email:String,newpass:String)
 
 }

@@ -15,9 +15,11 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_change_password.*
 import kotlinx.android.synthetic.main.activity_video_call.*
-
+import kotlinx.android.synthetic.main.dialogapply.*
+import org.jetbrains.anko.doAsync
 
 
 class ChangePasswordActivity : AppCompatActivity() {
@@ -33,6 +35,12 @@ class ChangePasswordActivity : AppCompatActivity() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this,R.color.gray3)
+        var db= Room.databaseBuilder(
+            this,
+            MyDBRoomHelper::class.java,
+            "myroomdb.db"
+        ).build()
+
 
         topAppBar_changePass.setNavigationOnClickListener {
             finish()
@@ -47,8 +55,11 @@ class ChangePasswordActivity : AppCompatActivity() {
         notifmanage.createNotificationChannels(notificationManager!!)
 
         btn_ConfirmChangePass.setOnClickListener {
+
+            val mySharedPref= SharePrefData(this, sharePrefFileName)
+            var emailLogin = mySharedPref.email.toString()
             if (newpass.text.toString()==confirmpass.text.toString()){
-                showToast(buildToastMessagePass("darwinch@gmail.com"))
+                showToast(buildToastMessagePass(emailLogin))
                 // init channelid
                 var channel_id =""
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -80,10 +91,23 @@ class ChangePasswordActivity : AppCompatActivity() {
                     NOTIFICATION_EMAIL,
                     myNotification.build())
 
+
+
             }
             else if(newpass.text.toString()!=confirmpass.text.toString()){
                 showToast(buildToastMessagePassWrong())
             }
+
+            doAsync {
+                for(allData in db.userDao().getAllData()){
+                    if(emailLogin== allData.email){
+                        db.userDao().updatepass(emailLogin,newpass.text.toString())
+                    }
+                }
+            }
+
+            // update pass
+
 
         }
     }

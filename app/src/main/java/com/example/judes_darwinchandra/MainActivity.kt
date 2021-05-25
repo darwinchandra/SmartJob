@@ -104,6 +104,7 @@ class MainActivity : AppCompatActivity() {
                     else{
                         Toast.makeText(it,"Email tidak Terdaftar" , Toast.LENGTH_SHORT).show()
                     }
+                    Log.w("tes",hasil)
                 }
 
             }
@@ -113,9 +114,8 @@ class MainActivity : AppCompatActivity() {
 
             clearDataLogin()
             delFile()
-
-//            val intent = Intent(this, BerandaActivity::class.java)
-//            startActivity(intent)
+            val intent = Intent(this, BerandaActivity::class.java)
+            startActivity(intent)
             //Cek jika id dari sound tidak sama dengan nol maka akan memainkan soundnya
             if (soundIDplayer != 0) {
                 //memainkan sound dan Set sound kiri dan kanan, priority,apakah diulang atau tidak
