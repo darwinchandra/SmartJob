@@ -74,6 +74,31 @@ class MainActivity : AppCompatActivity() {
         ).build()
 
         login_button.setOnClickListener{
+            var hasil =""
+            var findData = false
+            var mailLogin = inputEmail.text.toString()
+            var passLogin = inputPass.text.toString()
+            doAsync {
+                var index = db.userDao().validateEmailPass(mailLogin,passLogin)
+                var valid= index.size
+
+                for(allData in db.userDao().validateEmailPass(mailLogin,passLogin)){
+                    hasil += "${allData.email} ${allData.password}\n"
+                }
+                uiThread {
+                    if(valid>0) {
+                        val intent = Intent(it, BerandaActivity::class.java)
+                        startActivity(intent)
+                    }
+                    else{
+                        Toast.makeText(it,"Username dan Password Salah" , Toast.LENGTH_SHORT).show()
+                    }
+//
+                    Log.w("tes",hasil)
+                }
+
+            }
+
             var mySharedPref = SharePrefData(this, sharePrefFileName)
 
             mySharedPref.email = inputEmail.text.toString()
@@ -82,40 +107,9 @@ class MainActivity : AppCompatActivity() {
             if(isExternalStorageReadable()){
                 writeFileExternalMemory()
             }
-
-            var hasil =""
-
-            var emailLogin =  inputEmail.text.toString()
-            var passLogin = inputPass.text.toString()
-            doAsync {
-                var findData = false
-                for(allData in db.userDao().getAllData()){
-                    hasil += "${allData.email} ${allData.password}\n"
-                    if(emailLogin == allData.email){
-                        findData = true
-                    }
-                }
-
-                uiThread {
-                    if(findData)
-                    {
-                        Toast.makeText(it,"Email Terdaftar" , Toast.LENGTH_SHORT).show()
-                    }
-                    else{
-                        Toast.makeText(it,"Email tidak Terdaftar" , Toast.LENGTH_SHORT).show()
-                    }
-                    Log.w("tes",hasil)
-                }
-
-            }
-
-
-
-
             clearDataLogin()
             delFile()
-            val intent = Intent(this, BerandaActivity::class.java)
-            startActivity(intent)
+
             //Cek jika id dari sound tidak sama dengan nol maka akan memainkan soundnya
             if (soundIDplayer != 0) {
                 //memainkan sound dan Set sound kiri dan kanan, priority,apakah diulang atau tidak
@@ -183,6 +177,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         exist.setOnClickListener{
+
+
+
             val intent = Intent(this, ExistingUser::class.java)
             startActivity(intent)
         }

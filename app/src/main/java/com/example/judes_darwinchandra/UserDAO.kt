@@ -16,4 +16,6 @@ interface UserDAO {
     @Query("UPDATE User SET COLUMN_PASSWORD = :newpass WHERE COLUMN_EMAIL= :email")
     fun updatepass(email:String,newpass:String)
 
+    @Query("SELECT * FROM User WHERE COLUMN_EMAIL= :email AND COLUMN_PASSWORD= :pass")
+    fun validateEmailPass(email:String,pass:String) : List<User>
 }
