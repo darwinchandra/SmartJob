@@ -18,4 +18,7 @@ interface UserDAO {
 
     @Query("SELECT * FROM User WHERE COLUMN_EMAIL= :email AND COLUMN_PASSWORD= :pass")
     fun validateEmailPass(email:String,pass:String) : List<User>
+
+    @Query("SELECT * FROM User WHERE COLUMN_EMAIL= :email ")
+    fun validateEmailRegis(email:String) : List<User>
 }

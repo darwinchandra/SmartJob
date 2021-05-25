@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.room.Room
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -144,14 +145,54 @@ class RegisterActivity : AppCompatActivity() {
 
         regis_button.setOnClickListener {
             //Database
-            var hasil =""
-            doAsync {
-                db.userDao().insertAll(User(Random.nextInt(), inputNamaRegis.text.toString(), inputEmailRegis.text.toString(),inputPassRegis.text.toString()))
-                for(allData in db.userDao().getAllData()){
-                    hasil += "${allData.nama} ${allData.email} ${allData.password}\n"
+//            var hasil =""
+//            doAsync {
+//                db.userDao().insertAll(User(Random.nextInt(), inputNamaRegis.text.toString(), inputEmailRegis.text.toString(),inputPassRegis.text.toString()))
+//                for(allData in db.userDao().getAllData()){
+//                    hasil += "${allData.nama} ${allData.email} ${allData.password}\n"
+//
+//                }
+//                uiThread {
+//                    Log.w("Hasil",hasil)
+//                }
+//            }
+//
+//
+//
+//
+//            finish()
+//            Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
+//            val intent = Intent(this, RegisterActivity::class.java)
+//            startActivity(intent)
 
-                }
+            var hasil =""
+            var mailLogin = inputEmailRegis.text.toString()
+            var passLogin = inputPassRegis.text.toString()
+            doAsync {
+                var index = db.userDao().validateEmailRegis(mailLogin)
+                var valid= index.size
+
+
                 uiThread {
+                    if(valid>0)
+                    {
+                        inputEmailRegis.requestFocus()
+                        Toast.makeText(it,"Email Telah terdaftar" , Toast.LENGTH_SHORT).show()
+                        val intent = Intent(it, RegisterActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    else{
+                        db.userDao().insertAll(User(Random.nextInt(), inputNamaRegis.text.toString(), inputEmailRegis.text.toString(),inputPassRegis.text.toString()))
+                        for(allData in db.userDao().getAllData()){
+                            hasil += "${allData.nama} ${allData.email} ${allData.password}\n"
+
+                        }
+                        Toast.makeText(it ,"Registrasi Berhasil", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(it, RegisterActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
                     Log.w("Hasil",hasil)
                 }
             }
@@ -159,10 +200,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
 
-            finish()
-            Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
+
         }
     }
 
