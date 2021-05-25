@@ -149,6 +149,7 @@ class RegisterActivity : AppCompatActivity() {
                 db.userDao().insertAll(User(Random.nextInt(), inputNamaRegis.text.toString(), inputEmailRegis.text.toString(),inputPassRegis.text.toString()))
                 for(allData in db.userDao().getAllData()){
                     hasil += "${allData.nama} ${allData.email} ${allData.password}\n"
+
                 }
                 uiThread {
                     Log.w("Hasil",hasil)

@@ -141,6 +141,7 @@
                     android:textSize="12dp"
                     android:fontFamily="@font/basic_regular"
                     android:onClick="forgotpass_login"/>
+
                 <Button
                     android:id="@+id/login_button"
                     style="@style/Widget.App.Button"
@@ -148,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:width="130dp"
-                    android:onClick="gotoBeranda"
+
                     android:text="Login" />
             </LinearLayout>
             <RelativeLayout

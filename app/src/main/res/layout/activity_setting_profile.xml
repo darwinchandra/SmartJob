@@ -93,6 +93,6 @@
         android:drawablePadding="10dp"
         android:textColor="@color/black"
         android:textSize="16dp"
-        android:onClick="gotoforgotpassprofile"
+
         android:foreground="?selectableItemBackground"/>
 </LinearLayout>

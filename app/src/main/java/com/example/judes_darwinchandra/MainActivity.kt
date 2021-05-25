@@ -34,6 +34,8 @@ import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_existing_user.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.email
+import org.jetbrains.anko.find
 import org.jetbrains.anko.uiThread
 import java.io.File
 import java.util.*
@@ -64,6 +66,62 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         setContentView(R.layout.activity_main)
+
+        var db= Room.databaseBuilder(
+            this,
+            MyDBRoomHelper::class.java,
+            "myroomdb.db"
+        ).build()
+
+        login_button.setOnClickListener{
+            var mySharedPref = SharePrefData(this, sharePrefFileName)
+
+            mySharedPref.email = inputEmail.text.toString()
+
+            // ketika di click login button maka akan dijalankan fungsi write
+            if(isExternalStorageReadable()){
+                writeFileExternalMemory()
+            }
+
+            var hasil =""
+
+            var emailLogin =  inputEmail.text.toString()
+            var passLogin = inputPass.text.toString()
+            doAsync {
+                var findData = false
+                for(allData in db.userDao().getAllData()){
+                    hasil += "${allData.email} ${allData.password}\n"
+                    if(emailLogin == allData.email){
+                        findData = true
+                    }
+                }
+
+                uiThread {
+                    if(findData)
+                    {
+                        Toast.makeText(it,"Email Terdaftar" , Toast.LENGTH_SHORT).show()
+                    }
+                    else{
+                        Toast.makeText(it,"Email tidak Terdaftar" , Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+            }
+
+
+
+
+            clearDataLogin()
+            delFile()
+
+//            val intent = Intent(this, BerandaActivity::class.java)
+//            startActivity(intent)
+            //Cek jika id dari sound tidak sama dengan nol maka akan memainkan soundnya
+            if (soundIDplayer != 0) {
+                //memainkan sound dan Set sound kiri dan kanan, priority,apakah diulang atau tidak
+                sound?.play(soundIDplayer, .99f, .99f, 1, 0, .99f)
+            }
+        }
 
 
 
@@ -268,33 +326,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    //fungsi untuk keluar kehalaman Beranda
-    @RequiresApi(Build.VERSION_CODES.M)
-    fun gotoBeranda(view: View) {
-
-        var mySharedPref = SharePrefData(this, sharePrefFileName)
-
-        mySharedPref.email = inputEmail.text.toString()
-
-        // ketika di click login button maka akan dijalankan fungsi write
-        if(isExternalStorageReadable()){
-            writeFileExternalMemory()
-        }
-
-        clearDataLogin()
-        delFile()
-
-        val intent = Intent(this, BerandaActivity::class.java)
-        startActivity(intent)
-        //Cek jika id dari sound tidak sama dengan nol maka akan memainkan soundnya
-        if (soundIDplayer != 0) {
-            //memainkan sound dan Set sound kiri dan kanan, priority,apakah diulang atau tidak
-            sound?.play(soundIDplayer, .99f, .99f, 1, 0, .99f)
-        }
 
 
-
-    }
 
     private fun delFile() {
         if (fileList().size != 0) {
