@@ -164,18 +164,23 @@ class RegisterActivity : AppCompatActivity() {
 //            Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
 //            val intent = Intent(this, RegisterActivity::class.java)
 //            startActivity(intent)
-
+            //hasil untuk menampung data yang akan diinput
             var hasil =""
+            //berisi email yang diinput kedalam bentuk string
             var mailLogin = inputEmailRegis.text.toString()
-            var passLogin = inputPassRegis.text.toString()
+            //menjalankan input ke database secara asynchronous
             doAsync {
+                //menvalidasi email apakah sudah ada pada database
                 var index = db.userDao().validateEmailRegis(mailLogin)
+                //berisi return code pada index
                 var valid= index.size
 
 
                 uiThread {
                     if(valid>0)
                     {
+                        //jika email sama dengan yang ada pada database maka menampilkan toast bahwa
+                        //email sudah terdaftar
                         inputEmailRegis.requestFocus()
                         Toast.makeText(it,"Email Telah terdaftar" , Toast.LENGTH_SHORT).show()
                         val intent = Intent(it, RegisterActivity::class.java)
@@ -183,11 +188,13 @@ class RegisterActivity : AppCompatActivity() {
                         finish()
                     }
                     else{
+                        //jika email belum ada maka registrasi akan dilakukan dan data akan diinput kedalam database
                         db.userDao().insertAll(User(Random.nextInt(), inputNamaRegis.text.toString(), inputEmailRegis.text.toString(),inputPassRegis.text.toString()))
                         for(allData in db.userDao().getAllData()){
                             hasil += "${allData.nama} ${allData.email} ${allData.password}\n"
 
                         }
+                        //toast untuk menampilkan bahwa registrasi telah berhasil
                         Toast.makeText(it ,"Registrasi Berhasil", Toast.LENGTH_SHORT).show()
                         val intent = Intent(it, RegisterActivity::class.java)
                         startActivity(intent)
