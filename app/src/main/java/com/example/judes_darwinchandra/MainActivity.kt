@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     else{
                         Toast.makeText(it,"Username dan Password Salah" , Toast.LENGTH_SHORT).show()
+                        inputEmail.requestFocus()
                     }
 //
                     Log.w("tes",hasil)
@@ -177,9 +178,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         exist.setOnClickListener{
-
-
-
             val intent = Intent(this, ExistingUser::class.java)
             startActivity(intent)
         }

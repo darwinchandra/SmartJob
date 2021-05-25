@@ -9,6 +9,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_change_password.*
 import kotlinx.android.synthetic.main.activity_video_call.*
 import kotlinx.android.synthetic.main.dialogapply.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 
 class ChangePasswordActivity : AppCompatActivity() {
@@ -58,9 +60,52 @@ class ChangePasswordActivity : AppCompatActivity() {
 
             val mySharedPref= SharePrefData(this, sharePrefFileName)
             var emailLogin = mySharedPref.email.toString()
-            if (newpass.text.toString()==confirmpass.text.toString()){
-                showToast(buildToastMessagePass(emailLogin))
-                // init channelid
+            if(newpass.text.toString()!=confirmpass.text.toString()){
+                showToast(buildToastMessagePassWrong())
+                confirmpass.requestFocus()
+            }
+            else{
+                var newPass=newpass.text.toString()
+                var oldPass=oldpw.text.toString()
+                var oldPasswordcheck=false
+                doAsync {
+                    for(allData in db.userDao().getAllData()){
+                        if(emailLogin== allData.email && oldPass==allData.password){
+                            db.userDao().updatepass(emailLogin,newPass)
+                            oldPasswordcheck=true
+                        }
+                    }
+                    uiThread {
+                        if (oldPasswordcheck==false){
+                            Toast.makeText(it, "Old Password don't match", Toast.LENGTH_SHORT).show()
+                            oldpw.requestFocus()
+                        }
+                        else{
+                            showToast(buildToastMessagePass(emailLogin))
+                            shownotifvalid()
+                            clearText()
+                            newpass.requestFocus()
+                        }
+                    }
+                }
+
+
+            }
+
+            // update pass
+
+
+        }
+    }
+
+    private fun clearText() {
+        oldpw.text?.clear()
+        newpass.text?.clear()
+        confirmpass.text?.clear()
+    }
+
+    fun shownotifvalid(){
+        // init channelid
                 var channel_id =""
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     channel_id = notificationManager!!.getNotificationChannel("Change Password_Email"
@@ -90,26 +135,6 @@ class ChangePasswordActivity : AppCompatActivity() {
                 notificationManager?.notify(
                     NOTIFICATION_EMAIL,
                     myNotification.build())
-
-
-
-            }
-            else if(newpass.text.toString()!=confirmpass.text.toString()){
-                showToast(buildToastMessagePassWrong())
-            }
-
-            doAsync {
-                for(allData in db.userDao().getAllData()){
-                    if(emailLogin== allData.email){
-                        db.userDao().updatepass(emailLogin,newpass.text.toString())
-                    }
-                }
-            }
-
-            // update pass
-
-
-        }
     }
 
     fun forgotpass_changepass(view: View) {
