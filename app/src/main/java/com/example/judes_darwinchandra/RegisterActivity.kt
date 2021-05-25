@@ -6,13 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_register.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
+import kotlin.random.Random
 
 class RegisterActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -130,6 +134,35 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         })
+
+        var db= Room.databaseBuilder(
+            this,
+            MyDBRoomHelper::class.java,
+            "myroomdb.db"
+        ).build()
+
+
+        regis_button.setOnClickListener {
+            //Database
+            var hasil =""
+            doAsync {
+                db.userDao().insertAll(User(Random.nextInt(), inputNamaRegis.text.toString(), inputEmailRegis.text.toString(),inputPassRegis.text.toString()))
+                for(allData in db.userDao().getAllData()){
+                    hasil += "${allData.nama} ${allData.email} ${allData.password}\n"
+                }
+                uiThread {
+                    Log.w("Hasil",hasil)
+                }
+            }
+
+
+
+
+            finish()
+            Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     fun cekvalid(validasi:Array<Int>){
@@ -162,13 +195,6 @@ class RegisterActivity : AppCompatActivity() {
 
     fun gobacktoLogin(view: View) {
         finish()
-    }
-
-    fun RegisDone(view: View) {
-        finish()
-        Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this, RegisterActivity::class.java)
-        startActivity(intent)
     }
 
 }

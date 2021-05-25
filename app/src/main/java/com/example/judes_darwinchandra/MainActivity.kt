@@ -293,23 +293,6 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        //Database
-        var db= Room.databaseBuilder(
-            this,
-            MyDBRoomHelper::class.java,
-            "myroomdbex.db"
-        ).build()
-
-        var hasil =""
-        doAsync {
-            db.userDao().insertAll(User(Random.nextInt(), inputEmail.text.toString(), inputPass.text.toString()))
-            for(allData in db.userDao().getAllData()){
-                hasil += "${allData.nama} ${allData.email}\n"
-            }
-            uiThread {
-                Log.w("Hasil",hasil)
-            }
-        }
 
     }
 

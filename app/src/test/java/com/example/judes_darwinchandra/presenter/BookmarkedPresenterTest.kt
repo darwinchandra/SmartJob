@@ -1,7 +1,7 @@
 package com.example.judes_darwinchandra.presenter
 
 import com.example.judes_darwinchandra.Data.BookmarkedData
-import com.example.judes_darwinchandra.`interface`.bookmarkInterface
+import com.example.judes_darwinchandra.bookmarkInterface
 import com.example.judes_darwinchandra.model.MyBookmarkedModel
 import org.junit.Test
 

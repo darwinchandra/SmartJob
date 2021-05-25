@@ -12,6 +12,4 @@ interface UserDAO {
     @Insert
     fun insertAll(vararg user: User)
 
-    @Query("DELETE FROM User")
-    fun deleteAll()
 }

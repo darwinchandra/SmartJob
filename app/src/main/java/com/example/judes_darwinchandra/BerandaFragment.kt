@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.judes_darwinchandra.`interface`.bookmarkInterface
+import com.example.judes_darwinchandra.bookmarkInterface
 import com.example.judes_darwinchandra.adapter.postsAdapter1
 import com.example.judes_darwinchandra.adapter.postsAdapter2
 import com.example.judes_darwinchandra.model.MyBookmarkedModel
