@@ -138,7 +138,7 @@ class RegisterActivity : AppCompatActivity() {
         var db= Room.databaseBuilder(
             this,
             MyDBRoomHelper::class.java,
-            "myroomdb.db"
+            "userdb.db"
         ).build()
 
 

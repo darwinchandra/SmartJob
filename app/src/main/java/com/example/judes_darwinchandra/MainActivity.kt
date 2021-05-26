@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         var db= Room.databaseBuilder(
             this,
             MyDBRoomHelper::class.java,
-            "myroomdb.db"
+            "userdb.db"
         ).build()
 
         login_button.setOnClickListener{

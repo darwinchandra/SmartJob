@@ -14,9 +14,9 @@ class MyWifiStateReceiver : BroadcastReceiver() {
         // membuat switch case untuk mengembalikan nilai toast saat terjadi perubahan
         when(wifiStateExtra) {
             // menampilkan hasil toast WIFI ON ketika status wifi enabled
-            WifiManager.WIFI_STATE_ENABLED -> Toast.makeText(context, "WIFI ON", Toast.LENGTH_SHORT).show()
+            //WifiManager.WIFI_STATE_ENABLED -> Toast.makeText(context, "WIFI ON", Toast.LENGTH_SHORT).show()
             // menampilkan hasil toast WIFI OFF ketika status wifi disabled
-            WifiManager.WIFI_STATE_DISABLED -> Toast.makeText(context, "WIFI OFF", Toast.LENGTH_SHORT).show()
+            //WifiManager.WIFI_STATE_DISABLED -> Toast.makeText(context, "WIFI OFF", Toast.LENGTH_SHORT).show()
         }
     }
 }

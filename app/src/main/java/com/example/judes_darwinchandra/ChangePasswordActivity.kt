@@ -37,10 +37,13 @@ class ChangePasswordActivity : AppCompatActivity() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this,R.color.gray3)
+
+
+        //build db dengan nama userdb
         var db= Room.databaseBuilder(
             this,
             MyDBRoomHelper::class.java,
-            "myroomdb.db"
+            "userdb.db"
         ).build()
 
 
@@ -56,45 +59,63 @@ class ChangePasswordActivity : AppCompatActivity() {
         notifmanage.createNotificationGroups(notificationManager!!)
         notifmanage.createNotificationChannels(notificationManager!!)
 
-        btn_ConfirmChangePass.setOnClickListener {
 
+        // update pass
+        btn_ConfirmChangePass.setOnClickListener {
+            //init file sharepref
             val mySharedPref= SharePrefData(this, sharePrefFileName)
+            //ambil data email yang login pada file sharedPref
             var emailLogin = mySharedPref.email.toString()
+            //jika passbaru dengan passconfirm berbeda maka diminta untuk mengetik ulang pass tersebut
             if(newpass.text.toString()!=confirmpass.text.toString()){
+                //toast untuk mengetik ulang
                 showToast(buildToastMessagePassWrong())
+                //fokus pada confirm pass , untuk mengetik ulang passnya
                 confirmpass.requestFocus()
             }
             else{
+                //jika confirm pass sudah cocok
+                //init variabel yang sering dipakai
                 var newPass=newpass.text.toString()
                 var oldPass=oldpw.text.toString()
+                // var ini untuk cek apakah oldpassword sudah benar atau tidak,
+                // kondisi awal kita asumsikan masih salah
                 var oldPasswordcheck=false
+                // do async proses baca db
                 doAsync {
+                    // perulangan di setiap data pada database
                     for(allData in db.userDao().getAllData()){
+                        // cek apakah email login tersebut sudah sama dengan email pada for, jika sama
+                        // cek lagi apakah oldpassword sudah cocok
                         if(emailLogin== allData.email && oldPass==allData.password){
+                            //apabila dua inputan tersebut sudah cocok, maka panggil query update pass
                             db.userDao().updatepass(emailLogin,newPass)
+                            // dan buat status menjadi true
                             oldPasswordcheck=true
                         }
                     }
                     uiThread {
+                        //cek apakah status oldpass false atau true
                         if (oldPasswordcheck==false){
+                            //apabla masih false, maka toast oldpassword don't match
                             Toast.makeText(it, "Old Password don't match", Toast.LENGTH_SHORT).show()
+                            //fokus pada old password
                             oldpw.requestFocus()
                         }
                         else{
-                            showToast(buildToastMessagePass(emailLogin))
-                            shownotifvalid()
+                            // apabila cocok, maka toast
+                            Toast.makeText(it, "Password Changed", Toast.LENGTH_SHORT).show()
+                            // dua fungsi di bawah ini, dipakai ketika mau konfirm change password lewat email
+                            //showToast(buildToastMessagePass(emailLogin))
+                            // shownotifvalid()
+                            // clear semua edit text
                             clearText()
-                            newpass.requestFocus()
+                            //fokus pada oldpass
+                            oldpw.requestFocus()
                         }
                     }
                 }
-
-
             }
-
-            // update pass
-
-
         }
     }
 
