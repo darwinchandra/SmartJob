@@ -146,48 +146,68 @@ class RegisterActivity : AppCompatActivity() {
         regis_button.setOnClickListener {
             //Database
 
-            //hasil untuk menampung data yang akan diinput
             var hasil =""
-            //berisi email yang diinput kedalam bentuk string
-            var mailLogin = inputEmailRegis.text.toString()
-            //menjalankan input ke database secara asynchronous
             doAsync {
-                //menvalidasi email apakah sudah ada pada database
-                var index = db.userDao().validateEmailRegis(mailLogin)
-                //berisi return code pada index
-                var valid= index.size
+                db.userDao().insertAll(User(Random.nextInt(), inputNamaRegis.text.toString(), inputEmailRegis.text.toString(),inputPassRegis.text.toString()))
+                for(allData in db.userDao().getAllData()){
+                    hasil += "${allData.nama} ${allData.email} ${allData.password}\n"
 
-
+                }
                 uiThread {
-                    //jika valid>0 menandakan jika email sudah pernah terdaftar pada database
-                    if(valid>0)
-                    {
-                        //jika email sama dengan yang ada pada database maka menampilkan toast bahwa
-                        //email sudah terdaftar
-                        inputEmailRegis.requestFocus()
-                        Toast.makeText(it,"Email Telah terdaftar" , Toast.LENGTH_SHORT).show()
-                        val intent = Intent(it, RegisterActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                    else{
-                        //jika email belum ada maka registrasi akan dilakukan dan data akan diinput kedalam database
-                        db.userDao().insertAll(User(Random.nextInt(), inputNamaRegis.text.toString(), inputEmailRegis.text.toString(),inputPassRegis.text.toString()))
-                        //mendapatkan semua data yang ada pada database kemudian menyimpannya pada variabel hasil
-                        for(allData in db.userDao().getAllData()){
-                            hasil += "${allData.nama} ${allData.email} ${allData.password}\n"
-
-                        }
-                        //toast untuk menampilkan bahwa registrasi telah berhasil
-                        Toast.makeText(it ,"Registrasi Berhasil", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(it, RegisterActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                    //menampilkan log berupa data pada database yang telah kita simpan pada variabel hasil
                     Log.w("Hasil",hasil)
                 }
             }
+
+
+
+
+            finish()
+            Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+
+            //hasil untuk menampung data yang akan diinput
+//            var hasil =""
+//            //berisi email yang diinput kedalam bentuk string
+//            var mailLogin = inputEmailRegis.text.toString()
+//            //menjalankan input ke database secara asynchronous
+//            doAsync {
+//                //menvalidasi email apakah sudah ada pada database
+//                var index = db.userDao().validateEmailRegis(mailLogin)
+//                //berisi return code pada index
+//                var valid= index.size
+//
+//
+//                uiThread {
+//                    //jika valid>0 menandakan jika email sudah pernah terdaftar pada database
+//                    if(valid>0)
+//                    {
+//                        //jika email sama dengan yang ada pada database maka menampilkan toast bahwa
+//                        //email sudah terdaftar
+//                        inputEmailRegis.requestFocus()
+//                        Toast.makeText(it,"Email Telah terdaftar" , Toast.LENGTH_SHORT).show()
+//                        val intent = Intent(it, RegisterActivity::class.java)
+//                        startActivity(intent)
+//                        finish()
+//                    }
+//                    else{
+//                        //jika email belum ada maka registrasi akan dilakukan dan data akan diinput kedalam database
+//                        db.userDao().insertAll(User(Random.nextInt(), inputNamaRegis.text.toString(), inputEmailRegis.text.toString(),inputPassRegis.text.toString()))
+//                        //mendapatkan semua data yang ada pada database kemudian menyimpannya pada variabel hasil
+//                        for(allData in db.userDao().getAllData()){
+//                            hasil += "${allData.nama} ${allData.email} ${allData.password}\n"
+//
+//                        }
+//                        //toast untuk menampilkan bahwa registrasi telah berhasil
+//                        Toast.makeText(it ,"Registrasi Berhasil", Toast.LENGTH_SHORT).show()
+//                        val intent = Intent(it, RegisterActivity::class.java)
+//                        startActivity(intent)
+//                        finish()
+//                    }
+//                    //menampilkan log berupa data pada database yang telah kita simpan pada variabel hasil
+//                    Log.w("Hasil",hasil)
+//                }
+//            }
 
 
 
