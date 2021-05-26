@@ -1,0 +1,121 @@
+Index: app/src/main/java/com/example/judes_darwinchandra/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.judes_darwinchandra\r\n\r\nimport android.Manifest.permission.WRITE_EXTERNAL_STORAGE\r\nimport android.annotation.SuppressLint\r\nimport android.app.NotificationChannel\r\nimport android.app.NotificationManager\r\nimport android.app.PendingIntent\r\nimport android.app.job.JobInfo\r\nimport android.app.job.JobScheduler\r\nimport android.content.ComponentName\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport android.content.pm.PackageManager\r\nimport android.media.AudioManager\r\nimport android.media.SoundPool\r\nimport android.os.Build\r\nimport android.os.Bundle\r\nimport android.os.Environment\r\nimport android.text.Editable\r\nimport android.text.TextWatcher\r\nimport android.util.Log\r\nimport android.util.Patterns\r\nimport android.view.View\r\nimport android.view.WindowManager\r\nimport android.widget.RemoteViews\r\nimport android.widget.Toast\r\nimport androidx.annotation.RequiresApi\r\nimport androidx.annotation.UiThread\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.core.app.NotificationCompat\r\nimport androidx.core.app.NotificationManagerCompat\r\nimport androidx.core.content.ContextCompat\r\nimport androidx.room.Room\r\nimport kotlinx.android.synthetic.main.activity_existing_user.*\r\nimport kotlinx.android.synthetic.main.activity_main.*\r\nimport org.jetbrains.anko.doAsync\r\nimport org.jetbrains.anko.email\r\nimport org.jetbrains.anko.find\r\nimport org.jetbrains.anko.uiThread\r\nimport java.io.File\r\nimport java.util.*\r\nimport java.util.jar.Manifest\r\nimport javax.security.auth.callback.PasswordCallback\r\nimport kotlin.collections.ArrayList\r\nimport kotlin.random.Random\r\nimport com.example.judes_darwinchandra.ExistingUser as ExistingUser\r\n\r\n\r\nvar sharePrefFileName=\"PrefEmail\"\r\n\r\n//variabel Sound Pool\r\nprivate var sound : SoundPool? =null\r\n//Untuk menangkap ID dari sound pool\r\nprivate var soundIDplayer= 1\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n    var JobSchedulerId = 10\r\n    var notificationManager: NotificationManager? = null\r\n\r\n    @SuppressLint(\"NewApi\")\r\n    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        supportActionBar?.hide()\r\n        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)\r\n        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)\r\n        window.statusBarColor = ContextCompat.getColor(this, R.color.black)\r\n        setContentView(R.layout.activity_main)\r\n\r\n        var db= Room.databaseBuilder(\r\n            this,\r\n            MyDBRoomHelper::class.java,\r\n            \"myroomdb.db\"\r\n        ).build()\r\n\r\n        login_button.setOnClickListener{\r\n            var mySharedPref = SharePrefData(this, sharePrefFileName)\r\n\r\n            mySharedPref.email = inputEmail.text.toString()\r\n\r\n            // ketika di click login button maka akan dijalankan fungsi write\r\n            if(isExternalStorageReadable()){\r\n                writeFileExternalMemory()\r\n            }\r\n\r\n            var hasil =\"\"\r\n\r\n            var emailLogin =  inputEmail.text.toString()\r\n            var passLogin = inputPass.text.toString()\r\n            doAsync {\r\n                var findData = false\r\n                for(allData in db.userDao().getAllData()){\r\n                    hasil += \"${allData.email} ${allData.password}\\n\"\r\n                    if(emailLogin == allData.email){\r\n                        findData = true\r\n                    }\r\n                }\r\n\r\n                uiThread {\r\n                    if(findData)\r\n                    {\r\n                        Toast.makeText(it,\"Email Terdaftar\" , Toast.LENGTH_SHORT).show()\r\n                    }\r\n                    else{\r\n                        Toast.makeText(it,\"Email tidak Terdaftar\" , Toast.LENGTH_SHORT).show()\r\n                    }\r\n                    Log.w(\"tes\",hasil)\r\n                }\r\n\r\n            }\r\n\r\n\r\n\r\n\r\n            clearDataLogin()\r\n            delFile()\r\n            val intent = Intent(this, BerandaActivity::class.java)\r\n            startActivity(intent)\r\n            //Cek jika id dari sound tidak sama dengan nol maka akan memainkan soundnya\r\n            if (soundIDplayer != 0) {\r\n                //memainkan sound dan Set sound kiri dan kanan, priority,apakah diulang atau tidak\r\n                sound?.play(soundIDplayer, .99f, .99f, 1, 0, .99f)\r\n            }\r\n        }\r\n\r\n\r\n\r\n        //login button wrong ketika isinya kosong\r\n        login_button.isEnabled = false\r\n        var valid = arrayOf(0, 0)\r\n        inputEmail.addTextChangedListener(object : TextWatcher {\r\n            override fun afterTextChanged(s: Editable?) {\r\n            }\r\n\r\n            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {\r\n            }\r\n\r\n            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {\r\n                if (Patterns.EMAIL_ADDRESS.matcher(inputEmail.text.toString()).matches()) {\r\n                    valid[0] = 1\r\n                    cekvalid(valid)\r\n                } else if (inputEmail.text.toString().trim().isEmpty()) {\r\n                    inputEmail.setError(\"Email can't be empty\")\r\n                    valid[0] = 0\r\n                    cekvalid(valid)\r\n                } else {\r\n                    inputEmail.setError(\"Invalid Email\")\r\n                    valid[0] = 0\r\n                    cekvalid(valid)\r\n                }\r\n            }\r\n        })\r\n        inputPass.addTextChangedListener(object : TextWatcher {\r\n            override fun afterTextChanged(s: Editable?) {\r\n            }\r\n\r\n            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {\r\n            }\r\n\r\n            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {\r\n                if (inputPass.text.toString().trim().isEmpty()) {\r\n                    inputPass.setError(\"Password can't be empty\")\r\n                    valid[1] = 0\r\n                    cekvalid(valid)\r\n                } else {\r\n                    valid[1] = 1\r\n                    cekvalid(valid)\r\n                }\r\n            }\r\n        })\r\n\r\n\r\n        floating_action_button.setOnClickListener {\r\n            val intent = Intent(this, NewsActivity::class.java)\r\n            startActivity(intent)\r\n        }\r\n        // notifikasi reminder bookmarked dijalankan setelah 10000mili detik setelah aplikasi dijalankan\r\n        // doAsync diletakkan pada oncreate\r\n        doAsync {\r\n            Thread.sleep(10000L)\r\n            uiThread {\r\n                showNotifReminder()\r\n            }\r\n        }\r\n        exist.setOnClickListener{\r\n            val intent = Intent(this, ExistingUser::class.java)\r\n            startActivity(intent)\r\n        }\r\n\r\n    }\r\n\r\n\r\n    // membuat fungsi write ke external memory\r\n    @RequiresApi(Build.VERSION_CODES.KITKAT)\r\n    private fun writeFileExternalMemory() {\r\n        //mengambil file dari external memory yang sudah ada\r\n        var myLog = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.toURI())\r\n        // jika file tidak ada maka membuat file baru\r\n        if(!myLog.exists()){\r\n            myLog.mkdir()\r\n        }\r\n        // false duplicate isinya\r\n        var duplicateEmail=false\r\n        // jika file sudah ada maka dibuat arraylist\r\n        if(File(myLog,\"ExistingUser.txt\").exists()){\r\n            val listemail=ArrayList<String>()\r\n            // file yang dibuat dan ditambahkan ke array\r\n            File(myLog,\"ExistingUser.txt\").forEachLine (Charsets.UTF_8){\r\n                listemail.add(it)\r\n            }\r\n            //membuat perulangan pada setiap data list email.Ketika email yang ad pada edittext telah ada di file tersebut.\r\n            // Maka status duplicateEmail menjadi false\r\n            Log.w(\"listemail\",listemail.toString())\r\n            // setiap array listemail maka isi text ditulis dan duplicate true untuk menghindari adanya double\r\n            for (s in listemail) {\r\n                if(s==inputEmail.text.toString()){\r\n                    duplicateEmail=true\r\n                }\r\n            }\r\n        }\r\n        // jika double salah maka mengambil text dari textbox dan masukkan kefile\r\n        if (duplicateEmail==false) {\r\n            File(myLog, \"ExistingUser.txt\").apply {\r\n                appendText(inputEmail.text.toString() + \"\\n\")\r\n            }\r\n        }\r\n        // membersih edittext\r\n     inputEmail.text?.clear()\r\n    }\r\n    // membuat fungsi untuk permission external storage\r\n    @RequiresApi(Build.VERSION_CODES.M)\r\n    private fun isExternalStorageReadable(): Boolean {\r\n        // mengecek apakah selfpermission sudah ada atau belum jika belum maka dibuat request permission agar diberikan access\r\n        if (ContextCompat.checkSelfPermission(\r\n                this,\r\n                android.Manifest.permission.WRITE_EXTERNAL_STORAGE\r\n            ) != PackageManager.PERMISSION_GRANTED\r\n        ) {\r\n            requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 5558)\r\n        }\r\n        // mengambil state dari external storage\r\n        var status = Environment.getExternalStorageState()\r\n        // jika storage sama dengan media mount dan media mount read only maka hasilnya true\r\n        if(Environment.MEDIA_MOUNTED.equals(status) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(status)){\r\n            return true\r\n        }\r\n        // jika tidak maka return false\r\n        return false\r\n    }\r\n    // memnbuat fungsi requestcode\r\n    override fun onRequestPermissionsResult(\r\n            requestCode: Int,\r\n            permissions: Array<out String>,\r\n            grantResults: IntArray\r\n        )\r\n    {\r\n        // ketika requestcode 5558 maka akan dilanjutkan dengan jika grantresult tidak kosong dan grantresult ke 0\r\n        // sudah diberikan permission maka keluar toast permission is granted dan sebaliknya jika belum maka\r\n        // akan keluar permission is denied\r\n            when(requestCode){\r\n                5558 ->{\r\n                    if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)\r\n                        Toast.makeText(this,\"Permission is Granted\",Toast.LENGTH_SHORT).show()\r\n                    else{\r\n                        Toast.makeText(this,\"Permission is Denied\",Toast.LENGTH_SHORT).show()\r\n                    }\r\n                }\r\n            }\r\n    }\r\n\r\n\r\n    private fun clearDataLogin() {\r\n        inputEmail.text?.clear()\r\n        inputPass.text?.clear()\r\n    }\r\n\r\n    //fungsi untuk menload sound pool\r\n    override fun onStart() {\r\n        //membaca data\r\n        super.onStart()\r\n        //untuk versi yang sudah diatas lolipop\r\n        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {\r\n            //memanggil fungsi untuk membuat soundpool\r\n            createNewSoundPool()\r\n        }\r\n        //untuk versi lama\r\n        else {\r\n            //memanggil fungsi untuk membuat soundpool\r\n            createOldSoundPool()\r\n        }\r\n        //Menload sound yang akan dipakai dan set prioritas\r\n        soundIDplayer = sound?.load(this, R.raw.transitiontoberanda, 1) ?: 0\r\n    }\r\n\r\n    private fun createOldSoundPool() {\r\n        //untuk Membuat SoundPool dengan maxstream,type stream dan quality\r\n        sound = SoundPool(15, AudioManager.STREAM_MUSIC, 0)\r\n    }\r\n\r\n    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)\r\n    private fun createNewSoundPool() {\r\n        sound = SoundPool.Builder()\r\n            .setMaxStreams(15)\r\n            .build()\r\n    }\r\n\r\n    override fun onStop() {\r\n        super.onStop()\r\n        sound?.release()\r\n        sound = null\r\n    }\r\n\r\n    fun cekvalid(validasi: Array<Int>) {\r\n        if (validasi[0] == 1 && validasi[1] == 1) {\r\n            login_button.isEnabled = true\r\n        } else {\r\n            login_button.isEnabled = false\r\n        }\r\n    }\r\n\r\n    //Intent Eksplisit\r\n    //fungsi untuk keluar kehalaman Registrasi\r\n    fun gotoRegis(view: View) {\r\n        val intent = Intent(this, RegisterActivity::class.java)\r\n        startActivity(intent)\r\n\r\n    }\r\n\r\n\r\n\r\n\r\n    private fun delFile() {\r\n        if (fileList().size != 0) {\r\n            for (i in fileList())\r\n                deleteFile(i)\r\n        }\r\n    }\r\n\r\n    //fungsi untuk keluar kehalaman Forgot Password\r\n    fun forgotpass_login(view: View) {\r\n        val intent=Intent(this,ForgotPasswordActivity::class.java)\r\n        startActivity(intent)\r\n    }\r\n\r\n    override fun onWindowFocusChanged(hasFocus: Boolean) {\r\n        super.onWindowFocusChanged(hasFocus)\r\n        if (hasFocus) hideSystemUI()\r\n    }\r\n    private fun hideSystemUI() {\r\n        // Enables regular immersive mode.\r\n        // For \"lean back\" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.\r\n        // Or for \"sticky immersive,\" replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY\r\n        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY\r\n                // Set the content to appear under the system bars so that the\r\n                // content doesn't resize when the system bars hide and show.\r\n                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE\r\n                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION\r\n                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN\r\n                // Hide the nav bar and status bar\r\n                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION\r\n                or View.SYSTEM_UI_FLAG_FULLSCREEN)\r\n    }\r\n\r\n    private fun showNotifReminder(){\r\n        //notif manager getsystem notif service\r\n        var notificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE)\r\n                as NotificationManager\r\n\r\n        //class baru untuk create notif. class \"NotificationManager\" telah dibuat pada class tersendiri pertemuan sebelumnya\r\n        // sehingga dapat di akses pada tiap activity\r\n        val notifmanage = NotificationManager()\r\n        // create group dan channelnya\r\n        notifmanage.createNotificationGroups(notificationManager!!)\r\n        notifmanage.createNotificationChannels(notificationManager!!)\r\n\r\n        // membuat intent untuk mengarahkan ke bookmark activity\r\n        val notifyBookmarkIntent = Intent(this, BookmarkedActivity::class.java)\r\n            .apply {\r\n                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK }\r\n\r\n        // membuat pending intent guna untuk memberikan intent content pada notifikiasi nantinya\r\n        // pending intent ii berisi intent yang sebelumnya telah kita buat yaitu  notifyBookmarkIntent\r\n        val myPendingIntent = PendingIntent.getActivity(this,0,\r\n            notifyBookmarkIntent,\r\n            PendingIntent.FLAG_CANCEL_CURRENT);\r\n\r\n        // pembuatan variable notifikiasi yang dan diisi ContentIntentnya menjadi myPendingIntent\r\n        // untuk menghandle ketika diclick ada intent yang akan di triger dan mengarahkannya kepada bookmarkedactivity\r\n        var myNotification = NotificationCompat.Builder(this,\"Reminder_Promosi\")\r\n            // title notif\r\n            .setContentTitle(\"Bookmarked Loker\")\r\n            //isi notif\r\n            .setContentText(\"Yuk cek kembali Loker yang sudah di bookmark kamu\")\r\n            // group notif\r\n            .setGroup(\"Promosi\")\r\n            //icon notif\r\n            .setSmallIcon(R.drawable.ic_baseline_bookmark_24)\r\n            .setContentIntent(myPendingIntent)\r\n        // build var notif yang telah dbuat dengan id 100\r\n        notificationManager?.notify(100,myNotification.build())\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/judes_darwinchandra/MainActivity.kt	(revision c48ff3f401dbbcfdbe13a90d37c8ea210d913b47)
++++ app/src/main/java/com/example/judes_darwinchandra/MainActivity.kt	(date 1621945541026)
+@@ -74,14 +74,6 @@
+         ).build()
+ 
+         login_button.setOnClickListener{
+-            var mySharedPref = SharePrefData(this, sharePrefFileName)
+-
+-            mySharedPref.email = inputEmail.text.toString()
+-
+-            // ketika di click login button maka akan dijalankan fungsi write
+-            if(isExternalStorageReadable()){
+-                writeFileExternalMemory()
+-            }
+ 
+             var hasil =""
+ 
+@@ -91,7 +83,7 @@
+                 var findData = false
+                 for(allData in db.userDao().getAllData()){
+                     hasil += "${allData.email} ${allData.password}\n"
+-                    if(emailLogin == allData.email){
++                    if(emailLogin == allData.email && passLogin==){
+                         findData = true
+                     }
+                 }
+@@ -99,7 +91,8 @@
+                 uiThread {
+                     if(findData)
+                     {
+-                        Toast.makeText(it,"Email Terdaftar" , Toast.LENGTH_SHORT).show()
++                        val intent = Intent(it, BerandaActivity::class.java)
++                        startActivity(intent)
+                     }
+                     else{
+                         Toast.makeText(it,"Email tidak Terdaftar" , Toast.LENGTH_SHORT).show()
+@@ -109,13 +102,21 @@
+ 
+             }
+ 
++            var mySharedPref = SharePrefData(this, sharePrefFileName)
++
++            mySharedPref.email = inputEmail.text.toString()
++
++            // ketika di click login button maka akan dijalankan fungsi write
++            if(isExternalStorageReadable()){
++                writeFileExternalMemory()
++            }
++
++
+ 
+ 
+ 
+             clearDataLogin()
+             delFile()
+-            val intent = Intent(this, BerandaActivity::class.java)
+-            startActivity(intent)
+             //Cek jika id dari sound tidak sama dengan nol maka akan memainkan soundnya
+             if (soundIDplayer != 0) {
+                 //memainkan sound dan Set sound kiri dan kanan, priority,apakah diulang atau tidak
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CompilerConfiguration\">\r\n    <bytecodeTargetLevel target=\"1.8\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision c48ff3f401dbbcfdbe13a90d37c8ea210d913b47)
++++ .idea/compiler.xml	(date 1621943831640)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="CompilerConfiguration">
+-    <bytecodeTargetLevel target="1.8" />
++    <bytecodeTargetLevel target="11" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/runConfigurations.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/runConfigurations.xml	(date 1621943672818)
++++ .idea/runConfigurations.xml	(date 1621943672818)
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RunConfigurationProducerService">
++    <option name="ignoredProducers">
++      <set>
++        <option value="com.android.tools.idea.compose.preview.runconfiguration.ComposePreviewRunConfigurationProducer" />
++      </set>
++    </option>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" default=\"true\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision c48ff3f401dbbcfdbe13a90d37c8ea210d913b47)
++++ .idea/misc.xml	(date 1621943831640)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
