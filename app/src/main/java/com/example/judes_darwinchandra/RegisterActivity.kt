@@ -135,7 +135,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         })
-
+        //membentuk database dengan nama userdb.db
         var db= Room.databaseBuilder(
             this,
             MyDBRoomHelper::class.java,
@@ -145,25 +145,7 @@ class RegisterActivity : AppCompatActivity() {
 
         regis_button.setOnClickListener {
             //Database
-//            var hasil =""
-//            doAsync {
-//                db.userDao().insertAll(User(Random.nextInt(), inputNamaRegis.text.toString(), inputEmailRegis.text.toString(),inputPassRegis.text.toString()))
-//                for(allData in db.userDao().getAllData()){
-//                    hasil += "${allData.nama} ${allData.email} ${allData.password}\n"
-//
-//                }
-//                uiThread {
-//                    Log.w("Hasil",hasil)
-//                }
-//            }
-//
-//
-//
-//
-//            finish()
-//            Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
-//            val intent = Intent(this, RegisterActivity::class.java)
-//            startActivity(intent)
+
             //hasil untuk menampung data yang akan diinput
             var hasil =""
             //berisi email yang diinput kedalam bentuk string

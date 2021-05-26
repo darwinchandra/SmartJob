@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         setContentView(R.layout.activity_main)
 
+        //membentuk database dengan nama userdb.db
         var db= Room.databaseBuilder(
             this,
             MyDBRoomHelper::class.java,
