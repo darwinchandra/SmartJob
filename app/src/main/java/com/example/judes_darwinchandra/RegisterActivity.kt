@@ -146,8 +146,7 @@ class RegisterActivity : AppCompatActivity() {
         regis_button.setOnClickListener {
             //Database
 
-            //hasil untuk menampung data yang akan diinput
-            var hasil =""
+
             //berisi email yang diinput kedalam bentuk string
             var mailLogin = inputEmailRegis.text.toString()
             //menjalankan input ke database secara asynchronous
@@ -184,8 +183,6 @@ class RegisterActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     }
-                    //menampilkan log berupa data pada database yang telah kita simpan pada variabel hasil
-                    Log.w("Hasil",hasil)
                 }
             }
 
