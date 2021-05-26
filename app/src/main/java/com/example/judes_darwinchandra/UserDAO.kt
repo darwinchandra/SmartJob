@@ -5,14 +5,15 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 
+//DAO merupakan komponen utama Room yang menyertakan metode yang menawarkan akses
+//abstrak ke database aplikasi
 @Dao
 interface UserDAO {
-
-    // query untuk menampilkan semua database dan disimpan dalam bentuk list
+    //membca semua data pada tabel User
     @Query("Select * From User")
     fun getAllData() : List<User>
 
-    // perintah untuk insert
+    //memasukkan data kedalam tabel user
     @Insert
     fun insertAll(vararg user: User)
 

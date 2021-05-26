@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                     else{
-                        Toast.makeText(it,"Username dan Password Salah" , Toast.LENGTH_SHORT).show()
+                        Toast.makeText(it,"Username dan Password Tidak Cocok" , Toast.LENGTH_SHORT).show()
                         inputEmail.requestFocus()
                     }
 //
