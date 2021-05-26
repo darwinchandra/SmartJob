@@ -75,6 +75,8 @@ class MainActivity : AppCompatActivity() {
         ).build()
 
         login_button.setOnClickListener{
+            //hasil untuk menampung data yang akan diinput
+            var hasil =""
             var findData = false
             //berisi email dan password yang diinput dan di konversi kedalam bentuk string
             var mailLogin = inputEmail.text.toString()
@@ -99,6 +101,8 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(it,"Username dan Password Tidak Cocok" , Toast.LENGTH_SHORT).show()
                         inputEmail.requestFocus()
                     }
+                    //menampilkan log berupa data pada database yang telah kita simpan pada variabel hasil
+                    Log.w("tes",hasil)
                 }
 
             }

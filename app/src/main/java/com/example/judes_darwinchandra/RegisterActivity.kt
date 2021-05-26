@@ -172,11 +172,6 @@ class RegisterActivity : AppCompatActivity() {
                     else{
                         //jika email belum ada maka registrasi akan dilakukan dan data akan diinput kedalam database
                         db.userDao().insertAll(User(Random.nextInt(), inputNamaRegis.text.toString(), inputEmailRegis.text.toString(),inputPassRegis.text.toString()))
-                        //mendapatkan semua data yang ada pada database kemudian menyimpannya pada variabel hasil
-                        for(allData in db.userDao().getAllData()){
-                            hasil += "${allData.nama} ${allData.email} ${allData.password}\n"
-
-                        }
                         //toast untuk menampilkan bahwa registrasi telah berhasil
                         Toast.makeText(it ,"Registrasi Berhasil", Toast.LENGTH_SHORT).show()
                         val intent = Intent(it, RegisterActivity::class.java)
