@@ -26,6 +26,7 @@ interface UserDAO {
     //QUERY UNTUK TAMPILKAN DATA DENGAN EMAIL DAN PASSWORD YANG COCOK dan di buat dalam bentuk list
     @Query("SELECT * FROM User WHERE COLUMN_EMAIL= :email AND COLUMN_PASSWORD= :pass")
     fun validateEmailPass(email:String,pass:String) : List<User>
+
     //melakukan validasi email dengan yang ada pada di database
     @Query("SELECT * FROM User WHERE COLUMN_EMAIL= :email ")
     fun validateEmailRegis(email:String) : List<User>
