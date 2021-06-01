@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity() {
             //berisi email dan password yang diinput dan di konversi kedalam bentuk string
             var mailLogin = inputEmail.text.toString()
             var passLogin = inputPass.text.toString()
+
             doAsync {
                 //menvalidasi email apakah sudah ada pada database
                 var index = db.userDao().validateEmailPass(mailLogin,passLogin)

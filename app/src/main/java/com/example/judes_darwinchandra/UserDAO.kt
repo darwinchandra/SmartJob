@@ -3,7 +3,6 @@ package com.example.judes_darwinchandra
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Update
 
 //DAO merupakan komponen utama Room yang menyertakan metode yang menawarkan akses
 //abstrak ke database aplikasi
@@ -17,6 +16,11 @@ interface UserDAO {
     @Insert
     fun insertAll(vararg user: User)
 
+    @Query("SELECT COUNT(*) FROM  User")
+    fun count(): Int
+
+    @Query("INSERT INTO User VALUES (:id,:email,:pass)")
+    fun PreloadData(id:Int,email: String,pass: String)
 
     //QUERY UNTUK UPDATE PASSWORD
     @Query("UPDATE User SET COLUMN_PASSWORD = :newpass WHERE COLUMN_EMAIL= :email")

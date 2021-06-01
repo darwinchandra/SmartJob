@@ -8,4 +8,9 @@ import androidx.room.RoomDatabase
 abstract class MyDBRoomHelper : RoomDatabase() {
     //membuat function untuk class dbhelper dengan tipe data class yang telah dibuat
     abstract fun userDao() : UserDAO
+    fun addUserTransaction(user :User) {
+        runInTransaction {
+            userDao().PreloadData(user._id,user.email,user.password)
+        }
+    }
 }
