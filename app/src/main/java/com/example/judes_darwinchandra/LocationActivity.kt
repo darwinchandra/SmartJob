@@ -48,10 +48,10 @@ class LocationActivity : AppCompatActivity() {
 
     }
     fun getCustomDialog() {
-        var Mylayout = layoutInflater.inflate(R.layout.my_custom_dialog,null)
+        var Mylayout = layoutInflater.inflate(R.layout.customdialogkota,null)
         val mydialogbuilder : AlertDialog.Builder = AlertDialog.Builder(this).apply {
             setView(Mylayout)
-            setTitle("Masukkan")
+            setTitle("Masukkan Kota")
         }
         var mydialog = mydialogbuilder.create()
         var nama = Mylayout.findViewById<EditText>(R.id.nama)
@@ -73,7 +73,7 @@ class LocationActivity : AppCompatActivity() {
     companion object{
         //fungsi untuk membuat message dari Toast
         fun buildToastMessage(name:String):String{
-            return "Nama Anda Adalah $name"
+            return "Nama Kotanya Adalah $name"
         }
     }
 }

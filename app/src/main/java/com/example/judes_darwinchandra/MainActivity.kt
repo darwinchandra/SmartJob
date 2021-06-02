@@ -76,7 +76,6 @@ class MainActivity : AppCompatActivity() {
 
         login_button.setOnClickListener{
             //hasil untuk menampung data yang akan diinput
-
             var hasil =""
             var findData = false
             //berisi email dan password yang diinput dan di konversi kedalam bentuk string
@@ -87,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                 var index = db.userDao().validateEmailPass(mailLogin,passLogin)
                 //berisi return code pada index
                 var valid= index.size
+
                 //mendapatkan semua data yang ada pada database kemudian menyimpannya pada variabel hasil
                 uiThread {
                     //jika valid>0 menandakan jika email sesuai dengan yang ada pada database maka user dapat masuk ke dalam halaman beranda
@@ -116,8 +116,7 @@ class MainActivity : AppCompatActivity() {
             }
             clearDataLogin()
             delFile()
-            val intent = Intent(this, BerandaActivity::class.java)
-            startActivity(intent)
+
             //Cek jika id dari sound tidak sama dengan nol maka akan memainkan soundnya
             if (soundIDplayer != 0) {
                 //memainkan sound dan Set sound kiri dan kanan, priority,apakah diulang atau tidak
