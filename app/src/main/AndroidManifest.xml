@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.judes_darwinchandra">
 
+    <permission android:name="com.example.app2.provider.READ_URI_DB"/>
+    <uses-permission android:name="com.example.app2.provider.READ_URI_DB"/>
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" /> <!-- untuk dapat membaca/mengambil contact dari hp kita -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />

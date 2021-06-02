@@ -1,11 +1,14 @@
 package com.example.judes_darwinchandra
 
+import android.content.Context
 import android.database.Cursor
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.provider.ContactsContract.Contacts
+import android.view.View
 import android.view.WindowManager
-import android.widget.SearchView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -13,6 +16,7 @@ import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.judes_darwinchandra.Data.myContact
 import com.example.judes_darwinchandra.adapter.postsAdapterInvite
 import kotlinx.android.synthetic.main.activity_invitefriends.*
@@ -21,6 +25,7 @@ class invitefriends : AppCompatActivity(),
     //Metode Callback yang mengatur siklus hidup Loader, yang terdiri atas 3 metode utama onCreateLoader(), onLoadFinished(), dan
     //onLoaderReset()
     LoaderManager.LoaderCallbacks<Cursor>
+
 {
     //DISPLAY_NAME dan NUMBER merupakan variable yang akan digunakan untuk
     //menentukan attribute yang perlu diambil pada CursorLoader
@@ -29,6 +34,7 @@ class invitefriends : AppCompatActivity(),
 
     //myListContact Untuk memasukkan contact kedalam Mutable list
     var myListContact : MutableList<myContact> = ArrayList()
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +44,11 @@ class invitefriends : AppCompatActivity(),
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this,R.color.gray3)
+
         topAppBar_invitefriends.setNavigationOnClickListener {
             finish()
         }
+
 
         //Untuk menjalankan loader kita mmerlukan intLoader yang terdiri dari id,objek bundle dan callback
         //getInstance(this) menyatakan dari mana context yang menjalankan loader
@@ -69,7 +77,12 @@ class invitefriends : AppCompatActivity(),
             }
 
         } )
+
+
+
+
     }
+
         //InitLoader akan menjalankan onCreateLoader() yang akan mengembalikan objek CursorLoader()
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
         //mentukan reference uri (alamat) pembacaan data, uri yang digunakan adalah uri dari kontak phone kita
@@ -126,4 +139,10 @@ class invitefriends : AppCompatActivity(),
     override fun onLoaderReset(loader: Loader<Cursor>) {
         recyInvFriend.adapter?.notifyDataSetChanged()
     }
+
+    
 }
+
+
+
+

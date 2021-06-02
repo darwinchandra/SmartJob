@@ -85,7 +85,7 @@ class BerandaFragment : Fragment() {
 
             val intent = Intent(requireContext(), LocationActivity::class.java)
             startActivity(intent)
-            Toast.makeText(context, "loca", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "location", Toast.LENGTH_SHORT).show()
             // Handle navigation icon press
         }
         topAppBar.setOnMenuItemClickListener {
