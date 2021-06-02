@@ -82,28 +82,28 @@ class MainActivity : AppCompatActivity() {
             //berisi email dan password yang diinput dan di konversi kedalam bentuk string
             var mailLogin = inputEmail.text.toString()
             var passLogin = inputPass.text.toString()
-//            doAsync {
-//                //menvalidasi email apakah sudah ada pada database
-//                var index = db.userDao().validateEmailPass(mailLogin,passLogin)
-//                //berisi return code pada index
-//                var valid= index.size
-//                //mendapatkan semua data yang ada pada database kemudian menyimpannya pada variabel hasil
-//                uiThread {
-//                    //jika valid>0 menandakan jika email sesuai dengan yang ada pada database maka user dapat masuk ke dalam halaman beranda
-//                    if(valid>0) {
-//                        val intent = Intent(it, BerandaActivity::class.java)
-//                        startActivity(intent)
-//                    }
-//                    //jika data tidak cocok dengan data yang ada pada database maka akan menampilkan toast bahwa username dan password salah
-//                    else{
-//                        Toast.makeText(it,"Username dan Password Tidak Cocok" , Toast.LENGTH_SHORT).show()
-//                        inputEmail.requestFocus()
-//                    }
-//                    //menampilkan log berupa data pada database yang telah kita simpan pada variabel hasil
-//
-//                }
-//
-//            }
+            doAsync {
+                //menvalidasi email apakah sudah ada pada database
+                var index = db.userDao().validateEmailPass(mailLogin,passLogin)
+                //berisi return code pada index
+                var valid= index.size
+                //mendapatkan semua data yang ada pada database kemudian menyimpannya pada variabel hasil
+                uiThread {
+                    //jika valid>0 menandakan jika email sesuai dengan yang ada pada database maka user dapat masuk ke dalam halaman beranda
+                    if(valid>0) {
+                        val intent = Intent(it, BerandaActivity::class.java)
+                        startActivity(intent)
+                    }
+                    //jika data tidak cocok dengan data yang ada pada database maka akan menampilkan toast bahwa username dan password salah
+                    else{
+                        Toast.makeText(it,"Username dan Password Tidak Cocok" , Toast.LENGTH_SHORT).show()
+                        inputEmail.requestFocus()
+                    }
+                    //menampilkan log berupa data pada database yang telah kita simpan pada variabel hasil
+
+                }
+
+            }
 
 
             var mySharedPref = SharePrefData(this, sharePrefFileName)
