@@ -9,20 +9,24 @@
     android:padding="10dp"
     tools:context=".MainActivity">
 
-    <Spinner
-        android:id="@+id/spinner1"
+    <ListView
+        android:id="@+id/lv_Location"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:background="#1111"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:fontFamily="@font/basic_regular"
+
+        />
 
     <EditText
-        android:id="@+id/edit_text_name"
+        android:id="@+id/edit_text_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="15"
         android:hint="Location"
-        android:inputType="textAutoComplete" />
+        android:inputType="textAutoComplete"
+        android:layout_marginTop="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,17 +35,17 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/btn_submit"
+            android:id="@+id/btn_tambahkota"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Simpan" />
+            android:text="Add City" />
 
         <Button
             android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Hapus" />
+            android:text="Delete City" />
     </LinearLayout>
 </LinearLayout>

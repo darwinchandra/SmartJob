@@ -41,7 +41,7 @@ class myDBRoomHelper (context: Context) : SQLiteOpenHelper(
     }
 
     fun viewAllName() : List<String>{
-        val nameList = ArrayList<String>()
+        val locaList = ArrayList<String>()
         val SELECT_NAME = "SELECT ${userDB.userTable.COLUMN_LOCATION} FROM " +
                 "${userDB.userTable.TABLE_USER}"
         var db = this.writableDatabase
@@ -55,10 +55,10 @@ class myDBRoomHelper (context: Context) : SQLiteOpenHelper(
         if(cursor.moveToFirst()){
             do{
                 location = cursor.getString(cursor.getColumnIndex(userDB.userTable.COLUMN_LOCATION))
-                nameList.add(location)
+                locaList.add(location)
             }while (cursor.moveToNext())
         }
-        return nameList
+        return locaList
     }
 
     fun deleteUser(location : String){

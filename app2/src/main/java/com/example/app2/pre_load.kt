@@ -26,34 +26,13 @@ class pre_load : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pre_load)
-
-        btn_yes.setOnClickListener { executeLoadDataTransaction() }
-        btn_no.setOnClickListener { finishThisActivity() }
+        executeLoadDataTransaction()
     }
 
     private fun finishThisActivity() {
         var myFirstRunSharePref = FirstRunSharePref(this)
         myFirstRunSharePref.firstRun = false
         this.finish()
-    }
-
-    private fun executeLoadData() {
-        btn_no.isEnabled = false
-        btn_yes.isEnabled = false
-        myProgress.progress = 0
-        var progress = 0
-        mySQLitedb = myDBRoomHelper(this)
-        doAsync {
-            for (userData in mhs) {
-                progress += 1
-                mySQLitedb?.addUser(userData)
-                uiThread {
-                    myProgress.progress += progress / mhs.size * 100
-                    Log.w("Progress", "${myProgress.progress}")
-                }
-            }
-            uiThread { finishThisActivity() }
-        }
     }
 
     private fun executeLoadDataTransaction() {

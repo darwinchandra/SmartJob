@@ -27,9 +27,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(secondIntent)
         }
         updateAdapter()
-        btn_submit.setOnClickListener {
+        lv_Location.setOnItemClickListener { parent, view, position, id ->
+            doAsync {
+                var locaList = mySQLitedb?.viewAllName()?.toTypedArray()
+
+                edit_text_location.setText(locaList!![position])
+            }
+        }
+        btn_tambahkota.setOnClickListener {
             var userTmp = User()
-            userTmp.location = edit_text_name.text.toString()
+            userTmp.location = edit_text_location.text.toString()
 
             var result = mySQLitedb?.addUser(userTmp)
             if(result!=-1L){
@@ -39,16 +46,16 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Gagal", Toast.LENGTH_SHORT).show()
             }
             updateAdapter()
-            edit_text_name.text.clear()
+            edit_text_location.text.clear()
 
         }
         btn_delete.setOnClickListener {
-            var nama = spinner1.selectedItem.toString()
-            if(nama!=null || nama != ""){
+            var location = edit_text_location.text.toString()
+            if(location!=null || location != ""){
 
                 doAsync {
 
-                    mySQLitedb?.deleteUser(nama)
+                    mySQLitedb?.deleteUser(location)
                     updateAdapter()
                 }
             }
@@ -56,14 +63,13 @@ class MainActivity : AppCompatActivity() {
     }
     fun updateAdapter(){
         doAsync {
-            var nameList = mySQLitedb?.viewAllName()?.toTypedArray()
+            var locaList = mySQLitedb?.viewAllName()?.toTypedArray()
             uiThread {
-                if(spinner1 != null && nameList?.size != 0){
-                    var arrayAdapter = ArrayAdapter(applicationContext,
-                        android.R.layout.simple_spinner_dropdown_item,
-                        nameList!!
+                if(lv_Location != null && locaList?.size != 0){
+                    lv_Location.adapter = ArrayAdapter(applicationContext,
+                        android.R.layout.simple_list_item_1,
+                        locaList!!
                     )
-                    spinner1.adapter = arrayAdapter
                 }
             }
         }
