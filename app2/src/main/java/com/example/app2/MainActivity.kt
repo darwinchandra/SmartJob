@@ -12,24 +12,24 @@ import org.jetbrains.anko.uiThread
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    var mySQLitedb : myDBRoomHelper? = null
-    var myFirstRunSharePref : FirstRunSharePref? = null
+    var SQLitedb : myDBRoomHelper? = null
+    var FirstRunSharePref : FirstRunSharePref? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mySQLitedb = myDBRoomHelper(this)
-        myFirstRunSharePref = FirstRunSharePref(this)
-        mySQLitedb?.deleteAllUser()
-        myFirstRunSharePref?.firstRun = true
-        if(myFirstRunSharePref!!.firstRun){
+        SQLitedb = myDBRoomHelper(this)
+        FirstRunSharePref = FirstRunSharePref(this)
+        SQLitedb?.deleteAllUser()
+        FirstRunSharePref?.firstRun = true
+        if(FirstRunSharePref!!.firstRun){
             val secondIntent = Intent(this,pre_load::class.java)
             startActivity(secondIntent)
         }
         updateAdapter()
         lv_Location.setOnItemClickListener { parent, view, position, id ->
             doAsync {
-                var locaList = mySQLitedb?.viewAllName()?.toTypedArray()
+                var locaList = SQLitedb?.viewAllName()?.toTypedArray()
 
                 edit_text_location.setText(locaList!![position])
             }
@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
             var userTmp = User()
             userTmp.location = edit_text_location.text.toString()
 
-            var result = mySQLitedb?.addUser(userTmp)
-            if(result!=-1L){
+            var hasil = SQLitedb?.addUser(userTmp)
+            if(hasil!=-1L){
                 Toast.makeText(this,"Berhasil", Toast.LENGTH_SHORT).show()
             }
             else {
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
                 doAsync {
 
-                    mySQLitedb?.deleteUser(location)
+                    SQLitedb?.deleteUser(location)
                     updateAdapter()
                 }
             }
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     }
     fun updateAdapter(){
         doAsync {
-            var locaList = mySQLitedb?.viewAllName()?.toTypedArray()
+            var locaList = SQLitedb?.viewAllName()?.toTypedArray()
             uiThread {
                 if(lv_Location != null && locaList?.size != 0){
                     lv_Location.adapter = ArrayAdapter(applicationContext,

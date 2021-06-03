@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class FirstRunSharePref(context: Context) {
-    private val keyPref = "FIRST_RUN"
-    private var mySharePref : SharedPreferences =
-        context.getSharedPreferences("SharePrefFile", Context.MODE_PRIVATE)
+    private val SharekeyPref = "FIRST_RUN"
+    private var SharePref : SharedPreferences =
+        context.getSharedPreferences("SharePreferenceFile", Context.MODE_PRIVATE)
     var firstRun : Boolean
-        get() = mySharePref.getBoolean(keyPref, true)
-        set(value) { mySharePref.edit().putBoolean(keyPref,value).commit() }
+        get() = SharePref.getBoolean(SharekeyPref, true)
+        set(value) { SharePref.edit().putBoolean(SharekeyPref,value).commit() }
 }

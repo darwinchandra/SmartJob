@@ -11,9 +11,9 @@ import com.example.app2.myDBRoomHelper
 
 
 class ContentProvider : ContentProvider() {
-    private var dbHelper: myDBRoomHelper? = null
+    private var dbRoomHelper: myDBRoomHelper? = null
     override fun onCreate(): Boolean {
-        dbHelper = myDBRoomHelper(context!!)
+        dbRoomHelper = myDBRoomHelper(context!!)
         return true
     }
 
@@ -28,7 +28,7 @@ class ContentProvider : ContentProvider() {
         var queryBuilder = SQLiteQueryBuilder()
         queryBuilder.tables = userDB.userTable.TABLE_USER
         var cursor = queryBuilder.query(
-            dbHelper?.readableDatabase,
+            dbRoomHelper?.readableDatabase,
             p1, p2, p3, null, null, p4
         )
         cursor.setNotificationUri(context?.contentResolver, p0)
