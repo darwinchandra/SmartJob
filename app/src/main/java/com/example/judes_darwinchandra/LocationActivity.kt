@@ -36,7 +36,9 @@ class LocationActivity : AppCompatActivity() {
         topAppBar_loca.setNavigationOnClickListener {
             finish()
         }
+        //menambahkan onclick pada saat add di tekan maka akan memunculkan kotak dialog
         addlocation.setOnClickListener{
+            //fungsi untuk menampilkan kotak dialog
             getCustomDialog()
         }
 
@@ -64,15 +66,20 @@ class LocationActivity : AppCompatActivity() {
     }
 
 
+    //custom dialog untuk menambahkan kota
     fun getCustomDialog() {
+        //menerapkan layout yang telah di buat
         var Mylayout = layoutInflater.inflate(R.layout.customdialogkota, null)
+        //membuild custom dialog
         val mydialogbuilder : AlertDialog.Builder = AlertDialog.Builder(this).apply {
             setView(Mylayout)
             setTitle("Masukkan Kota")
         }
+        //melakukan create pada dialog yang telah dibuat
         var mydialog = mydialogbuilder.create()
         var kota = Mylayout.findViewById<EditText>(R.id.dialog_ET_kota)
         var Btnok = Mylayout.findViewById<Button>(R.id.dialog_btn_ok_kota)
+        //ketika button ok di klik maka dialog akan ditutup
         Btnok.setOnClickListener {
             insertkota(kota.text.toString())
             mydialog.cancel()
@@ -80,22 +87,23 @@ class LocationActivity : AppCompatActivity() {
 
         mydialog.show()
     }
-
+    //fungsi untuk menambahkan kota
     fun insertkota(newlocation:String){
 
         var temp= locationTransaction(this)
 
         // melakukan doasync
         doAsync {
-
+            // locallist menampung semua isi data dari app 2 dan ditulis ke arraylist
             var locaList = temp?.viewAllLocation()?.toTypedArray()
-
             var loca = Location()
             loca.id=locaList.size+1
+            //menambahkan lokasi baru
             loca.location=newlocation
-
+            //insert lokasi baru kedalam database
             temp?.insertDataLocation(loca)
             uiThread {
+                //mengupdate adapter
                 updateAdapter()
             }
         }

@@ -38,11 +38,14 @@ class locationTransaction(context: Context) {
         // hasil
         return myLocaList
     }
-
+    //fungsi untuk menambah lokasi
     fun insertDataLocation(location : Location){
         var values= ContentValues()
+        //mebambahkan id ke dalam database
         values.put(COLUMN_ID,location.id)
+        //menambahkan nama lokasi baru
         values.put(COLUMN_LOCATION,location.location)
+        //uri untuk melakukan insert
         var uri = myContentResolver.insert(myContentProviderURI.CONTENT_URI,values)
     }
 }

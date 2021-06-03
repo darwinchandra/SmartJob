@@ -48,16 +48,17 @@ class ContentProvider : ContentProvider() {
     override fun getType(p0: Uri): String? {
         TODO("Not yet implemented")
     }
-
+    //mengoveride fungsi insert untuk menambahkan lokasi baru
     override fun insert(p0: Uri, p1: ContentValues?): Uri? {
+        // menambahkan perintah insert untuk dapat menambahkan data baru
         var id=dbRoomHelper!!.writableDatabase.insert(locationDB.userTable.TABLE_USER,null,p1)
-
+        //jika id>0 maka akan di jalankan
         if (id > 0) {
             val uri = ContentUris.withAppendedId(CONTENT_URI, id)
             context!!.contentResolver.notifyChange(uri, null)
             return uri
         }
-
+        //jika gagal maka akan di tampilkan execption
         throw SQLException("Gagal untuk tambah data ke $p0")
     }
 
