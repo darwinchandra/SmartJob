@@ -71,13 +71,13 @@ class LocationActivity : AppCompatActivity() {
             setTitle("Masukkan Kota")
         }
         var mydialog = mydialogbuilder.create()
-        var nama = Mylayout.findViewById<EditText>(R.id.nama)
-        var Btnok = Mylayout.findViewById<Button>(R.id.ok)
+        var kota = Mylayout.findViewById<EditText>(R.id.dialog_ET_kota)
+        var Btnok = Mylayout.findViewById<Button>(R.id.dialog_btn_ok_kota)
         Btnok.setOnClickListener {
-            textViewnama.text=nama.text
+            kota.text
             mydialog.cancel()
             //Menampilkan Toast
-            showToast(buildToastMessage(nama.text.toString()))
+            showToast(buildToastMessage(kota.text.toString()))
         }
 
         mydialog.show()

@@ -3,13 +3,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <EditText
-        android:id="@+id/nama"
+        android:id="@+id/dialog_ET_kota"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Masukkan Nama Kota"/>
 
     <Button
-        android:id="@+id/ok"
+        android:id="@+id/dialog_btn_ok_kota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

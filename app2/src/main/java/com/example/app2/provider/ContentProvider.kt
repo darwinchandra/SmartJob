@@ -2,8 +2,10 @@ package com.example.app2.provider
 
 
 import android.content.ContentProvider
+import android.content.ContentUris
 import android.content.ContentValues
 import android.database.Cursor
+import android.database.SQLException
 import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
 import com.example.app2.MyDB.locationDB
@@ -48,7 +50,15 @@ class ContentProvider : ContentProvider() {
     }
 
     override fun insert(p0: Uri, p1: ContentValues?): Uri? {
-        TODO("Not yet implemented")
+        var id=dbRoomHelper!!.writableDatabase.insert(locationDB.userTable.TABLE_USER,null,p1)
+
+        if (id > 0) {
+            val uri = ContentUris.withAppendedId(CONTENT_URI, id)
+            context!!.contentResolver.notifyChange(uri, null)
+            return uri
+        }
+
+        throw SQLException("Gagal untuk tambah data ke $p0")
     }
 
     override fun delete(p0: Uri, p1: String?, p2: Array<out String>?): Int {
