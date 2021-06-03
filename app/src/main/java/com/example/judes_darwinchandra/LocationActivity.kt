@@ -45,11 +45,11 @@ class LocationActivity : AppCompatActivity() {
     // membuat fungsi
     fun updateAdapter(){
         // membuat temp utk menampung fungsi usertransaction
-        var temp= userTransaction(this)
+        var temp= locationTransaction(this)
         // melakukan doasync
         doAsync {
             // locallist menampung semua isi data dari app 2 dan ditulis ke arraylist
-            var locaList = temp?.viewAllName()?.toTypedArray()
+            var locaList = temp?.viewAllLocation()?.toTypedArray()
             uiThread {
                 // jika listview tidak kosong / tidak sama dengan 0 maka listview ditambah dari localist
                 if(lv_Location1 != null && locaList?.size != 0){

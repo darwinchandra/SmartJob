@@ -6,7 +6,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
-import com.example.app2.MyDB.userDB
+import com.example.app2.MyDB.locationDB
 import com.example.app2.myDBRoomHelper
 
 
@@ -31,7 +31,7 @@ class ContentProvider : ContentProvider() {
         // mmebuat sqlite builder utk membuat sebuah database
         var queryBuilder = SQLiteQueryBuilder()
         // membuat sebuah table
-        queryBuilder.tables = userDB.userTable.TABLE_USER
+        queryBuilder.tables = locationDB.userTable.TABLE_USER
         // cursor mengambil query data dari dbroomhelper
         var cursor = queryBuilder.query(
             dbRoomHelper?.readableDatabase,
@@ -61,7 +61,7 @@ class ContentProvider : ContentProvider() {
     // membuat companion untuk mendapatkan akses dari app 2
     companion object {
         val AUTHORITY = "com.example.app2.provider.provider.ContentProvider"
-        private val USER_TABLE = userDB.userTable.TABLE_USER
+        private val USER_TABLE = locationDB.userTable.TABLE_USER
         val CONTENT_URI: Uri = Uri.parse("content://$AUTHORITY/$USER_TABLE")
     }
 }

@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         // membuat share pref yg menampung firstrunsharepref
         FirstRunSharePref = FirstRunSharePref(this)
         // semua data dihapus
-        SQLitedb?.deleteAllUser()
+        SQLitedb?.deleteAllLocation()
         // share pref dibuat true
         FirstRunSharePref?.firstRun = true
         // jika share pref false maka jalankan secondintent
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         lv_Location.setOnItemClickListener { parent, view, position, id ->
             doAsync {
                 // locallist mengambil data dari sqlite dan dituliskan
-                var locaList = SQLitedb?.viewAllName()?.toTypedArray()
+                var locaList = SQLitedb?.viewAllLocation()?.toTypedArray()
                 // editbox akan sesuai ketika di klik isi dari listviewnya
                 edit_text_location.setText(locaList!![position])
             }
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         // melakukan doasync
         doAsync {
             // locallist menampung semua isi data dari sqlite dan ditulis ke arraylist
-            var locaList = SQLitedb?.viewAllName()?.toTypedArray()
+            var locaList = SQLitedb?.viewAllLocation()?.toTypedArray()
             uiThread {
                 // jika listview tidak kosong / tidak sama dengan 0 maka listview ditambah dari localist
                 if(lv_Location != null && locaList?.size != 0){

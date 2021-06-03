@@ -5,12 +5,12 @@ import com.example.judes_darwinchandra.locationDB.userTable.Companion.COLUMN_ID
 import com.example.judes_darwinchandra.locationDB.userTable.Companion.COLUMN_LOCATION
 
 
-class userTransaction(context: Context) {
+class locationTransaction(context: Context) {
     // membuat val yang menampung content yang di ambil dari database app2
     private val myContentResolver = context.contentResolver
 
     // membuat fungsi
-    fun viewAllName() : List<String>{
+    fun viewAllLocation() : List<String>{
         // membuat var menampung array list
         var myNameList = ArrayList<String>()
         // membuat var yang menampung column id dan column location database

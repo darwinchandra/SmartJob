@@ -8,7 +8,7 @@ object locationDB {
         class userTable : BaseColumns {
             companion object{
                 val TABLE_USER = "tbl_User"
-                val COLUMN_ID = "User_Id"
+                val COLUMN_ID = "Location_Id"
                 val COLUMN_LOCATION = "LOCATION"
 
             }
