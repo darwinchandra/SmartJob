@@ -21,10 +21,7 @@ class MainActivity : AppCompatActivity() {
         SQLitedb = myDBRoomHelper(this)
         // membuat share pref yg menampung firstrunsharepref
         FirstRunSharePref = FirstRunSharePref(this)
-        // semua data dihapus
-        SQLitedb?.deleteAllLocation()
-        // share pref dibuat true
-        FirstRunSharePref?.firstRun = true
+
         // jika share pref false maka jalankan secondintent
         if(FirstRunSharePref!!.firstRun){
             val secondIntent = Intent(this, pre_load::class.java)

@@ -14,7 +14,7 @@ class locationTransaction(context: Context) {
     // membuat fungsi
     fun viewAllLocation() : List<String>{
         // membuat var menampung array list
-        var myNameList = ArrayList<String>()
+        var myLocaList = ArrayList<String>()
         // membuat var yang menampung column id dan column location database
         var mProjection = arrayOf(COLUMN_ID, COLUMN_LOCATION)
         // membuat cursor dimana contentresolver memanggil data dari app2
@@ -22,26 +22,27 @@ class locationTransaction(context: Context) {
         // jika cursor / data tidak kosong maka jalan program dibawah
         if(cursor!=null){
             // membuat var username untuk menampung
-            var userName: String = ""
+            var locationName: String = ""
             // jika cursor berpindah pada klik pertama
             if (cursor.moveToFirst()) {
                 // maka lakukan
                 do {
                     // user mengambil data dari cursor menggunakan columnindex yang berada di column location
-                    userName = cursor.getString(cursor.getColumnIndex(COLUMN_LOCATION))
-                    // username ditambah pada mynamelist
-                    myNameList.add(userName)
+                    locationName = cursor.getString(cursor.getColumnIndex(COLUMN_LOCATION))
+                    // username ditambah pada myLocaList
+                    myLocaList.add(locationName)
                     //sampai klik selanjutnya
                 } while (cursor.moveToNext())
             }
         }
         // hasil
-        return myNameList
+        return myLocaList
     }
 
     fun insertDataLocation(location : Location){
-        var contentValue= ContentValues()
-
-        var uri = myContentResolver.insert(myContentProviderURI.CONTENT_URI,contentValue)
+        var values= ContentValues()
+        values.put(COLUMN_ID,location.id)
+        values.put(COLUMN_LOCATION,location.location)
+        var uri = myContentResolver.insert(myContentProviderURI.CONTENT_URI,values)
     }
 }

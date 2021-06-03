@@ -74,43 +74,31 @@ class LocationActivity : AppCompatActivity() {
         var kota = Mylayout.findViewById<EditText>(R.id.dialog_ET_kota)
         var Btnok = Mylayout.findViewById<Button>(R.id.dialog_btn_ok_kota)
         Btnok.setOnClickListener {
-            kota.text
+            insertkota(kota.text.toString())
             mydialog.cancel()
-            //Menampilkan Toast
-            showToast(buildToastMessage(kota.text.toString()))
         }
 
         mydialog.show()
     }
 
-    fun insertkota(){
-        // membuat temp utk menampung fungsi usertransaction
+    fun insertkota(newlocation:String){
+
         var temp= locationTransaction(this)
+
         // melakukan doasync
         doAsync {
-            // locallist menampung semua isi data dari app 2 dan ditulis ke arraylist
+
             var locaList = temp?.viewAllLocation()?.toTypedArray()
+
+            var loca = Location()
+            loca.id=locaList.size+1
+            loca.location=newlocation
+
+            temp?.insertDataLocation(loca)
             uiThread {
-                // jika listview tidak kosong / tidak sama dengan 0 maka listview ditambah dari localist
-                if(lv_Location1 != null && locaList?.size != 0){
-                    lv_Location1.adapter = ArrayAdapter(
-                        applicationContext,
-                        android.R.layout.simple_list_item_1,
-                        locaList!!
-                    )
-                }
+                updateAdapter()
             }
         }
     }
-    private fun showToast(message: String){
-        //membuat Toast
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
 
-    companion object{
-        //fungsi untuk membuat message dari Toast
-        fun buildToastMessage(name: String):String{
-            return "Nama Kotanya Adalah $name"
-        }
-    }
 }
