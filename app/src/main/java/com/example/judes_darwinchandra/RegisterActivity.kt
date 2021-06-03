@@ -146,16 +146,10 @@ class RegisterActivity : AppCompatActivity() {
         regis_button.setOnClickListener {
             //Database
 
-            var hasil =""
             doAsync {
-                db.userDao().insertAll(User(Random.nextInt(), inputNamaRegis.text.toString(), inputEmailRegis.text.toString(),inputPassRegis.text.toString()))
-                for(allData in db.userDao().getAllData()){
-                    hasil += "${allData.nama} ${allData.email} ${allData.password}\n"
-
-                }
-                uiThread {
-                    Log.w("Hasil",hasil)
-                }
+                db.addUserTransaction(
+                    User(Random.nextInt(), inputNamaRegis.text.toString(),
+                        inputEmailRegis.text.toString(),inputPassRegis.text.toString()))
             }
             finish()
             Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()

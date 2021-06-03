@@ -17,6 +17,13 @@ interface UserDAO {
     @Insert
     fun insertAll(vararg user: User)
 
+    @Query("SELECT COUNT(*) FROM  User")
+    fun count(): Int
+
+    // Query untuk insert data pada table user
+    @Query("INSERT INTO User VALUES (:id,:nama,:email,:pass)")
+    fun addNewDataUser(id:Int,nama: String,email: String,pass: String)
+
 
     //QUERY UNTUK UPDATE PASSWORD
     @Query("UPDATE User SET COLUMN_PASSWORD = :newpass WHERE COLUMN_EMAIL= :email")
@@ -26,7 +33,16 @@ interface UserDAO {
     //QUERY UNTUK TAMPILKAN DATA DENGAN EMAIL DAN PASSWORD YANG COCOK dan di buat dalam bentuk list
     @Query("SELECT * FROM User WHERE COLUMN_EMAIL= :email AND COLUMN_PASSWORD= :pass")
     fun validateEmailPass(email:String,pass:String) : List<User>
+
     //melakukan validasi email dengan yang ada pada di database
     @Query("SELECT * FROM User WHERE COLUMN_EMAIL= :email ")
     fun validateEmailRegis(email:String) : List<User>
 }
+
+
+
+
+
+
+
+

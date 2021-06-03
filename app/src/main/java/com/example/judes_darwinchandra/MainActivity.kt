@@ -73,6 +73,9 @@ class MainActivity : AppCompatActivity() {
             MyDBRoomHelper::class.java,
             "userdb.db"
         ).build()
+        doAsync {
+            db.userDao().getAllData()
+        }
 
         login_button.setOnClickListener{
             //hasil untuk menampung data yang akan diinput
@@ -83,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             var passLogin = inputPass.text.toString()
             doAsync {
                 //menvalidasi email apakah sudah ada pada database
-                var index = db.userDao().validateEmailPass(mailLogin,passLogin)
+                var index = db.selectValidTransaction(mailLogin,passLogin)
                 //berisi return code pada index
                 var valid= index.size
 

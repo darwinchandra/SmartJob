@@ -28,7 +28,7 @@
             android:enabled="true"
             android:exported="true"
             android:grantUriPermissions="true"
-            android:readPermission="com.example.app2.provider.READ_URI_DB" />
+            android:writePermission="com.example.app2.provider.READ_URI_DB" />
 
     </application>
 
