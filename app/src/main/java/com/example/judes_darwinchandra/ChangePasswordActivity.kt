@@ -89,7 +89,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                         // cek lagi apakah oldpassword sudah cocok
                         if(emailLogin== allData.email && oldPass==allData.password){
                             //apabila dua inputan tersebut sudah cocok, maka panggil query update pass
-                            db.userDao().updatepass(emailLogin,newPass)
+                            db.updatePasswordTransaction(emailLogin,newPass)
                             // dan buat status menjadi true
                             oldPasswordcheck=true
                         }
