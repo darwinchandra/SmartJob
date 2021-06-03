@@ -2,6 +2,7 @@ package com.example.app2.MyDB
 
 import android.provider.BaseColumns
 
+// membuat objek dari location yang dimana terbuat tabel dan terdiri dari tabel user id dan location
 object userDB{
     class userTable : BaseColumns {
         companion object{

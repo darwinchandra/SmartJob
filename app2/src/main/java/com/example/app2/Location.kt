@@ -4,7 +4,8 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class User(
+// membuat data dari location
+data class Location(
     var id :Int = 0,
     var location : String = ""): Parcelable {
 

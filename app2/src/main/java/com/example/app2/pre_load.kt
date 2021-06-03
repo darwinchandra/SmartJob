@@ -9,50 +9,67 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class pre_load : AppCompatActivity() {
-    var mySQLitedb: myDBRoomHelper? = null
-    private var mhs = listOf(
-        User(1, "ACEH"),
-        User(2, "BALI"),
-        User(3, "BANGKA BELITUNG"),
-        User(4, "BANTEN"),
-        User(5, "BENGKULU"),
-        User(6, "GORONTALO"),
-        User(7, "JAKARTA RAYA"),
-        User(8, "JAMBI"),
-        User(9, "JAWA BARAT"),
-        User(10, "JAWA TENGAH")
+    // membuat sqlite data dari mydbroomhelper kosong
+    var SQLitedb: myDBRoomHelper? = null
+    //membuat list
+    private var location = listOf(
+        Location(1, "ACEH"),
+        Location(2, "BALI"),
+        Location(3, "BANGKA BELITUNG"),
+        Location(4, "BANTEN"),
+        Location(5, "BENGKULU"),
+        Location(6, "GORONTALO"),
+        Location(7, "JAKARTA RAYA"),
+        Location(8, "JAMBI"),
+        Location(9, "JAWA BARAT"),
+        Location(10, "JAWA TENGAH")
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pre_load)
+        // execute data yang mau diload
         executeLoadDataTransaction()
     }
 
+    // fungsi finish
     private fun finishThisActivity() {
+        // share pref diambil dari firstrunsharepref.kt
         var myFirstRunSharePref = FirstRunSharePref(this)
+        // jika sudah run maka false
         myFirstRunSharePref.firstRun = false
+        // tutup
         this.finish()
     }
 
+    //fungsi loaddata
     private fun executeLoadDataTransaction() {
-        btn_no.isEnabled = false
-        btn_yes.isEnabled = false
+        // progress 0
         myProgress.progress = 0
         var progress = 0
-        mySQLitedb = myDBRoomHelper(this)
+        // sqlite dari mydbroomhelper
+        SQLitedb = myDBRoomHelper(this)
+        // doasync
         doAsync {
-            mySQLitedb?.beginUserTransaction()
-            for (userData in mhs) {
+            // sqlite beginusertransaction agar dapat ditulis didatabasenya
+            SQLitedb?.beginUserTransaction()
+            // perulangan userdata sebanyak lokasi
+            for (userData in location) {
+                // setiap perulangan tmbh 1 progress
                 progress += 1
-                mySQLitedb?.addUserTransaction(userData)
+                // sqlite di tmbh dari userdata database
+                SQLitedb?.addUserTransaction(userData)
                 uiThread {
-                    myProgress.progress += progress / mhs.size * 100
+                    // progress bertambah sebanyak  lokasinya
+                    myProgress.progress += progress / location.size * 100
                     Log.w("Progress", "${myProgress.progress}")
                 }
             }
-            mySQLitedb?.successUserTransaction()
-            mySQLitedb?.endUserTransaction()
+            // succes di tulis didatabase
+            SQLitedb?.successUserTransaction()
+            // akhir transaction
+            SQLitedb?.endUserTransaction()
+            // tutup aktivitas ini
             uiThread { finishThisActivity() }
         }
     }
