@@ -121,7 +121,7 @@ class myDBRoomHelper (context: Context) : SQLiteOpenHelper(
         this.writableDatabase.endTransaction()
     }
     // fungsi menambah
-    fun addUserTransaction(location : Location){
+    fun addLocaTransaction(location : Location){
         // sqlstring untuk memasukkan data ke tabel user
         val sqlString = "INSERT INTO ${locationDB.userTable.TABLE_USER} " +
                 "(${locationDB.userTable.COLUMN_ID}" +

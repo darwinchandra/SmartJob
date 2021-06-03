@@ -1,5 +1,7 @@
 package com.example.judes_darwinchandra
 
+import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Context
 import com.example.judes_darwinchandra.locationDB.userTable.Companion.COLUMN_ID
 import com.example.judes_darwinchandra.locationDB.userTable.Companion.COLUMN_LOCATION
@@ -35,5 +37,11 @@ class locationTransaction(context: Context) {
         }
         // hasil
         return myNameList
+    }
+
+    fun insertDataLocation(location : Location){
+        var contentValue= ContentValues()
+
+        var uri = myContentResolver.insert(myContentProviderURI.CONTENT_URI,contentValue)
     }
 }

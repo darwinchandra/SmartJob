@@ -53,12 +53,12 @@ class pre_load : AppCompatActivity() {
         doAsync {
             // sqlite beginusertransaction agar dapat ditulis didatabasenya
             SQLitedb?.beginUserTransaction()
-            // perulangan userdata sebanyak lokasi
-            for (userData in location) {
+            // perulangan locationData sebanyak lokasi
+            for (locationData in location) {
                 // setiap perulangan tmbh 1 progress
                 progress += 1
-                // sqlite di tmbh dari userdata database
-                SQLitedb?.addUserTransaction(userData)
+                // sqlite di tmbh dari locationData database
+                SQLitedb?.addLocaTransaction(locationData)
                 uiThread {
                     // progress bertambah sebanyak  lokasinya
                     myProgress.progress += progress / location.size * 100
