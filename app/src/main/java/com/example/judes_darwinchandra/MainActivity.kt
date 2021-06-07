@@ -2,6 +2,7 @@ package com.example.judes_darwinchandra
 
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -66,6 +67,17 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         setContentView(R.layout.activity_main)
+
+        var alarmIntent = Intent(this, JobMessage::class.java).let {
+            it.action = scheduleJobWidget.ACTION_AUTO_UPDATE
+            PendingIntent.getBroadcast(this,101,it, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+        var cal = Calendar.getInstance()
+        cal.add(Calendar.MINUTE,1)
+
+        var alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.setRepeating(AlarmManager.RTC,cal.timeInMillis,60000,alarmIntent)
+
 
         //membentuk database dengan nama userdb.db
         var db= Room.databaseBuilder(

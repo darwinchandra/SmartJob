@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.judes_darwinchandra">
 
-    <permission android:name="com.example.app2.provider.READ_URI_DB"/>
-    <uses-permission android:name="com.example.app2.provider.READ_URI_DB"/>
+    <permission android:name="com.example.app2.provider.READ_URI_DB" />
 
+    <uses-permission android:name="com.example.app2.provider.READ_URI_DB" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" /> <!-- untuk dapat membaca/mengambil contact dari hp kita -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -22,7 +22,6 @@
     <uses-permission android:name="android.permissioxn.ACCESS_FINE_LOCATION" /> <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
     <uses-feature android:name="android.hardware.location.gps" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -30,7 +29,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ExistingUser"></activity>
+        <receiver android:name=".scheduleJobWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/schedule_job_widget_info" />
+        </receiver>
+
+        <activity android:name=".ExistingUser" />
         <activity android:name=".invitefriends" />
         <activity android:name=".NewsActivity" /> <!-- receiver untuk wifi yang telah dibuat -->
         <receiver
