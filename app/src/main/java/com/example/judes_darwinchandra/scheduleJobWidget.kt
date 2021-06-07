@@ -13,24 +13,24 @@ import java.util.*
  * Implementation of App Widget functionality.
  */
 class scheduleJobWidget : AppWidgetProvider() {
-    var myPref : JobIdsPref?=null
+    var JobPref : JobIdsPref?=null
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-        if(myPref==null){
-            myPref = JobIdsPref(context)
+        if(JobPref==null){
+            JobPref = JobIdsPref(context)
         }
-        myPref?.getIds()?.clear()
-        var ids = myPref?.getIds()
+        JobPref?.getJobId()?.clear()
+        var JobId = JobPref?.getJobId()
         // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
-            ids?.add(appWidgetId.toString())
+            JobId?.add(appWidgetId.toString())
             updateAppWidget(context, appWidgetManager, appWidgetId)
         }
-        if(ids!=null){
-            myPref?.setIds(ids)
+        if(JobId!=null){
+            JobPref?.setJobId(JobId)
         }
     }
 
@@ -60,10 +60,10 @@ class scheduleJobWidget : AppWidgetProvider() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if(intent?.action!!.equals(ACTION_AUTO_UPDATE)) {
-            if (myPref == null) {
-                myPref = JobIdsPref(context!!)
+            if (JobPref == null) {
+                JobPref = JobIdsPref(context!!)
             }
-            for (appWidgetId in myPref?.getIds()!!) {
+            for (appWidgetId in JobPref?.getJobId()!!) {
                 updateAppWidget(context!!, AppWidgetManager.getInstance(context),appWidgetId.toInt())
             }
         }
