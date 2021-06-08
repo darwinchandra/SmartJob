@@ -1,7 +1,6 @@
 package com.example.judes_darwinchandra
 
 import android.annotation.SuppressLint
-import android.graphics.Typeface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,10 +9,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.judes_darwinchandra.adapter.postsAdapter2
 import com.example.judes_darwinchandra.adapter.postsAdapterInterview
-import com.example.judes_darwinchandra.adapter.postsAdapterChat
 import kotlinx.android.synthetic.main.fragment_msg.*
+import org.jetbrains.annotations.NotNull
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,13 +36,17 @@ class InterviewFragment : Fragment() {
         val view:View=inflater.inflate(R.layout.fragment_interview, container, false)
         recyclerView_interview=view.findViewById(R.id.recyclerView_interview)
 
+        var listdata1=ArrayList<objDetailLoker>()
+        listdata1.add(objDetailLoker("PT. Industri Pembungkus Internasional", "Manager", "10 jt/Bulan", "Medan - Sumatera Utara","Interview : 15-May-20  (10:30 AM)"))
+        listdata1.add(objDetailLoker("PT. Bukit Asam Tbk", "CEO", "15 jt/Bulan", "Jakarta Utara","Interview : 19-May-20  (9:30 AM)"))
+        listdata1.add(objDetailLoker("PT. Aneka Tambang Tbk", "IT Support", "5 jt/Bulan", "Bogor - Jawa Barat","Interview : 15-July-20  (8:30 AM)"))
         val numberOfRecyclerView_Interview: ArrayList<String> = ArrayList()
         for (i in 1..10){
             numberOfRecyclerView_Interview.add("Post# $i")
         }
         recyclerView_interview.adapter=
             postsAdapterInterview(
-                numberOfRecyclerView_Interview
+                listdata1
             )
         recyclerView_interview?.layoutManager= LinearLayoutManager(requireContext(), OrientationHelper.VERTICAL,false)
 

@@ -67,6 +67,12 @@
                     android:layout_height="wrap_content"
                     android:text="Medan, Sumatera Utara"
                     android:fontFamily="@font/basic_regular"/>
+                <TextView
+                    android:id="@+id/gaji_interview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10 jt / month"
+                    android:fontFamily="@font/basic_regular"/>
             </LinearLayout>
         </LinearLayout>
 
