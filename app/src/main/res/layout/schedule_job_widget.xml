@@ -35,9 +35,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/shape_iconperusahaan"
+
                     android:scaleType="fitXY"
-                    android:src="@drawable/ipi" />
+                    android:src="@drawable/icons8_office_24" />
             </RelativeLayout>
 
             <LinearLayout
