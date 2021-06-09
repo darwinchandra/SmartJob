@@ -2,6 +2,7 @@ package com.example.judes_darwinchandra
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.judes_darwinchandra.adapter.postsAdapterInterview
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_msg.*
-import org.jetbrains.annotations.NotNull
+import java.lang.reflect.Type
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,4 +59,5 @@ class InterviewFragment : Fragment() {
         // Inflate the layout for this fragment
         return view
     }
+
 }
