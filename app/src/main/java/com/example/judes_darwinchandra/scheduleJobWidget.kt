@@ -125,8 +125,15 @@ class scheduleJobWidget : AppWidgetProvider() {
             views.setTextViewText(R.id.jabatan_pegawai_interview2, widgetText.posisiLoker)
             views.setTextViewText(R.id.time_interview2, widgetText.jadwal)
 
+            views.setOnClickPendingIntent(R.id.card_interview1,getPendingIntentActivity(context))
+            views.setOnClickPendingIntent(R.id.card_interview2,getPendingIntentActivity(context))
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
+        }
+
+        private fun getPendingIntentActivity(context: Context): PendingIntent? {
+            var mIntent=Intent(context,MainActivity::class.java)
+            return PendingIntent.getActivity(context,0,mIntent,0)
         }
     }
 }
