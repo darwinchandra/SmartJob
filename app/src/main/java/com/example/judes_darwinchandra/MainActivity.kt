@@ -1,14 +1,9 @@
 package com.example.judes_darwinchandra
 
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.AlarmManager
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.app.job.JobInfo
-import android.app.job.JobScheduler
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -23,29 +18,19 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.view.WindowManager
-import android.widget.RemoteViews
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.room.Room
-import com.example.judes_darwinchandra.Data.jobScheduleData
 import com.example.judes_darwinchandra.db.MyDBRoomHelper
-import kotlinx.android.synthetic.main.activity_existing_user.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.email
-import org.jetbrains.anko.find
 import org.jetbrains.anko.uiThread
 import java.io.File
 import java.util.*
-import java.util.jar.Manifest
-import javax.security.auth.callback.PasswordCallback
 import kotlin.collections.ArrayList
-import kotlin.random.Random
 import com.example.judes_darwinchandra.ExistingUser as ExistingUser
 
 
@@ -70,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         setContentView(R.layout.activity_main)
 
-        var alarmIntent = Intent(this, JobMessage::class.java).let {
+        var alarmIntent = Intent(this, jobInterviewMessage::class.java).let {
             it.action = scheduleJobWidget.ACTION_AUTO_UPDATE
             PendingIntent.getBroadcast(this,101,it, PendingIntent.FLAG_UPDATE_CURRENT)
         }

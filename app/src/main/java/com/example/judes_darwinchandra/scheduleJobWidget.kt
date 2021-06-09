@@ -35,7 +35,7 @@ class scheduleJobWidget : AppWidgetProvider() {
     }
 
     override fun onEnabled(context: Context) {
-        var alarmIntent = Intent(context, JobMessage::class.java).let {
+        var alarmIntent = Intent(context, jobInterviewMessage::class.java).let {
             it.action = ACTION_AUTO_UPDATE
             PendingIntent.getBroadcast(context,101,it, PendingIntent.FLAG_UPDATE_CURRENT)
         }
@@ -47,7 +47,7 @@ class scheduleJobWidget : AppWidgetProvider() {
     }
 
     override fun onDisabled(context: Context) {
-        var alarmIntent = Intent(context, JobMessage::class.java).let {
+        var alarmIntent = Intent(context, jobInterviewMessage::class.java).let {
             it.action = ACTION_AUTO_UPDATE
             PendingIntent.getBroadcast(context,101,it,PendingIntent.FLAG_UPDATE_CURRENT)
         }
@@ -70,7 +70,7 @@ class scheduleJobWidget : AppWidgetProvider() {
         super.onReceive(context, intent)
     }
     companion object{
-        var pesan = JobMessage()
+        var pesan = jobInterviewMessage()
         var ACTION_AUTO_UPDATE = "android.appwidget.action.APPWIDGET_UPDATE"
         internal fun updateAppWidget(
             context: Context,
@@ -80,7 +80,7 @@ class scheduleJobWidget : AppWidgetProvider() {
             val widgetText = pesan.getMessage()
             // Construct the RemoteViews object
             val views = RemoteViews(context.packageName, R.layout.schedule_job_widget)
-            views.setTextViewText(R.id.appwidget_text, widgetText)
+            views.setTextViewText(R.id.appwidget_text, widgetText.namaPerusahaan)
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
