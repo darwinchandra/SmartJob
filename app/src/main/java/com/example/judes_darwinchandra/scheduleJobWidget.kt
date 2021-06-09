@@ -7,6 +7,8 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_detail_pekerjaan.*
 import java.util.*
 
 /**
@@ -80,7 +82,10 @@ class scheduleJobWidget : AppWidgetProvider() {
             val widgetText = pesan.getMessage()
             // Construct the RemoteViews object
             val views = RemoteViews(context.packageName, R.layout.schedule_job_widget)
-            views.setTextViewText(R.id.appwidget_text, widgetText.namaPerusahaan)
+            views.setTextViewText(R.id.jabatan_pegawai_interview1, widgetText.posisiLoker)
+            views.setTextViewText(R.id.nama_perusahaan_interview1, widgetText.namaPerusahaan)
+            views.setImageViewResource(R.id.icon_perusahaan_interview1, R.drawable.icons8_office_24);
+            views.setTextViewText(R.id.time_interview1, widgetText.jadwal)
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)

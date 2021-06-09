@@ -1,21 +1,86 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/appWidgetBackgroundColor"
+
     android:padding="@dimen/widget_margin"
     android:theme="@style/ThemeOverlay.JUDES_DarwinChandra.AppWidgetContainer">
-
-    <TextView
-        android:id="@+id/appwidget_text"
+    <LinearLayout
+        android:id="@+id/card_interview1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="8dp"
-        android:background="?attr/appWidgetBackgroundColor"
-        android:contentDescription="@string/appwidget_text"
-        android:text="@string/appwidget_text"
-        android:textColor="?attr/appWidgetTextColor"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/card_interview_top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:paddingRight="10dp">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/icon_perusahaan_interview1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/shape_iconperusahaan"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ipi" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/jabatan_pegawai_interview1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/basic_regular"
+                    android:text="Sales Manager"
+                    android:textColor="@color/black"
+                    android:textSize="22dp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/line" />
+
+                <TextView
+                    android:id="@+id/nama_perusahaan_interview1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/basic_regular"
+                    android:text="PT. Industri Pembungkus Internasional" />
+
+                <TextView
+                    android:id="@+id/time_interview1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+
+                    android:fontFamily="@font/basic_regular"
+                    android:text="Interview : 15-May-20  (10:30 AM)"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
 </RelativeLayout>
