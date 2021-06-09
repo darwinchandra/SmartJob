@@ -5,12 +5,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.judes_darwinchandra.*
+import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 
 class postsAdapter1(val list: ArrayList<objDetailLoker>): RecyclerView.Adapter<postsAdapter1.ViewHolder>() {
@@ -25,13 +27,15 @@ class postsAdapter1(val list: ArrayList<objDetailLoker>): RecyclerView.Adapter<p
         var posisi:TextView=itemView.findViewById(R.id.jabatan_pegawai_row)
         var gaji:TextView=itemView.findViewById(R.id.string_salary_row)
         var lokasiPerusahaan:TextView=itemView.findViewById(R.id.lokasi_perusahaan_row)
+        var img:ImageView=itemView.findViewById(R.id.icon_perusahaan_popular)
         init{
             itemView.setOnClickListener{
                 //ketika recyclerview di click, maka mengirimkan data parcel kepada DetailPekerjaanActivity.
                 val position:Int=adapterPosition
                 var intent = Intent(itemView.context, DetailPekerjaanActivity::class.java)
                 // data perusahaan di isi sesuai dengan text awalnya yang ada di beranda kemudian di kirim ke DetailPekerjaanActivity.
-                var dataPerusahaan=objDetailLoker(namaCompany.text.toString(),posisi.text.toString(),gaji.text.toString(),lokasiPerusahaan.text.toString())
+                var dataPerusahaan=objDetailLoker(namaCompany.text.toString(),posisi.text.toString(),
+                    gaji.text.toString(),lokasiPerusahaan.text.toString(),"",img.getTag().toString())
                 intent.putExtra(EXTRA_DETAIL_LOKER,dataPerusahaan)
                 itemView.context.startActivity(intent)
             }
@@ -54,6 +58,8 @@ class postsAdapter1(val list: ArrayList<objDetailLoker>): RecyclerView.Adapter<p
         holder.posisi.setText(list.get(position).posisiLoker)
         holder.lokasiPerusahaan.setText(list.get(position).alamatPerusahaan)
         holder.gaji.setText(list.get(position).gajiLoker)
+        Picasso.get().load(list.get(position).imageUrl).into(holder.img)
+        holder.img.setTag(list.get(position).imageUrl)
         holder.recyclerView3.layoutManager= LinearLayoutManager(holder.recyclerView3.context, OrientationHelper.HORIZONTAL,false)
         holder.recyclerView3.adapter=
             postsAdapter3(holder.numberOfRecyclerView3)

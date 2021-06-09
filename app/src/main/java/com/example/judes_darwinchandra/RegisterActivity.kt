@@ -6,17 +6,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.room.Room
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.judes_darwinchandra.Data.User
+import com.example.judes_darwinchandra.db.MyDBRoomHelper
 import kotlinx.android.synthetic.main.activity_register.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 import kotlin.random.Random
 
 class RegisterActivity : AppCompatActivity() {
@@ -148,8 +147,11 @@ class RegisterActivity : AppCompatActivity() {
 
             doAsync {
                 db.addUserTransaction(
-                    User(Random.nextInt(), inputNamaRegis.text.toString(),
-                        inputEmailRegis.text.toString(),inputPassRegis.text.toString()))
+                    User(
+                        Random.nextInt(), inputNamaRegis.text.toString(),
+                        inputEmailRegis.text.toString(), inputPassRegis.text.toString()
+                    )
+                )
             }
             finish()
             Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()

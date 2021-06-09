@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.judes_darwinchandra.*
+import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 
 
-class postsAdapterInterview(val numberOfRecyclerView_Interview: ArrayList<objDetailLoker>): RecyclerView.Adapter<postsAdapterInterview.ViewHolder>() {
+class postsAdapterInterview(val listInterview: ArrayList<objDetailLoker>): RecyclerView.Adapter<postsAdapterInterview.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val card2: RelativeLayout =itemView.findViewById(R.id.card_interview)
-        val numberOfRecyclerView4: ArrayList<String> = ArrayList()
+        val card2: LinearLayout =itemView.findViewById(R.id.card_interview)
 
 
         // menambahkan variabel yang dibutuhkan
@@ -25,8 +25,8 @@ class postsAdapterInterview(val numberOfRecyclerView_Interview: ArrayList<objDet
         var gaji:TextView=itemView.findViewById(R.id.gaji_interview)
         var lokasiPerusahaan:TextView=itemView.findViewById(R.id.loca_perusahaan_Interview)
         var jadwal : TextView=itemView.findViewById(R.id.time_interview)
-        val icon_person: ImageView =itemView.findViewById(R.id.icon_perusahaan_interview)
         val buttonjoin: Button =itemView.findViewById(R.id.btn_join_interview)
+        val img:ImageView=itemView.findViewById(R.id.icon_perusahaan_interview)
         init{
             buttonjoin.setOnClickListener{
                 val position:Int=adapterPosition
@@ -38,6 +38,9 @@ class postsAdapterInterview(val numberOfRecyclerView_Interview: ArrayList<objDet
             itemView.setOnClickListener{
                 val position:Int=adapterPosition
                 val intent = Intent(itemView.context, DetailPekerjaanActivity::class.java)
+                // data perusahaan di isi sesuai dengan text awalnya yang ada di beranda kemudian di kirim ke DetailPekerjaanActivity.
+                var dataPerusahaan=objDetailLoker(namaCompany.text.toString(),posisi.text.toString(),gaji.text.toString(),lokasiPerusahaan.text.toString(),jadwal.text.toString(),img.getTag().toString())
+                intent.putExtra(EXTRA_DETAIL_LOKER,dataPerusahaan)
                 itemView.context.startActivity(intent)
             }
         }
@@ -49,19 +52,17 @@ class postsAdapterInterview(val numberOfRecyclerView_Interview: ArrayList<objDet
         )
     }
 
-    override fun getItemCount() = numberOfRecyclerView_Interview.size
+    override fun getItemCount() = listInterview.size
 
     @SuppressLint("WrongConstant")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        for (i in 1..3){
-            holder.numberOfRecyclerView4.add("Post# $i")
-        }
-        holder.namaCompany.setText(numberOfRecyclerView_Interview.get(position).namaPerusahaan)
-        holder.posisi.setText(numberOfRecyclerView_Interview.get(position).posisiLoker)
-        holder.lokasiPerusahaan.setText(numberOfRecyclerView_Interview.get(position).alamatPerusahaan)
-        holder.gaji.setText(numberOfRecyclerView_Interview.get(position).gajiLoker)
-        holder.jadwal.setText(numberOfRecyclerView_Interview.get(position).jadwal)
-
+        holder.namaCompany.setText(listInterview.get(position).namaPerusahaan)
+        holder.posisi.setText(listInterview.get(position).posisiLoker)
+        holder.lokasiPerusahaan.setText(listInterview.get(position).alamatPerusahaan)
+        Picasso.get().load(listInterview.get(position).imageUrl).into(holder.img)
+        holder.gaji.setText(listInterview.get(position).gajiLoker)
+        holder.jadwal.setText(listInterview.get(position).jadwal)
+        holder.img.setTag(listInterview.get(position).imageUrl)
 
     }
 

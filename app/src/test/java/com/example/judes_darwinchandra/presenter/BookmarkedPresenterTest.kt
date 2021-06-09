@@ -1,8 +1,6 @@
 package com.example.judes_darwinchandra.presenter
 
-import com.example.judes_darwinchandra.Data.BookmarkedData
-import com.example.judes_darwinchandra.bookmarkInterface
-import com.example.judes_darwinchandra.model.MyBookmarkedModel
+import com.example.judes_darwinchandra.Interface.bookmarkInterface
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -12,7 +10,8 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class BookmarkedPresenterTest {
-    private var view :bookmarkInterface.DataView= mock(bookmarkInterface.DataView::class.java)
+    private var view : bookmarkInterface.DataView= mock(
+        bookmarkInterface.DataView::class.java)
     private var presenter=BookmarkedPresenter(view)
 
     @Test

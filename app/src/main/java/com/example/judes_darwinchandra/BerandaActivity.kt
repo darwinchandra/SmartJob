@@ -100,7 +100,7 @@ class BerandaActivity : AppCompatActivity() {
                     val bundle = Bundle()
                     // membuat variabel Shareprefdata agar dapat get nilai email
                     // dan memasukkannya pada variabel myMail yang akan dikirim lewat bundle
-                    val mySharedPref= SharePrefData(this, sharePrefFileName)
+                    val mySharedPref= SharePrefEmailLogin(this, sharePrefFileName)
                     val myMail = mySharedPref.email
                     // pengiriman myMail ke bundle dengan key MYEMAIL
                     bundle.putString("MYEMAIL", myMail)

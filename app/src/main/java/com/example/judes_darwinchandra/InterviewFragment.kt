@@ -37,12 +37,15 @@ class InterviewFragment : Fragment() {
         recyclerView_interview=view.findViewById(R.id.recyclerView_interview)
 
         var listdata1=ArrayList<objDetailLoker>()
-        listdata1.add(objDetailLoker("PT. Industri Pembungkus Internasional", "Manager", "10 jt/Bulan", "Medan - Sumatera Utara","Interview : 15-May-20  (10:30 AM)"))
-        listdata1.add(objDetailLoker("PT. Bukit Asam Tbk", "CEO", "15 jt/Bulan", "Jakarta Utara","Interview : 19-May-20  (9:30 AM)"))
-        listdata1.add(objDetailLoker("PT. Aneka Tambang Tbk", "IT Support", "5 jt/Bulan", "Bogor - Jawa Barat","Interview : 15-July-20  (8:30 AM)"))
-        val numberOfRecyclerView_Interview: ArrayList<String> = ArrayList()
+        listdata1.add(objDetailLoker("PT. Indah Kiat Tbk", "Manager", "10 jt/Bulan",
+            "Medan - Sumatera Utara","Interview : 15-May-20  (10:30 AM)","https://ceowatermandate.org/wp-content/uploads/2021/01/indah-kiat-logo.jpg"))
+        listdata1.add(objDetailLoker("PT. Bukit Asam Tbk", "CEO", "15 jt/Bulan",
+            "Jakarta Utara","Interview : 19-May-20  (9:30 AM)","https://tambang.itm.ac.id/wp-content/uploads/2019/03/logo-pt-bukit-asam.jpg"))
+        listdata1.add(objDetailLoker("PT. Aneka Tambang Tbk", "IT Support", "5 jt/Bulan",
+            "Bogor - Jawa Barat","Interview : 15-July-20  (8:30 AM)","https://www.dreamcareerbuilder.com/uploads/employers/5754_ECLB.png"))
+        val listInterview: ArrayList<String> = ArrayList()
         for (i in 1..10){
-            numberOfRecyclerView_Interview.add("Post# $i")
+            listInterview.add("Post# $i")
         }
         recyclerView_interview.adapter=
             postsAdapterInterview(

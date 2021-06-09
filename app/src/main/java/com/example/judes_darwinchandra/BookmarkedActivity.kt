@@ -9,14 +9,15 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
-import com.example.judes_darwinchandra.bookmarkInterface
+import com.example.judes_darwinchandra.Interface.bookmarkInterface
 import com.example.judes_darwinchandra.model.MyBookmarkedModel
 import com.example.judes_darwinchandra.adapter.postsAdapterBookmark
 import com.example.judes_darwinchandra.presenter.BookmarkedPresenter
 import kotlinx.android.synthetic.main.activity_bookmarked.*
 
 //implementasi interface DataView
-class BookmarkedActivity : AppCompatActivity(),bookmarkInterface.DataView {
+class BookmarkedActivity : AppCompatActivity(),
+    bookmarkInterface.DataView {
 
     private var presenter : bookmarkInterface.Presenter? =null
     @SuppressLint("WrongConstant")
@@ -58,7 +59,7 @@ class BookmarkedActivity : AppCompatActivity(),bookmarkInterface.DataView {
                 "CEO",
                 "PT. Bukit Asam Tbk",
                 "Setia Budi - Jakarta Selatan",
-                "http://dewara.com/wp-content/uploads/2018/03/logo-bukit_asam.png"
+                "https://tambang.itm.ac.id/wp-content/uploads/2019/03/logo-pt-bukit-asam.jpg"
             )
         )
         list.add(

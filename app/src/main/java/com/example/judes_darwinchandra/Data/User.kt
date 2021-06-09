@@ -1,4 +1,4 @@
-package com.example.judes_darwinchandra
+package com.example.judes_darwinchandra.Data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

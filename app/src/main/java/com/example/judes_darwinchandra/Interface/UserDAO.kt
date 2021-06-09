@@ -1,9 +1,9 @@
-package com.example.judes_darwinchandra
+package com.example.judes_darwinchandra.Interface
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Update
+import com.example.judes_darwinchandra.Data.User
 
 //DAO merupakan komponen utama Room yang menyertakan metode yang menawarkan akses
 //abstrak ke database aplikasi

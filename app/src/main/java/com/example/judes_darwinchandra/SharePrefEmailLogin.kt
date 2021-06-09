@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import android.view.View
 
 // membuat class untuk shared pref dengan param context dan string berupa nama file
-class SharePrefData(context: Context, namafile: String){
+class SharePrefEmailLogin(context: Context, namafile: String){
     //key
     val USER_EMAIL = "EMAIL"
     private var myPreferences : SharedPreferences

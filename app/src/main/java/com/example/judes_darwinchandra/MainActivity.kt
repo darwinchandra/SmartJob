@@ -32,6 +32,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.room.Room
+import com.example.judes_darwinchandra.Data.jobScheduleData
+import com.example.judes_darwinchandra.db.MyDBRoomHelper
 import kotlinx.android.synthetic.main.activity_existing_user.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
@@ -87,6 +89,7 @@ class MainActivity : AppCompatActivity() {
         ).build()
         doAsync {
             db.userDao().getAllData()
+            Log.w("tes","tes")
         }
 
         login_button.setOnClickListener{
@@ -121,7 +124,7 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-            var mySharedPref = SharePrefData(this, sharePrefFileName)
+            var mySharedPref = SharePrefEmailLogin(this, sharePrefFileName)
 
             mySharedPref.email = inputEmail.text.toString()
 
@@ -241,7 +244,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         // membersih edittext
-     inputEmail.text?.clear()
+        inputEmail.text?.clear()
     }
     // membuat fungsi untuk permission external storage
     @RequiresApi(Build.VERSION_CODES.M)
@@ -265,23 +268,23 @@ class MainActivity : AppCompatActivity() {
     }
     // memnbuat fungsi requestcode
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
-        )
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    )
     {
         // ketika requestcode 5558 maka akan dilanjutkan dengan jika grantresult tidak kosong dan grantresult ke 0
         // sudah diberikan permission maka keluar toast permission is granted dan sebaliknya jika belum maka
         // akan keluar permission is denied
-            when(requestCode){
-                5558 ->{
-                    if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                        Toast.makeText(this,"Permission is Granted",Toast.LENGTH_SHORT).show()
-                    else{
-                        Toast.makeText(this,"Permission is Denied",Toast.LENGTH_SHORT).show()
-                    }
+        when(requestCode){
+            5558 ->{
+                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    Toast.makeText(this,"Permission is Granted",Toast.LENGTH_SHORT).show()
+                else{
+                    Toast.makeText(this,"Permission is Denied",Toast.LENGTH_SHORT).show()
                 }
             }
+        }
     }
 
 

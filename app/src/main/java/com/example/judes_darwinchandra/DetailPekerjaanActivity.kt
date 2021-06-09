@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.judes_darwinchandra.R.layout.activity_detail_pekerjaan
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail_pekerjaan.*
 import kotlinx.android.synthetic.main.activity_forgot_password.*
 import kotlinx.android.synthetic.main.activity_manage_profil.*
@@ -59,6 +60,7 @@ class DetailPekerjaanActivity : AppCompatActivity() {
         string_salary_detail.text=dataPerusahaan?.gajiLoker
         lokasi_perusahaan_detail.text=dataPerusahaan?.alamatPerusahaan
         nama_perusahaan_detail.text=dataPerusahaan?.namaPerusahaan
+        Picasso.get().load(dataPerusahaan?.imageUrl).into(icon_perusahaan_detailkerja)
         // mereplace layout menggunakan inflate untuk mengambil dialogapply
         var Mylayout = layoutInflater.inflate(R.layout.dialogapply, null)
         // membuat alertdialog untuk popup yang menunjukan dont notify jika anda mau

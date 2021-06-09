@@ -49,7 +49,7 @@
                 android:layout_weight="3"
                 android:orientation="horizontal">
                 <ImageView
-                    android:id="@+id/icon_perusahaan"
+                    android:id="@+id/icon_perusahaan_popular"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

@@ -1,15 +1,12 @@
 package com.example.judes_darwinchandra
 
-import android.app.AlertDialog
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
@@ -17,9 +14,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.room.Room
+import com.example.judes_darwinchandra.db.MyDBRoomHelper
 import kotlinx.android.synthetic.main.activity_change_password.*
-import kotlinx.android.synthetic.main.activity_video_call.*
-import kotlinx.android.synthetic.main.dialogapply.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -63,7 +59,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         // update pass
         btn_ConfirmChangePass.setOnClickListener {
             //init file sharepref
-            val mySharedPref= SharePrefData(this, sharePrefFileName)
+            val mySharedPref= SharePrefEmailLogin(this, sharePrefFileName)
             //ambil data email yang login pada file sharedPref
             var emailLogin = mySharedPref.email.toString()
             //jika passbaru dengan passconfirm berbeda maka diminta untuk mengetik ulang pass tersebut

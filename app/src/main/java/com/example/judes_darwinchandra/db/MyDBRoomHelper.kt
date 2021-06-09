@@ -1,7 +1,11 @@
-package com.example.judes_darwinchandra
+package com.example.judes_darwinchandra.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.example.judes_darwinchandra.Data.User
+import com.example.judes_darwinchandra.Data.jobScheduleData
+import com.example.judes_darwinchandra.Interface.UserDAO
+import com.example.judes_darwinchandra.Interface.jobScheduleDAO
 
 //Menuliskan semua entitas/table yang akan dibentuk pada database
 @Database(entities = arrayOf(User::class), version = 1)
@@ -11,7 +15,7 @@ abstract class MyDBRoomHelper : RoomDatabase() {
 
     //membuat query jalan pada transaction untuk database room agaar lebih optimal
     //transaction untuk add user
-    fun addUserTransaction(user :User) {
+    fun addUserTransaction(user : User) {
         runInTransaction {
             userDao().addNewDataUser(user._id,user.nama,user.email,user.password)
         }

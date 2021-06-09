@@ -9,10 +9,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.judes_darwinchandra.bookmarkInterface
 import com.example.judes_darwinchandra.adapter.postsAdapter1
 import com.example.judes_darwinchandra.adapter.postsAdapter2
-import com.example.judes_darwinchandra.model.MyBookmarkedModel
 import kotlinx.android.synthetic.main.fragment_beranda.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -48,10 +46,13 @@ class BerandaFragment : Fragment() {
         recyclerView2=view.findViewById(R.id.recyclerView2)
 
         var listdata1=ArrayList<objDetailLoker>()
-        listdata1.add(objDetailLoker("PT. Industri Pembungkus Internasional", "Manager", "10 jt/Bulan", "Medan - Sumatera Utara"))
-        listdata1.add(objDetailLoker("PT. Bukit Asam Tbk", "CEO", "15 jt/Bulan", "Jakarta Utara"))
-        listdata1.add(objDetailLoker("PT. Aneka Tambang Tbk", "IT Support", "5 jt/Bulan", "Bogor - Jawa Barat"))
 
+        listdata1.add(objDetailLoker("PT. Indah Kiat Tbk", "Manager", "10 jt/Bulan",
+            "Medan - Sumatera Utara","Interview : 15-May-20  (10:30 AM)","https://ceowatermandate.org/wp-content/uploads/2021/01/indah-kiat-logo.jpg"))
+        listdata1.add(objDetailLoker("PT. Bukit Asam Tbk", "CEO", "15 jt/Bulan",
+            "Jakarta Utara","Interview : 19-May-20  (9:30 AM)","https://tambang.itm.ac.id/wp-content/uploads/2019/03/logo-pt-bukit-asam.jpg"))
+        listdata1.add(objDetailLoker("PT. Aneka Tambang Tbk", "IT Support", "5 jt/Bulan",
+            "Bogor - Jawa Barat","Interview : 15-July-20  (8:30 AM)","https://www.dreamcareerbuilder.com/uploads/employers/5754_ECLB.png"))
 
 
         val numberOfRecyclerView2: ArrayList<String> = ArrayList()
