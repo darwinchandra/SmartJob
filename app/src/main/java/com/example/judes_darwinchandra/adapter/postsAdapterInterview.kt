@@ -61,7 +61,7 @@ class postsAdapterInterview(val listInterview: ArrayList<objDetailLoker>): Recyc
         holder.lokasiPerusahaan.setText(listInterview.get(position).alamatPerusahaan)
         Picasso.get().load(listInterview.get(position).imageUrl).into(holder.img)
         holder.gaji.setText(listInterview.get(position).gajiLoker)
-        holder.jadwal.setText(listInterview.get(position).jadwal)
+        holder.jadwal.setText("Interview : "+listInterview.get(position).jadwal)
         holder.img.setTag(listInterview.get(position).imageUrl)
 
     }

@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
 
     android:padding="@dimen/widget_margin"
     android:theme="@style/ThemeOverlay.JUDES_DarwinChandra.AppWidgetContainer">
@@ -9,7 +10,9 @@
         android:id="@+id/card_interview1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="invisible">
 
         <LinearLayout
             android:id="@+id/card_interview_top"
@@ -31,13 +34,12 @@
 
                 <ImageView
                     android:id="@+id/icon_perusahaan_interview1"
-                    android:layout_width="match_parent"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:adjustViewBounds="true"
-
                     android:scaleType="fitXY"
-                    android:src="@drawable/icons8_office_24" />
+                    android:src="@drawable/ic_interview" />
             </RelativeLayout>
 
             <LinearLayout
@@ -81,6 +83,55 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/card_interview2"
+        android:layout_width="214dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        tools:visibility="visible">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+                <ImageView
+                    android:id="@+id/icon_perusahaan_interview2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:layout_centerVertical="true"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_interview" />
+
+
+                <TextView
+                    android:id="@+id/time_interview2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/basic_regular"
+                    android:text="Sales Manager"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center|right"
+                    android:gravity="center_vertical|right"
+                     />
+        </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/line" />
+                <TextView
+                    android:id="@+id/jabatan_pegawai_interview2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_vertical"
+                    android:fontFamily="@font/basic_regular"
+                    android:text="Interview : "
+                    android:textSize="20dp"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/black" />
+    </LinearLayout>
 
 </RelativeLayout>

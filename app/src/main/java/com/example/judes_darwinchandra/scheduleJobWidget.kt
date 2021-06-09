@@ -6,7 +6,10 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import android.view.View
 import android.widget.RemoteViews
+import android.widget.Toast
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail_pekerjaan.*
 import java.util.*
@@ -71,6 +74,38 @@ class scheduleJobWidget : AppWidgetProvider() {
         }
         super.onReceive(context, intent)
     }
+
+    override fun onAppWidgetOptionsChanged(
+        context: Context?,
+        appWidgetManager: AppWidgetManager?,
+        appWidgetId: Int,
+        newOptions: Bundle?
+    ) {
+
+        // Construct the RemoteViews object
+        val views = RemoteViews(context?.packageName, R.layout.schedule_job_widget)
+        var minWidth = newOptions?.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
+        var maxHeight = newOptions?.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT)
+        Toast.makeText(context, "minwidth : "+minWidth+" maxHeight : "+maxHeight, Toast.LENGTH_SHORT).show()
+
+        val widgetText = pesan.getMessage()
+        if (minWidth!! >291){
+            views.setViewVisibility(R.id.card_interview1, View.VISIBLE)
+            views.setViewVisibility(R.id.card_interview2, View.INVISIBLE)
+        }
+        else if(minWidth!! >214){
+            views.setViewVisibility(R.id.card_interview1, View.VISIBLE)
+            views.setViewVisibility(R.id.card_interview2, View.INVISIBLE)
+            views.setTextViewText(R.id.time_interview1, widgetText.jadwal)
+        }
+        else{
+            views.setViewVisibility(R.id.card_interview1, View.INVISIBLE)
+            views.setViewVisibility(R.id.card_interview2, View.VISIBLE)
+
+        }
+        // Instruct the widget manager to update the widget
+        appWidgetManager?.updateAppWidget(appWidgetId, views)
+    }
     companion object{
         var pesan = jobInterviewMessage()
         var ACTION_AUTO_UPDATE = "android.appwidget.action.APPWIDGET_UPDATE"
@@ -84,8 +119,11 @@ class scheduleJobWidget : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.schedule_job_widget)
             views.setTextViewText(R.id.jabatan_pegawai_interview1, widgetText.posisiLoker)
             views.setTextViewText(R.id.nama_perusahaan_interview1, widgetText.namaPerusahaan)
-            views.setImageViewResource(R.id.icon_perusahaan_interview1, R.drawable.icons8_office_24);
-            views.setTextViewText(R.id.time_interview1, widgetText.jadwal)
+            views.setImageViewResource(R.id.icon_perusahaan_interview1, R.drawable.ic_interview);
+            views.setTextViewText(R.id.time_interview1, "Interview : "+widgetText.jadwal)
+
+            views.setTextViewText(R.id.jabatan_pegawai_interview2, widgetText.posisiLoker)
+            views.setTextViewText(R.id.time_interview2, widgetText.jadwal)
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
