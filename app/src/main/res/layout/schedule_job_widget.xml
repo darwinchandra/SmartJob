@@ -78,7 +78,7 @@
                     android:layout_marginRight="20dp"
 
                     android:fontFamily="@font/basic_regular"
-                    android:text="Interview : 15-May-20  (10:30 AM)"
+                    android:text="Interview : 15-May-21  (10:30 AM)"
                     android:textColor="@color/black" />
             </LinearLayout>
         </LinearLayout>

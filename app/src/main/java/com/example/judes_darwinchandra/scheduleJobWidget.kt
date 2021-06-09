@@ -85,13 +85,13 @@ class scheduleJobWidget : AppWidgetProvider() {
         // Construct the RemoteViews object
         val views = RemoteViews(context?.packageName, R.layout.schedule_job_widget)
         var minWidth = newOptions?.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
-        var maxHeight = newOptions?.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT)
-        Toast.makeText(context, "minwidth : "+minWidth+" maxHeight : "+maxHeight, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, "minwidth : "+minWidth+" maxHeight : "+maxHeight, Toast.LENGTH_SHORT).show()
 
         val widgetText = pesan.getMessage()
         if (minWidth!! >291){
             views.setViewVisibility(R.id.card_interview1, View.VISIBLE)
             views.setViewVisibility(R.id.card_interview2, View.INVISIBLE)
+            views.setTextViewText(R.id.time_interview1, "Interview : "+widgetText.jadwal)
         }
         else if(minWidth!! >214){
             views.setViewVisibility(R.id.card_interview1, View.VISIBLE)
@@ -101,7 +101,7 @@ class scheduleJobWidget : AppWidgetProvider() {
         else{
             views.setViewVisibility(R.id.card_interview1, View.INVISIBLE)
             views.setViewVisibility(R.id.card_interview2, View.VISIBLE)
-
+            views.setTextViewText(R.id.time_interview1, widgetText.jadwal)
         }
         // Instruct the widget manager to update the widget
         appWidgetManager?.updateAppWidget(appWidgetId, views)

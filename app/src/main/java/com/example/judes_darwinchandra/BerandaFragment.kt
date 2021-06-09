@@ -48,11 +48,11 @@ class BerandaFragment : Fragment() {
         var listdata1=ArrayList<objDetailLoker>()
 
         listdata1.add(objDetailLoker("PT. Indah Kiat Tbk", "Financial Manager", "10 jt/Bulan",
-            "Medan - Sumatera Utara","15-May-20  (10:30 AM)","https://ceowatermandate.org/wp-content/uploads/2021/01/indah-kiat-logo.jpg"))
+            "Medan - Sumatera Utara","15-May-21  (10:30 AM)","https://ceowatermandate.org/wp-content/uploads/2021/01/indah-kiat-logo.jpg"))
         listdata1.add(objDetailLoker("PT. Bukit Asam Tbk", "CEO", "15 jt/Bulan",
-            "Jakarta Utara","19-May-20  (9:30 AM)","https://tambang.itm.ac.id/wp-content/uploads/2019/03/logo-pt-bukit-asam.jpg"))
+            "Jakarta Utara","19-May-21  (9:30 AM)","https://tambang.itm.ac.id/wp-content/uploads/2019/03/logo-pt-bukit-asam.jpg"))
         listdata1.add(objDetailLoker("PT. Aneka Tambang Tbk", "IT Support", "5 jt/Bulan",
-            "Bogor - Jawa Barat","15-July-20  (8:30 AM)","https://www.dreamcareerbuilder.com/uploads/employers/5754_ECLB.png"))
+            "Bogor - Jawa Barat","15-July-21  (8:30 AM)","https://www.dreamcareerbuilder.com/uploads/employers/5754_ECLB.png"))
 
 
         val numberOfRecyclerView2: ArrayList<String> = ArrayList()
