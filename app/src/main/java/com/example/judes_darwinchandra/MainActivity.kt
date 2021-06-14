@@ -25,6 +25,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.room.Room
 import com.example.judes_darwinchandra.db.MyDBRoomHelper
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -54,6 +57,13 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         setContentView(R.layout.activity_main)
+        MobileAds.initialize(this){}
+
+        adView.loadAd(AdRequest.Builder().build())
+
+        adView.adListener=object: AdListener(){
+
+        }
 
         var alarmIntent = Intent(this, jobInterviewMessage::class.java).let {
             it.action = scheduleJobWidget.ACTION_AUTO_UPDATE
