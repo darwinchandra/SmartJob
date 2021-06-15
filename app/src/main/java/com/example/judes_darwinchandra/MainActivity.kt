@@ -25,9 +25,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.room.Room
 import com.example.judes_darwinchandra.db.MyDBRoomHelper
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import kotlinx.android.synthetic.main.activity_beranda.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -45,9 +46,11 @@ private var sound : SoundPool? =null
 private var soundIDplayer= 1
 
 class MainActivity : AppCompatActivity() {
+
     var JobSchedulerId = 10
     var notificationManager: NotificationManager? = null
-
+    private var mInterstitialAd: InterstitialAd? = null
+    private final var TAG = "MainActivity"
     @SuppressLint("NewApi")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,59 +60,93 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         setContentView(R.layout.activity_main)
-        MobileAds.initialize(this){}
+        MobileAds.initialize(this) {}
 
         adView.loadAd(AdRequest.Builder().build())
 
-        adView.adListener=object: AdListener(){
+        adView.adListener = object : AdListener() {
 
         }
 
         var alarmIntent = Intent(this, jobInterviewMessage::class.java).let {
             it.action = scheduleJobWidget.ACTION_AUTO_UPDATE
-            PendingIntent.getBroadcast(this,101,it, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(this, 101, it, PendingIntent.FLAG_UPDATE_CURRENT)
         }
         var cal = Calendar.getInstance()
-        cal.add(Calendar.MINUTE,1)
+        cal.add(Calendar.MINUTE, 1)
 
         var alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setRepeating(AlarmManager.RTC,cal.timeInMillis,60000,alarmIntent)
+        alarmManager.setRepeating(AlarmManager.RTC, cal.timeInMillis, 60000, alarmIntent)
 
 
         //membentuk database dengan nama userdb.db
-        var db= Room.databaseBuilder(
+        var db = Room.databaseBuilder(
             this,
             MyDBRoomHelper::class.java,
             "userdb.db"
         ).build()
         doAsync {
             db.userDao().getAllData()
-            Log.w("tes","tes")
+            Log.w("tes", "tes")
         }
 
-        login_button.setOnClickListener{
+        login_button.setOnClickListener {
             //hasil untuk menampung data yang akan diinput
-            var hasil =""
+            var hasil = ""
             var findData = false
             //berisi email dan password yang diinput dan di konversi kedalam bentuk string
             var mailLogin = inputEmail.text.toString()
             var passLogin = inputPass.text.toString()
+
             doAsync {
                 //menvalidasi email apakah sudah ada pada database
-                var index = db.selectValidTransaction(mailLogin,passLogin)
+                var index = db.selectValidTransaction(mailLogin, passLogin)
                 //berisi return code pada index
-                var valid= index.size
+                var valid = index.size
 
                 //mendapatkan semua data yang ada pada database kemudian menyimpannya pada variabel hasil
                 uiThread {
                     //jika valid>0 menandakan jika email sesuai dengan yang ada pada database maka user dapat masuk ke dalam halaman beranda
-                    if(valid>0) {
-                        val intent = Intent(it, BerandaActivity::class.java)
-                        startActivity(intent)
+                    if (valid > 0) {
+                        var adRequest = AdRequest.Builder().build()
+
+
+                        InterstitialAd.load(this@MainActivity,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+                            override fun onAdFailedToLoad(adError: LoadAdError) {
+                                Log.d(TAG, adError?.message)
+                                mInterstitialAd = null
+                            }
+
+                            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                                Log.d(TAG, "Ad was loaded.")
+                                mInterstitialAd = interstitialAd
+                                mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+                                    override fun onAdDismissedFullScreenContent() {
+                                        Log.d(TAG, "Ad was dismissed.")
+                                        val intent = Intent(it, BerandaActivity::class.java)
+                                        startActivity(intent)
+                                    }
+
+                                    override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+                                        Log.d(TAG, "Ad failed to show.")
+                                    }
+
+                                    override fun onAdShowedFullScreenContent() {
+                                        Log.d(TAG, "Ad showed fullscreen content.")
+                                        mInterstitialAd = null;
+                                    }
+                                }
+                            }
+                        })
+
+
+
+
                     }
                     //jika data tidak cocok dengan data yang ada pada database maka akan menampilkan toast bahwa username dan password salah
-                    else{
-                        Toast.makeText(it,"Username dan Password Tidak Cocok" , Toast.LENGTH_SHORT).show()
+                    else {
+                        Toast.makeText(it, "Username dan Password Tidak Cocok", Toast.LENGTH_SHORT)
+                            .show()
                         inputEmail.requestFocus()
                     }
                     //menampilkan log berupa data pada database yang telah kita simpan pada variabel hasil
@@ -124,7 +161,7 @@ class MainActivity : AppCompatActivity() {
             mySharedPref.email = inputEmail.text.toString()
 
             // ketika di click login button maka akan dijalankan fungsi write
-            if(isExternalStorageReadable()){
+            if (isExternalStorageReadable()) {
                 writeFileExternalMemory()
             }
             clearDataLogin()
@@ -196,13 +233,21 @@ class MainActivity : AppCompatActivity() {
                 showNotifReminder()
             }
         }
-        exist.setOnClickListener{
+        exist.setOnClickListener {
             val intent = Intent(this, ExistingUser::class.java)
             startActivity(intent)
         }
 
+
     }
 
+    fun showInterstitialAd(view: View) {
+        if (mInterstitialAd != null) {
+            mInterstitialAd?.show(this)
+        } else {
+            Log.d("TAG", "The interstitial ad wasn't ready yet.")
+        }
+    }
 
     // membuat fungsi write ke external memory
     @RequiresApi(Build.VERSION_CODES.KITKAT)
@@ -210,30 +255,30 @@ class MainActivity : AppCompatActivity() {
         //mengambil file dari external memory yang sudah ada
         var myLog = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.toURI())
         // jika file tidak ada maka membuat file baru
-        if(!myLog.exists()){
+        if (!myLog.exists()) {
             myLog.mkdir()
         }
         // false duplicate isinya
-        var duplicateEmail=false
+        var duplicateEmail = false
         // jika file sudah ada maka dibuat arraylist
-        if(File(myLog,"ExistingUser.txt").exists()){
-            val listemail=ArrayList<String>()
+        if (File(myLog, "ExistingUser.txt").exists()) {
+            val listemail = ArrayList<String>()
             // file yang dibuat dan ditambahkan ke array
-            File(myLog,"ExistingUser.txt").forEachLine (Charsets.UTF_8){
+            File(myLog, "ExistingUser.txt").forEachLine(Charsets.UTF_8) {
                 listemail.add(it)
             }
             //membuat perulangan pada setiap data list email.Ketika email yang ad pada edittext telah ada di file tersebut.
             // Maka status duplicateEmail menjadi false
-            Log.w("listemail",listemail.toString())
+            Log.w("listemail", listemail.toString())
             // setiap array listemail maka isi text ditulis dan duplicate true untuk menghindari adanya double
             for (s in listemail) {
-                if(s==inputEmail.text.toString()){
-                    duplicateEmail=true
+                if (s == inputEmail.text.toString()) {
+                    duplicateEmail = true
                 }
             }
         }
         // jika double salah maka mengambil text dari textbox dan masukkan kefile
-        if (duplicateEmail==false) {
+        if (duplicateEmail == false) {
             File(myLog, "ExistingUser.txt").apply {
                 appendText(inputEmail.text.toString() + "\n")
             }
@@ -241,6 +286,7 @@ class MainActivity : AppCompatActivity() {
         // membersih edittext
         inputEmail.text?.clear()
     }
+
     // membuat fungsi untuk permission external storage
     @RequiresApi(Build.VERSION_CODES.M)
     private fun isExternalStorageReadable(): Boolean {
@@ -255,28 +301,31 @@ class MainActivity : AppCompatActivity() {
         // mengambil state dari external storage
         var status = Environment.getExternalStorageState()
         // jika storage sama dengan media mount dan media mount read only maka hasilnya true
-        if(Environment.MEDIA_MOUNTED.equals(status) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(status)){
+        if (Environment.MEDIA_MOUNTED.equals(status) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(
+                status
+            )
+        ) {
             return true
         }
         // jika tidak maka return false
         return false
     }
+
     // memnbuat fungsi requestcode
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
-    )
-    {
+    ) {
         // ketika requestcode 5558 maka akan dilanjutkan dengan jika grantresult tidak kosong dan grantresult ke 0
         // sudah diberikan permission maka keluar toast permission is granted dan sebaliknya jika belum maka
         // akan keluar permission is denied
-        when(requestCode){
-            5558 ->{
-                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    Toast.makeText(this,"Permission is Granted",Toast.LENGTH_SHORT).show()
-                else{
-                    Toast.makeText(this,"Permission is Denied",Toast.LENGTH_SHORT).show()
+        when (requestCode) {
+            5558 -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    Toast.makeText(this, "Permission is Granted", Toast.LENGTH_SHORT).show()
+                else {
+                    Toast.makeText(this, "Permission is Denied", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -341,8 +390,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
     private fun delFile() {
         if (fileList().size != 0) {
             for (i in fileList())
@@ -352,7 +399,7 @@ class MainActivity : AppCompatActivity() {
 
     //fungsi untuk keluar kehalaman Forgot Password
     fun forgotpass_login(view: View) {
-        val intent=Intent(this,ForgotPasswordActivity::class.java)
+        val intent = Intent(this, ForgotPasswordActivity::class.java)
         startActivity(intent)
     }
 
@@ -360,6 +407,7 @@ class MainActivity : AppCompatActivity() {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) hideSystemUI()
     }
+
     private fun hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
@@ -375,7 +423,7 @@ class MainActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
 
-    private fun showNotifReminder(){
+    private fun showNotifReminder() {
         //notif manager getsystem notif service
         var notificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE)
                 as NotificationManager
@@ -390,17 +438,20 @@ class MainActivity : AppCompatActivity() {
         // membuat intent untuk mengarahkan ke bookmark activity
         val notifyBookmarkIntent = Intent(this, BookmarkedActivity::class.java)
             .apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK }
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
 
         // membuat pending intent guna untuk memberikan intent content pada notifikiasi nantinya
         // pending intent ii berisi intent yang sebelumnya telah kita buat yaitu  notifyBookmarkIntent
-        val myPendingIntent = PendingIntent.getActivity(this,0,
+        val myPendingIntent = PendingIntent.getActivity(
+            this, 0,
             notifyBookmarkIntent,
-            PendingIntent.FLAG_CANCEL_CURRENT);
+            PendingIntent.FLAG_CANCEL_CURRENT
+        );
 
         // pembuatan variable notifikiasi yang dan diisi ContentIntentnya menjadi myPendingIntent
         // untuk menghandle ketika diclick ada intent yang akan di triger dan mengarahkannya kepada bookmarkedactivity
-        var myNotification = NotificationCompat.Builder(this,"Reminder_Promosi")
+        var myNotification = NotificationCompat.Builder(this, "Reminder_Promosi")
             // title notif
             .setContentTitle("Bookmarked Loker")
             //isi notif
@@ -411,6 +462,8 @@ class MainActivity : AppCompatActivity() {
             .setSmallIcon(R.drawable.ic_baseline_bookmark_24)
             .setContentIntent(myPendingIntent)
         // build var notif yang telah dbuat dengan id 100
-        notificationManager?.notify(100,myNotification.build())
+        notificationManager?.notify(100, myNotification.build())
     }
+
+
 }

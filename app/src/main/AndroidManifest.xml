@@ -29,6 +29,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Interstitial"></activity>
+
         <receiver android:name=".scheduleJobWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -120,7 +122,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7522501712516015~9371464429"/>
+            android:value="ca-app-pub-7522501712516015~9371464429" />
     </application>
 
 </manifest>
