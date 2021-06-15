@@ -21,6 +21,7 @@ import com.example.judes_darwinchandra.adapter.postsAdapterChat
 import com.example.judes_darwinchandra.adapter.postsAdapterProfile
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.w3c.dom.Text
+import com.example.judes_darwinchandra.MainActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,7 +86,11 @@ class ProfileFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         icon_person_profile.clipToOutline = true
         btn_logout.setOnClickListener{
+
             activity?.finish();
+            val intent = Intent(context, MainActivity::class.java)
+            startActivity(intent)
+
         }
         btn_manage_profil.setOnClickListener{
             val intent= Intent(context,ManageProfilActivity::class.java)

@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         adView.adListener = object : AdListener() {
 
         }
-
+        createad()
         var alarmIntent = Intent(this, jobInterviewMessage::class.java).let {
             it.action = scheduleJobWidget.ACTION_AUTO_UPDATE
             PendingIntent.getBroadcast(this, 101, it, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -90,7 +90,9 @@ class MainActivity : AppCompatActivity() {
             Log.w("tes", "tes")
         }
 
+
         login_button.setOnClickListener {
+
             //hasil untuk menampung data yang akan diinput
             var hasil = ""
             var findData = false
@@ -108,39 +110,15 @@ class MainActivity : AppCompatActivity() {
                 uiThread {
                     //jika valid>0 menandakan jika email sesuai dengan yang ada pada database maka user dapat masuk ke dalam halaman beranda
                     if (valid > 0) {
-                        var adRequest = AdRequest.Builder().build()
+                        if (mInterstitialAd != null) {
+                            mInterstitialAd?.show(this@MainActivity)
+                        } else {
+                            Log.d("TAG", "The interstitial ad wasn't ready yet.")
+                            finish()
+                            val intent = Intent(it, BerandaActivity::class.java)
+                            startActivity(intent)
 
-
-                        InterstitialAd.load(this@MainActivity,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
-                            override fun onAdFailedToLoad(adError: LoadAdError) {
-                                Log.d(TAG, adError?.message)
-                                mInterstitialAd = null
-                            }
-
-                            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                                Log.d(TAG, "Ad was loaded.")
-                                mInterstitialAd = interstitialAd
-                                mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
-                                    override fun onAdDismissedFullScreenContent() {
-                                        Log.d(TAG, "Ad was dismissed.")
-                                        val intent = Intent(it, BerandaActivity::class.java)
-                                        startActivity(intent)
-                                    }
-
-                                    override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
-                                        Log.d(TAG, "Ad failed to show.")
-                                    }
-
-                                    override fun onAdShowedFullScreenContent() {
-                                        Log.d(TAG, "Ad showed fullscreen content.")
-                                        mInterstitialAd = null;
-                                    }
-                                }
-                            }
-                        })
-
-
-
+                        }
 
                     }
                     //jika data tidak cocok dengan data yang ada pada database maka akan menampilkan toast bahwa username dan password salah
@@ -240,13 +218,40 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+    fun createad(){
+        var adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(this@MainActivity,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.d(TAG, adError?.message)
+                mInterstitialAd = null
+            }
 
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                Log.d(TAG, "Ad was loaded.")
+                mInterstitialAd = interstitialAd
+                mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+                    override fun onAdDismissedFullScreenContent() {
+                        Log.d(TAG, "Ad was dismissed.")
+                        finish()
+                        val intent = Intent(this@MainActivity, BerandaActivity::class.java)
+                        startActivity(intent)
+
+
+                    }
+
+                    override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+                        Log.d(TAG, "Ad failed to show.")
+                    }
+
+                    override fun onAdShowedFullScreenContent() {
+                        Log.d(TAG, "Ad showed fullscreen content.")
+                        mInterstitialAd = null;
+                    }
+                }
+            }
+        })}
     fun showInterstitialAd(view: View) {
-        if (mInterstitialAd != null) {
-            mInterstitialAd?.show(this)
-        } else {
-            Log.d("TAG", "The interstitial ad wasn't ready yet.")
-        }
+
     }
 
     // membuat fungsi write ke external memory
