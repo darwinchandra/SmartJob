@@ -18,11 +18,13 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.view.WindowManager
+import android.widget.RemoteViews
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isInvisible
 import androidx.room.Room
 import com.example.judes_darwinchandra.db.MyDBRoomHelper
 import com.google.android.gms.ads.*
@@ -64,9 +66,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         MobileAds.initialize(this) {}
 
-        adView.loadAd(AdRequest.Builder().build())
+        switch2.setOnClickListener{
+            if(switch2.isChecked){
+                adView.visibility = View.VISIBLE
+                adView.loadAd(AdRequest.Builder().build())
+            }
+            else{
+                adView.visibility = View.GONE
+                adView.setEnabled(false);
+            }
+        }
+
 
         adView.adListener = object : AdListener() {
+
 
         }
 
@@ -92,8 +105,10 @@ class MainActivity : AppCompatActivity() {
             db.userDao().getAllData()
             Log.w("tes", "tes")
         }
+
         // ad interstitial dibuat
         createad()
+
         login_button.setOnClickListener {
 
             //hasil untuk menampung data yang akan diinput
@@ -114,9 +129,11 @@ class MainActivity : AppCompatActivity() {
                     //jika valid>0 menandakan jika email sesuai dengan yang ada pada database maka user dapat masuk ke dalam halaman beranda
                     if (valid > 0) {
                         // jika ad tidak null maka keluarkan ad dimain activity
-                        if (mInterstitialAd != null) {
-                            mInterstitialAd?.show(this@MainActivity)
-                        }
+                            if(switch2.isChecked){
+                                if (mInterstitialAd != null) {
+                                    mInterstitialAd?.show(this@MainActivity)
+                                }
+                            }
                         // yang lainnya keluarkan ad belum tersedia dan akan menuju ke beranda
                         else {
                             Log.d("TAG", "The interstitial ad wasn't ready yet.")
