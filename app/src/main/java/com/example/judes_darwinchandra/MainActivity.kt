@@ -49,7 +49,9 @@ class MainActivity : AppCompatActivity() {
 
     var JobSchedulerId = 10
     var notificationManager: NotificationManager? = null
+    // membuat var yang menampung InterstitialAd isinya kosong
     private var mInterstitialAd: InterstitialAd? = null
+    //membuat Tag
     private final var TAG = "MainActivity"
     @SuppressLint("NewApi")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -67,7 +69,8 @@ class MainActivity : AppCompatActivity() {
         adView.adListener = object : AdListener() {
 
         }
-        createad()
+
+
         var alarmIntent = Intent(this, jobInterviewMessage::class.java).let {
             it.action = scheduleJobWidget.ACTION_AUTO_UPDATE
             PendingIntent.getBroadcast(this, 101, it, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -89,8 +92,8 @@ class MainActivity : AppCompatActivity() {
             db.userDao().getAllData()
             Log.w("tes", "tes")
         }
-
-
+        // ad interstitial dibuat
+        createad()
         login_button.setOnClickListener {
 
             //hasil untuk menampung data yang akan diinput
@@ -110,9 +113,12 @@ class MainActivity : AppCompatActivity() {
                 uiThread {
                     //jika valid>0 menandakan jika email sesuai dengan yang ada pada database maka user dapat masuk ke dalam halaman beranda
                     if (valid > 0) {
+                        // jika ad tidak null maka keluarkan ad dimain activity
                         if (mInterstitialAd != null) {
                             mInterstitialAd?.show(this@MainActivity)
-                        } else {
+                        }
+                        // yang lainnya keluarkan ad belum tersedia dan akan menuju ke beranda
+                        else {
                             Log.d("TAG", "The interstitial ad wasn't ready yet.")
                             finish()
                             val intent = Intent(it, BerandaActivity::class.java)
@@ -218,19 +224,30 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+    // membuat fungsi ad
     fun createad(){
+        // membuat var yang menampung build adrequest
         var adRequest = AdRequest.Builder().build()
+        // insterstitial di load dan dipanggil kembali jika ad failed atau ad loaded
         InterstitialAd.load(this@MainActivity,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
+                // jika failed keluar kan tag di load
                 Log.d(TAG, adError?.message)
+                // ad dibuat menjadi kosong
                 mInterstitialAd = null
             }
 
+
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                // jika loaded maka keluarkan tag
                 Log.d(TAG, "Ad was loaded.")
+                // dan mengeluarkan adnya
                 mInterstitialAd = interstitialAd
+                // insterstitial di load dan dipanggil kembali pada fullscreen
                 mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+
                     override fun onAdDismissedFullScreenContent() {
+                        // jika ditutup maka keluarkan tag dan finish activity dan kemudian menuju ke beranda
                         Log.d(TAG, "Ad was dismissed.")
                         finish()
                         val intent = Intent(this@MainActivity, BerandaActivity::class.java)
@@ -238,11 +255,11 @@ class MainActivity : AppCompatActivity() {
 
 
                     }
-
+                    // jika ad gagal pada saat fullscreen maka keluar log bahwa gagal ad
                     override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
                         Log.d(TAG, "Ad failed to show.")
                     }
-
+                    // jika ad keluar pada saat fullscreen maka keluar tag dan membuat insterstitial ad null
                     override fun onAdShowedFullScreenContent() {
                         Log.d(TAG, "Ad showed fullscreen content.")
                         mInterstitialAd = null;
@@ -250,9 +267,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })}
-    fun showInterstitialAd(view: View) {
 
-    }
 
     // membuat fungsi write ke external memory
     @RequiresApi(Build.VERSION_CODES.KITKAT)
