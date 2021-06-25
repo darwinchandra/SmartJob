@@ -132,6 +132,8 @@ class MainActivity : AppCompatActivity() {
                             if(switch2.isChecked){
                                 if (mInterstitialAd != null) {
                                     mInterstitialAd?.show(this@MainActivity)
+                                    val intent = Intent(it, BerandaActivity::class.java)
+                                    startActivity(intent)
                                 }
                             }
                         // yang lainnya keluarkan ad belum tersedia dan akan menuju ke beranda
