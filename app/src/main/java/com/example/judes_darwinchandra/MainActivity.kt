@@ -501,7 +501,7 @@ class MainActivity : AppCompatActivity() {
             .setSmallIcon(R.drawable.ic_baseline_bookmark_24)
             .setContentIntent(myPendingIntent)
         // build var notif yang telah dbuat dengan id 100
-        notificationManager?.notify(100, myNotification.build())
+        //notificationManager?.notify(100, myNotification.build())
     }
 
 
